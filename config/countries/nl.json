@@ -1,0 +1,32 @@
+{
+  "id": "nl",
+  "type": "country-config",
+  "version": 1,
+  "extends": "global",
+  "meta": {
+    "name": "Netherlands",
+    "description": "Country-specific rules for the Netherlands"
+  },
+  "scope": {
+    "country": "nl"
+  },
+  "defaults": {
+    "locale": "nl"
+  },
+  "formatting": {
+    "phone": {
+      "countryCode": "+31",
+      "formatStyle": "national"
+    }
+  },
+  "rules": {
+    "phoneValidation": {
+      "enabled": true,
+      "severity": "warning"
+    },
+    "categoryValidation": {
+      "enabled": true,
+      "severity": "error"
+    }
+  }
+}
