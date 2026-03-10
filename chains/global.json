@@ -2,5 +2,32 @@
   "id": "global-chains",
   "type": "chain-dataset",
   "version": 1,
-  "items": []
+  "items": [
+    {
+      "id": "mcdonalds",
+      "canonicalName": "McDonald's",
+      "match": {
+        "aliases": ["mc donalds", "mcdonalds", "mcdonald's"],
+        "regex": ["^mc\\s?donald'?s$"],
+        "categoryAnyOf": ["FAST_FOOD", "RESTAURANT"]
+      },
+      "standard": {
+        "name": "McDonald's",
+        "categories": ["FAST_FOOD"],
+        "brand": "McDonald's"
+      },
+      "policy": {
+        "geometry": "point",
+        "lockLevel": 3,
+        "requirePhone": true,
+        "requireUrl": false
+      },
+      "scope": {
+        "level": "global"
+      },
+      "meta": {
+        "description": "Global chain definition for McDonald's"
+      }
+    }
+  ]
 }
