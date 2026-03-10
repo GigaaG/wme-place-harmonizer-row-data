@@ -1,0 +1,26 @@
+{
+  "id": "dach",
+  "type": "community-config",
+  "version": 1,
+  "extends": "global",
+  "meta": {
+    "name": "DACH Community",
+    "description": "Shared community rules for Germany, Austria and Switzerland"
+  },
+  "scope": {
+    "countries": ["de", "at", "ch"]
+  },
+  "defaults": {
+    "locale": "de"
+  },
+  "rules": {
+    "phoneValidation": {
+      "enabled": true,
+      "severity": "warning"
+    },
+    "urlValidation": {
+      "enabled": true,
+      "severity": "warning"
+    }
+  }
+}

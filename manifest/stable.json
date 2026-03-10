@@ -1,0 +1,26 @@
+{
+  "channel": "stable",
+  "version": "0.1.0",
+  "generatedAt": "2026-03-10T00:00:00Z",
+  "dataRevision": "initial",
+  "files": {
+    "config/global.json": {
+      "required": true
+    },
+    "config/communities/dach.json": {
+      "required": false
+    },
+    "config/countries/nl.json": {
+      "required": false
+    },
+    "chains/global.json": {
+      "required": true
+    },
+    "exceptions/global.json": {
+      "required": true
+    },
+    "locales/en.json": {
+      "required": true
+    }
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "locale": "en",
+  "messages": {
+    "app.title": "WME Place Harmonizer ROW Edition",
+    "status.ok": "No issues found",
+    "status.warning": "Improvements available",
+    "status.error": "Critical issues found",
+    "status.whitelisted": "Issue whitelisted",
+    "status.unknown": "Not analyzed"
+  }
+}
