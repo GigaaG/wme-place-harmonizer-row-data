@@ -36,7 +36,7 @@ locales/
 schemas/
 examples/
 docs/
-
+```
 ## Configuratiehiërarchie
 
 De basisvolgorde is:
