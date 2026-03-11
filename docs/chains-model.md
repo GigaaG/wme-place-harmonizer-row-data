@@ -188,25 +188,126 @@ De standaardisatie levert de canonieke of gewenste waarden waartegen een place v
 
 ### 8.2 Typische standaardisatievelden
 
-Binnen standard kunnen onder andere voorkomen:
+Binnen `standard` kunnen onder andere voorkomen:
 
-- name
-- aliases
-- categories
-- description
-- url
-- services
-- brand
-- ev
-- optionalAliases
+- `name`
+- `brand`
+- `aliases`
+- `optionalAliases`
+- `categories`
+- `description`
+- `url`
+- `services`
+- `openingHoursTemplate`
+- `externalProviderIds`
+- `ev`
 
-### 8.3 Voorbeeld
+Binnen `policy` kunnen bijvoorbeeld voorkomen:
+
+- `geometry`
+- `lockLevel`
+- `requirePhone`
+- `requireUrl`
+- `requireOpeningHours`
+- `requireExternalProvider`
+- `services`
+- `aliasPolicy`
+- `urlPolicy`
+- `phonePolicy`
+- `servicePolicy`
+- `evPolicy`
+
+Geometry gebruikt de echte WME-toestanden:
+
+- `point`
+- `polygon`
+
+Geometry policy ondersteunt:
+
+- `required`
+- `recommended`
+- `allowed`
+
+Voorbeeld:
+
 ```json
 {
+  "geometry": {
+    "recommended": "point",
+    "allowed": ["point", "polygon"]
+  }
+}
+```
+Services policy ondersteunt:
+
+- `required`
+- `recommended`
+- `forbidden`
+
+Voorbeeld:
+
+```json
+{
+  "services": {
+    "required": [],
+    "recommended": ["DRIVE_THROUGH"],
+    "forbidden": []
+  }
+}
+```
+
+JSON-voorbeeldrecord:
+```json
+{
+  "id": "mcdonalds",
+  "canonicalName": "McDonald's",
+  "match": {
+    "aliases": [
+      "mc donalds",
+      "mcdonalds",
+      "mcdonald's"
+    ],
+    "regex": [
+      "^mc\\s?donald'?s$"
+    ],
+    "categoryAnyOf": [
+      "FAST_FOOD",
+      "RESTAURANT"
+    ]
+  },
   "standard": {
     "name": "McDonald's",
+    "brand": "McDonald's",
     "categories": ["FAST_FOOD"],
-    "brand": "McDonald's"
+    "description": "",
+    "url": "",
+    "aliases": [],
+    "optionalAliases": [],
+    "services": ["TAKEAWAY", "DINE_IN"],
+    "openingHoursTemplate": null,
+    "externalProviderIds": []
+  },
+  "policy": {
+    "geometry": {
+      "recommended": "point",
+      "allowed": ["point", "polygon"]
+    },
+    "lockLevel": 3,
+    "requirePhone": true,
+    "requireUrl": false,
+    "requireOpeningHours": false,
+    "requireExternalProvider": false,
+    "services": {
+      "required": [],
+      "recommended": ["DRIVE_THROUGH"],
+      "forbidden": []
+    }
+  },
+  "scope": {
+    "level": "global"
+  },
+  "meta": {
+    "description": "Global chain definition for McDonald's"
   }
 }
 ```

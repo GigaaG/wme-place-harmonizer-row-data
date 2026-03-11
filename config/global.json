@@ -66,6 +66,40 @@
       "severity": "warning"
     }
   },
+  "categoryStandards": {
+    "OFFICES": {
+      "geometry": {
+        "recommended": "point",
+        "allowed": ["point", "polygon"]
+      },
+      "lockLevel": 2,
+      "requirePhone": true,
+      "requireUrl": true,
+      "requireOpeningHours": false,
+      "requireExternalProvider": false,
+      "services": {
+        "required": [],
+        "recommended": [],
+        "forbidden": ["DRIVE_THROUGH"]
+      }
+    },
+    "FAST_FOOD": {
+      "geometry": {
+        "recommended": "point",
+        "allowed": ["point", "polygon"]
+      },
+      "lockLevel": 3,
+      "requirePhone": true,
+      "requireUrl": false,
+      "requireOpeningHours": false,
+      "requireExternalProvider": false,
+      "services": {
+        "required": [],
+        "recommended": [],
+        "forbidden": []
+      }
+    }
+  },
   "mergeStrategies": {
     "chains.items": {
       "mode": "keyedMerge",

@@ -258,6 +258,62 @@ Het script gebruikt scope voor:
 - Debug-weergave
 - Validatie van inheritance en consistentie
 
+### `categoryStandards`
+
+Het `categoryStandards` object bevat standaarden per placecategorie, ook wanneer een place geen onderdeel is van een chain.
+
+Voorbeelden:
+- `OFFICES`
+- `FAST_FOOD`
+- `PARKING_LOT`
+- `GAS_STATION`
+
+Een category standard kan onder andere bevatten:
+- `geometry`
+- `lockLevel`
+- `requirePhone`
+- `requireUrl`
+- `requireOpeningHours`
+- `requireExternalProvider`
+- `services`
+
+### Geometry standaard
+
+Geometry ondersteunt voor v1:
+
+- `required`
+- `recommended`
+- `allowed`
+
+Voorbeeld:
+
+```json
+{
+  "geometry": {
+    "recommended": "point",
+    "allowed": ["point", "polygon"]
+  }
+}
+```
+
+### Services standaard
+
+Services ondersteunt voor v1:
+- required
+- recommended
+- forbidden
+
+Voorbeeld:
+```json
+{
+  "services": {
+    "required": [],
+    "recommended": [],
+    "forbidden": ["DRIVE_THROUGH"]
+  }
+}
+```
+
 ## 8. defaults
 
 ### 8.1 Doel

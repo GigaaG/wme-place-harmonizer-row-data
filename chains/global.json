@@ -13,14 +13,31 @@
       },
       "standard": {
         "name": "McDonald's",
+        "brand": "McDonald's",
         "categories": ["FAST_FOOD"],
-        "brand": "McDonald's"
+        "description": "",
+        "url": "",
+        "aliases": [],
+        "optionalAliases": [],
+        "services": ["TAKEAWAY", "DINE_IN"],
+        "openingHoursTemplate": null,
+        "externalProviderIds": []
       },
       "policy": {
-        "geometry": "point",
+        "geometry": {
+          "recommended": "point",
+          "allowed": ["point", "polygon"]
+        },
         "lockLevel": 3,
         "requirePhone": true,
-        "requireUrl": false
+        "requireUrl": false,
+        "requireOpeningHours": false,
+        "requireExternalProvider": false,
+        "services": {
+          "required": [],
+          "recommended": ["DRIVE_THROUGH"],
+          "forbidden": []
+        }
       },
       "scope": {
         "level": "global"
