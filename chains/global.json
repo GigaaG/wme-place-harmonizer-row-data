@@ -30,7 +30,7 @@
         },
         "lockLevel": 3,
         "requirePhone": true,
-        "requireUrl": false,
+        "requireUrl": true,
         "requireOpeningHours": false,
         "requireExternalProvider": false,
         "services": {
