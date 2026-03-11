@@ -35,7 +35,7 @@
         "requireExternalProvider": false,
         "services": {
           "required": [],
-          "recommended": ["DRIVE_THROUGH"],
+          "recommended": ["DRIVETHROUGH"],
           "forbidden": []
         }
       },
