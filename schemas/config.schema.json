@@ -1,0 +1,101 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "required": ["id", "type", "version"],
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "type": {
+      "type": "string"
+    },
+    "version": {
+      "type": "number"
+    },
+    "meta": {
+      "type": "object"
+    },
+    "defaults": {
+      "type": "object"
+    },
+    "highlighting": {
+      "type": "object"
+    },
+    "rules": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "required": ["enabled", "severity"],
+        "properties": {
+          "enabled": {
+            "type": "boolean"
+          },
+          "severity": {
+            "type": "string",
+            "enum": ["info", "warning", "error"]
+          }
+        }
+      }
+    },
+    "categoryStandards": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "geometry": {
+            "type": "object",
+            "properties": {
+              "required": {
+                "type": "string",
+                "enum": ["point", "polygon"]
+              },
+              "recommended": {
+                "type": "string",
+                "enum": ["point", "polygon"]
+              },
+              "allowed": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "enum": ["point", "polygon"]
+                }
+              }
+            }
+          },
+          "lockLevel": {
+            "type": "number"
+          },
+          "requirePhone": {
+            "type": "boolean"
+          },
+          "requireUrl": {
+            "type": "boolean"
+          },
+          "requireOpeningHours": {
+            "type": "boolean"
+          },
+          "requireExternalProvider": {
+            "type": "boolean"
+          },
+          "services": {
+            "type": "object",
+            "properties": {
+              "required": {
+                "type": "array",
+                "items": { "type": "string" }
+              },
+              "recommended": {
+                "type": "array",
+                "items": { "type": "string" }
+              },
+              "forbidden": {
+                "type": "array",
+                "items": { "type": "string" }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

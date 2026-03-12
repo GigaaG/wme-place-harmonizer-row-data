@@ -80,7 +80,7 @@
       "services": {
         "required": [],
         "recommended": [],
-        "forbidden": ["DRIVE_THROUGH"]
+        "forbidden": ["DRIVETHROUGH"]
       }
     },
     "FAST_FOOD": {

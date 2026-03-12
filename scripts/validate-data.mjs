@@ -103,16 +103,95 @@ function validateManifest() {
   }
 }
 
+function validateConfig() {
+  const sdkValues = loadJSON("reference/sdk-values.json");
+  const config = loadJSON("config/global.json");
+
+  const allowedGeometry = sdkValues.geometry;
+  const allowedServices = sdkValues.services;
+  const allowedSeverity = ["info", "warning", "error"];
+
+  if (config.rules) {
+    for (const [ruleId, rule] of Object.entries(config.rules)) {
+      if (!allowedSeverity.includes(rule.severity)) {
+        error(
+          `Invalid severity "${rule.severity}" in config.rules.${ruleId}. Allowed values: ${allowedSeverity.join(", ")}`
+        );
+      }
+    }
+  }
+
+  if (config.categoryStandards) {
+    for (const [categoryId, standard] of Object.entries(config.categoryStandards)) {
+      if (standard.geometry) {
+        if (
+          standard.geometry.required &&
+          !allowedGeometry.includes(standard.geometry.required)
+        ) {
+          error(
+            `Invalid geometry "${standard.geometry.required}" in config.categoryStandards.${categoryId}.geometry.required`
+          );
+        }
+
+        if (
+          standard.geometry.recommended &&
+          !allowedGeometry.includes(standard.geometry.recommended)
+        ) {
+          error(
+            `Invalid geometry "${standard.geometry.recommended}" in config.categoryStandards.${categoryId}.geometry.recommended`
+          );
+        }
+
+        if (standard.geometry.allowed) {
+          for (const geometry of standard.geometry.allowed) {
+            if (!allowedGeometry.includes(geometry)) {
+              error(
+                `Invalid geometry "${geometry}" in config.categoryStandards.${categoryId}.geometry.allowed`
+              );
+            }
+          }
+        }
+      }
+
+      if (standard.services) {
+        validateServices(
+          standard.services.required,
+          allowedServices,
+          `config.categoryStandards.${categoryId}.services.required`
+        );
+
+        validateServices(
+          standard.services.recommended,
+          allowedServices,
+          `config.categoryStandards.${categoryId}.services.recommended`
+        );
+
+        validateServices(
+          standard.services.forbidden,
+          allowedServices,
+          `config.categoryStandards.${categoryId}.services.forbidden`
+        );
+      }
+    }
+  }
+}
+
 function runValidation() {
   console.log("Running data validation...");
 
   validateManifest();
 
   validateSchema(
+    "config/global.json",
+    "schemas/config.schema.json"
+  );
+
+  validateSchema(
     "chains/global.json",
     "schemas/chain-dataset.schema.json"
   );
 
+  validateConfig();
   validateChains();
 
   console.log("✅ Data validation passed");
