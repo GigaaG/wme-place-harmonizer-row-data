@@ -2,31 +2,275 @@
   "id": "nl",
   "type": "country-config",
   "version": 1,
-  "extends": "global",
   "meta": {
-    "name": "Netherlands",
-    "description": "Country-specific rules for the Netherlands"
-  },
-  "scope": {
-    "country": "nl"
+    "name": "Netherlands Configuration",
+    "description": "Dutch community standards for WME Place Harmonizer ROW Edition"
   },
   "defaults": {
-    "locale": "nl"
+    "locale": "nl",
+    "countryResolution": {
+      "preferPlaceCountry": true,
+      "fallbackToMapContext": true,
+      "allowManualFallback": true
+    },
+    "matching": {
+      "caseInsensitive": true,
+      "normalizeWhitespace": true,
+      "stripCommonPunctuation": true
+    },
+    "ui": {
+      "showDebugTab": false,
+      "defaultChannel": "stable"
+    }
   },
-  "formatting": {
-    "phone": {
-      "countryCode": "+31",
-      "formatStyle": "national"
+  "highlighting": {
+    "statuses": {
+      "ok": "green",
+      "warning": "orange",
+      "error": "red",
+      "whitelisted": "blue",
+      "unknown": "gray"
     }
   },
   "rules": {
+    "nameNormalization": {
+      "enabled": true,
+      "severity": "warning"
+    },
+    "aliasNormalization": {
+      "enabled": true,
+      "severity": "warning"
+    },
+    "brandHarmonization": {
+      "enabled": true,
+      "severity": "warning"
+    },
     "phoneValidation": {
+      "enabled": true,
+      "severity": "warning"
+    },
+    "urlValidation": {
       "enabled": true,
       "severity": "warning"
     },
     "categoryValidation": {
       "enabled": true,
       "severity": "error"
+    },
+    "lockLevelRecommendation": {
+      "enabled": true,
+      "severity": "info"
+    },
+    "residentialCleanup": {
+      "enabled": true,
+      "severity": "warning"
+    }
+  },
+  "categoryStandards": {
+    "GAS_STATION": {
+      "geometry": {
+        "recommended": "point",
+        "allowed": ["point", "polygon"]
+      },
+      "lockLevel": 3,
+      "requirePhone": true,
+      "requireUrl": false,
+      "requireOpeningHours": true,
+      "requireExternalProvider": false,
+      "services": {
+        "required": [],
+        "recommended": ["RESTROOMS"],
+        "forbidden": []
+      }
+    },
+    "PARKING_LOT": {
+      "geometry": {
+        "recommended": "point",
+        "allowed": ["point", "polygon"]
+      },
+      "lockLevel": 2,
+      "requirePhone": false,
+      "requireUrl": false,
+      "requireOpeningHours": false,
+      "requireExternalProvider": false,
+      "services": {
+        "required": [],
+        "recommended": [],
+        "forbidden": []
+      }
+    },
+    "SUPERMARKET_GROCERY": {
+      "geometry": {
+        "recommended": "point",
+        "allowed": ["point", "polygon"]
+      },
+      "lockLevel": 3,
+      "requirePhone": true,
+      "requireUrl": true,
+      "requireOpeningHours": true,
+      "requireExternalProvider": false,
+      "services": {
+        "required": [],
+        "recommended": [],
+        "forbidden": []
+      }
+    },
+    "RESTAURANT": {
+      "geometry": {
+        "recommended": "point",
+        "allowed": ["point", "polygon"]
+      },
+      "lockLevel": 3,
+      "requirePhone": true,
+      "requireUrl": false,
+      "requireOpeningHours": true,
+      "requireExternalProvider": false,
+      "services": {
+        "required": [],
+        "recommended": [],
+        "forbidden": []
+      }
+    },
+    "FAST_FOOD": {
+      "geometry": {
+        "recommended": "point",
+        "allowed": ["point", "polygon"]
+      },
+      "lockLevel": 3,
+      "requirePhone": true,
+      "requireUrl": false,
+      "requireOpeningHours": true,
+      "requireExternalProvider": false,
+      "services": {
+        "required": [],
+        "recommended": [],
+        "forbidden": []
+      }
+    },
+    "HOTEL": {
+      "geometry": {
+        "recommended": "point",
+        "allowed": ["point", "polygon"]
+      },
+      "lockLevel": 3,
+      "requirePhone": true,
+      "requireUrl": true,
+      "requireOpeningHours": false,
+      "requireExternalProvider": false,
+      "services": {
+        "required": [],
+        "recommended": [],
+        "forbidden": []
+      }
+    },
+    "HOSPITAL_MEDICAL_CARE": {
+      "geometry": {
+        "recommended": "polygon",
+        "allowed": ["point", "polygon"]
+      },
+      "lockLevel": 4,
+      "requirePhone": true,
+      "requireUrl": true,
+      "requireOpeningHours": false,
+      "requireExternalProvider": false,
+      "services": {
+        "required": [],
+        "recommended": [],
+        "forbidden": []
+      }
+    },
+    "AIRPORT": {
+      "geometry": {
+        "recommended": "polygon",
+        "allowed": ["point", "polygon"]
+      },
+      "lockLevel": 4,
+      "requirePhone": true,
+      "requireUrl": true,
+      "requireOpeningHours": false,
+      "requireExternalProvider": false,
+      "services": {
+        "required": [],
+        "recommended": [],
+        "forbidden": []
+      }
+    },
+    "TRAIN_STATION": {
+      "geometry": {
+        "recommended": "point",
+        "allowed": ["point", "polygon"]
+      },
+      "lockLevel": 3,
+      "requirePhone": false,
+      "requireUrl": true,
+      "requireOpeningHours": false,
+      "requireExternalProvider": false,
+      "services": {
+        "required": [],
+        "recommended": [],
+        "forbidden": []
+      }
+    },
+    "SCHOOL": {
+      "geometry": {
+        "recommended": "polygon",
+        "allowed": ["point", "polygon"]
+      },
+      "lockLevel": 3,
+      "requirePhone": true,
+      "requireUrl": true,
+      "requireOpeningHours": false,
+      "requireExternalProvider": false,
+      "services": {
+        "required": [],
+        "recommended": [],
+        "forbidden": []
+      }
+    },
+    "UNIVERSITY": {
+      "geometry": {
+        "recommended": "polygon",
+        "allowed": ["point", "polygon"]
+      },
+      "lockLevel": 4,
+      "requirePhone": true,
+      "requireUrl": true,
+      "requireOpeningHours": false,
+      "requireExternalProvider": false,
+      "services": {
+        "required": [],
+        "recommended": [],
+        "forbidden": []
+      }
+    },
+    "OFFICES": {
+      "geometry": {
+        "recommended": "point",
+        "allowed": ["point", "polygon"]
+      },
+      "lockLevel": 2,
+      "requirePhone": true,
+      "requireUrl": true,
+      "requireOpeningHours": false,
+      "requireExternalProvider": false,
+      "services": {
+        "required": [],
+        "recommended": [],
+        "forbidden": ["DRIVETHROUGH"]
+      }
+    }
+  },
+  "mergeStrategies": {
+    "chains.items": {
+      "mode": "keyedMerge",
+      "key": "id"
+    },
+    "exceptions.items": {
+      "mode": "keyedMerge",
+      "key": "id"
+    },
+    "matching.synonyms": {
+      "mode": "appendUnique"
     }
   }
 }
