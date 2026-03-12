@@ -1,65 +1,97 @@
-name: Update config
-description: Request changes to an existing config file
-title: "[Update Config]: "
-labels: ["data", "config"]
+name: Add chain
+description: Request to add a new chain definition
+title: "[Add Chain]: "
+labels: ["data", "chains"]
 body:
   - type: markdown
     attributes:
       value: |
-        Use this form to request changes to an existing config file.
+        Use this form to request a new chain definition.
 
-  - type: dropdown
-    id: config_type
+  - type: input
+    id: chain_id
     attributes:
-      label: Config type
-      options:
-        - global
-        - country
-        - community
-        - state
+      label: Chain ID
+      description: A unique, lowercase identifier for the chain
+      placeholder: mcdonalds
     validations:
       required: true
 
   - type: input
-    id: config_id
+    id: canonical_name
     attributes:
-      label: Config identifier
-      description: Example global, nl, dach, us-ca
-      placeholder: global
+      label: Canonical name
+      description: The exact canonical display name
+      placeholder: McDonald's
     validations:
       required: true
 
   - type: textarea
-    id: current_behavior
+    id: aliases
     attributes:
-      label: Current behavior
-      description: What does the current config do now?
-    validations:
-      required: true
-
-  - type: textarea
-    id: requested_change
-    attributes:
-      label: Requested change
-      description: Describe the exact config change that is needed
-    validations:
-      required: true
-
-  - type: textarea
-    id: affected_fields
-    attributes:
-      label: Affected fields
-      description: List the fields that should be updated
+      label: Aliases
+      description: One alias per line
       placeholder: |
-        rules.phoneValidation.severity
-        categoryStandards.OFFICES.geometry.recommended
+        mc donalds
+        mcdonalds
+        mcdonald's
     validations:
       required: false
 
   - type: textarea
-    id: rationale
+    id: categories
     attributes:
-      label: Reason / source
-      description: Why is this config update needed?
+      label: Categories
+      description: One category per line
+      placeholder: |
+        FAST_FOOD
+        RESTAURANT
+    validations:
+      required: false
+
+  - type: dropdown
+    id: geometry
+    attributes:
+      label: Recommended geometry
+      options:
+        - point
+        - polygon
+    validations:
+      required: false
+
+  - type: textarea
+    id: required_services
+    attributes:
+      label: Required services
+      description: One service per line
+      placeholder: |
+        DRIVETHROUGH
+    validations:
+      required: false
+
+  - type: textarea
+    id: recommended_services
+    attributes:
+      label: Recommended services
+      description: One service per line
+      placeholder: |
+        TAKE_AWAY
+        DINE_IN
+    validations:
+      required: false
+
+  - type: textarea
+    id: forbidden_services
+    attributes:
+      label: Forbidden services
+      description: One service per line
+    validations:
+      required: false
+
+  - type: textarea
+    id: notes
+    attributes:
+      label: Notes / motivation
+      description: Why should this chain be added?
     validations:
       required: true
