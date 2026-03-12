@@ -176,6 +176,57 @@ function validateConfig() {
   }
 }
 
+function ensureUniqueStrings(values, context) {
+  const seen = new Set();
+
+  for (const value of values) {
+    if (seen.has(value)) {
+      error(`Duplicate value "${value}" found in ${context}`);
+    }
+
+    seen.add(value);
+  }
+}
+
+function validateChainDuplicates() {
+  const chains = loadJSON("chains/global.json");
+
+  if (!Array.isArray(chains.items)) {
+    error("chains/global.json missing items array");
+  }
+
+  const seenChainIds = new Set();
+
+  for (const chain of chains.items) {
+    if (seenChainIds.has(chain.id)) {
+      error(`Duplicate chain id "${chain.id}" found in chains/global.json`);
+    }
+
+    seenChainIds.add(chain.id);
+
+    const aliases = chain.match?.aliases ?? [];
+    ensureUniqueStrings(
+      aliases,
+      `chain ${chain.id} match.aliases`
+    );
+
+    const canonicalName = chain.canonicalName?.trim().toLowerCase();
+    for (const alias of aliases) {
+      if (alias.trim().toLowerCase() === canonicalName) {
+        error(
+          `Alias "${alias}" in chain ${chain.id} duplicates canonicalName "${chain.canonicalName}"`
+        );
+      }
+    }
+
+    const regexList = chain.match?.regex ?? [];
+    ensureUniqueStrings(
+      regexList,
+      `chain ${chain.id} match.regex`
+    );
+  }
+}
+
 function runValidation() {
   console.log("Running data validation...");
 
@@ -193,6 +244,7 @@ function runValidation() {
 
   validateConfig();
   validateChains();
+  validateChainDuplicates();
 
   console.log("✅ Data validation passed");
 }

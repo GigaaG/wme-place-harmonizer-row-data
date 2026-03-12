@@ -7,7 +7,7 @@
       "id": "mcdonalds",
       "canonicalName": "McDonald's",
       "match": {
-        "aliases": ["mc donalds", "mcdonalds", "mcdonald's"],
+        "aliases": ["mc donalds", "mcdonalds"],
         "regex": ["^mc\\s?donald'?s$"],
         "categoryAnyOf": ["FAST_FOOD", "RESTAURANT"]
       },
