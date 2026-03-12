@@ -1,98 +1,267 @@
-# WME Place Harmonizer ROW Edition — Data Repository
+# WME Place Harmonizer ROW Edition Data Repository
 
-Deze repository bevat alle publieke community-data voor WME Place Harmonizer ROW Edition.
+This repository contains the data files used by **WME Place Harmonizer ROW Edition**.
 
-De repository is bedoeld als centrale bron voor:
+It is intentionally separated from the code repository so that communities can maintain standards, chains, exceptions and translations without changing the userscript code.
 
-- global configuratie
-- community configuratie
-- country configuratie
-- optionele state/region configuratie
-- chains
+---
+
+## Repository purpose
+
+This repository stores:
+
+- runtime manifest files
+- global and local configuration
+- chain definitions
 - exceptions
-- locales
-- JSON schema’s
-- manifestbestanden voor caching en versiebeheer
+- locales / translations
+- schemas
+- validation tooling
+- SDK value snapshots used for validation
 
-## Doel
+The code repository consumes these files at runtime.
 
-Het userscript gebruikt deze repository als externe configuratiebron. Hierdoor kunnen communities standaarden, chains en uitzonderingen beheren zonder de scriptcode aan te passen.
+---
 
-## Basisstructuur
+## Current status
+
+This repository is the **data layer** for the MVP of WME Place Harmonizer ROW Edition.
+
+The validation pipeline currently checks:
+
+- manifest references
+- chain schema
+- config schema
+- allowed geometry values
+- allowed service values
+- duplicate chain ids
+- duplicate aliases within a chain
+- duplicate regex values within a chain
+
+GitHub Actions runs validation automatically on:
+
+- push
+- pull request
+
+---
+
+## Repository structure
 
 ```text
-manifest/
-config/
-config/communities/
-config/countries/
-config/states/
-chains/
-chains/communities/
-chains/countries/
-exceptions/
-exceptions/communities/
-exceptions/countries/
-locales/
-schemas/
-examples/
-docs/
+.github/workflows/     CI validation workflows
+
+chains/                Chain definitions
+  communities/
+  countries/
+
+config/                Config files
+  communities/
+  countries/
+  states/
+
+docs/                  Data model and contribution docs
+
+examples/              Example data files and examples
+
+exceptions/            Community / country exceptions
+  communities/
+  countries/
+
+locales/               Locale files
+
+manifest/              Runtime manifests
+
+reference/             Generated SDK value snapshots
+
+schemas/               JSON schemas
+
+scripts/               Validation and generation scripts
 ```
-## Configuratiehiërarchie
 
-De basisvolgorde is:
+## Key files
 
-- global
-- community
-- country
-- state/region
-- tijdelijke user fallback in het script
+Important runtime files include:
 
-Niet alle niveaus zijn verplicht.
+manifest/stable.json
+config/global.json
+chains/global.json
+locales/en.json
 
-## Communities over meerdere landen
+## How runtime loading works
 
-Een community mag meerdere landen bedienen.
+The userscript loads a manifest file first.
 
-Voorbeeld:
+The manifest points to the data files that are needed at runtime, such as:
 
-- DACH community voor Duitsland, Oostenrijk en Zwitserland
+global config
 
-In dat geval kan een country-config verwijzen naar of erven van een community-config.
+country config
 
-## Manifesten
+global chains
 
-De map manifest/ bevat de publicatie-ingangen voor het script.
+country chains
 
-Minimaal zijn er twee kanalen:
+locale files
 
-- stable.json
-- dev.json
+This allows the code repository to stay stable while communities update data independently.
 
-Deze bestanden helpen het script bepalen:
+## Local development and validation
 
-- welke data-versie actief is
-- welke bestanden bekend zijn
-- welke cache invalidatie nodig is
+### Install dependencies
+npm install
 
-## Governance
+### Generate SDK reference values
 
-Deze repository bevat geen governance-logica in code.
-Beheer vindt plaats via normale GitHub-processen, zoals:
+npm run generate:sdk-values
 
-- branches
-- pull requests
-- reviews
-- commit history
+This writes:
 
-## Richtlijnen
+reference/sdk-values.json
 
-- houd bestanden klein en gericht
-- gebruik consistente sleutels en IDs
-- hardcode geen scriptlogica in configuratie
-- leg uitzonderingen expliciet vast
-- voeg documentatie toe bij nieuwe landen of communities
-- voorkom duplicatie wanneer global of community-level hergebruik mogelijk is
+### Validate the repository
 
-## Status
+npm run validate
 
-Deze repository is in opbouw en vormt het datamodel voor v1 van WME Place Harmonizer ROW Edition.
+The validation must pass before opening or merging a pull request.
+
+## What the validator checks
+
+### Structure validation
+
+- JSON schema validation for supported data files
+- required fields
+- valid object structure
+- expected data types
+
+### Enum / SDK value validation
+
+- geometry values
+- service values
+- supported severity values
+
+### Consistency validation
+
+- manifest references existing files
+- duplicate chain ids
+- duplicate aliases within a chain
+- duplicate regex values within a chain
+
+## Contribution workflow
+
+### For contributors
+
+- Create a branch
+- Make your data changes
+- Run local validation
+- Commit the changes
+- Open a pull request
+
+### Recommended local workflow
+
+```bash
+npm install
+npm run generate:sdk-values
+npm run validate
+```
+
+## Adding or editing chain data
+
+Chain data belongs in:
+
+- chains/global.json
+- chains/countries/
+- chains/communities/
+
+### Use the existing structure for:
+
+- id
+- canonicalName
+- match
+- standard
+- policy
+- scope
+- meta
+
+### When adding chain data:
+
+- use a unique id
+- keep canonicalName canonical
+- do not duplicate the canonical name in aliases
+- only use valid SDK service values
+- keep geometry values to point or polygon
+
+## Adding or editing config data
+
+Config data belongs in:
+
+- config/global.json
+- config/countries/
+- config/communities/
+- config/states/
+
+### Use config files for:
+
+- rules
+- category standards
+- geometry recommendations
+- required / recommended / forbidden services
+- community-specific behavior
+
+### When editing config:
+
+- use valid severity values
+- use valid geometry values
+- use valid service values
+- keep structures aligned with the schema
+
+## Locales
+
+Locale files belong in:
+
+- locales/
+
+For MVP, locale files should remain simple and valid JSON.
+
+## Pull request expectations
+
+A pull request should:
+
+- be limited in scope
+- explain what changed
+- explain why the change is needed
+- pass validation
+- avoid unrelated formatting-only changes unless requested
+
+### Examples of good PRs:
+
+- add one new chain
+- update one country config
+- fix one invalid service value
+- add one locale update
+
+## CI validation
+
+GitHub Actions validates the repository automatically on push and pull request.
+
+If validation fails, the pull request should not be merged until the issue is fixed.
+
+## Design principles
+
+- data-driven behavior
+- safe defaults
+- global-first with local overrides
+- no code changes required for normal community data updates
+- validation before merge
+- prevent runtime breakage caused by bad data
+
+## Related repository
+
+The userscript code lives in the separate code repository for WME Place Harmonizer ROW Edition.
+
+This repository only contains the data layer.
+
+## Notes
+
+The SDK values snapshot in reference/sdk-values.json is used to validate data safely and consistently.
+
+Contributors should not invent new SDK-facing values without first confirming that they are valid and updating the reference pipeline when needed.
