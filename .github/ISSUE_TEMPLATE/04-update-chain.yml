@@ -1,0 +1,45 @@
+name: Update chain
+description: Request to update an existing chain definition
+title: "[Update Chain]: "
+labels: ["data", "chains"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use this form to request changes to an existing chain definition.
+
+  - type: input
+    id: chain_id
+    attributes:
+      label: Existing chain ID
+      placeholder: mcdonalds
+    validations:
+      required: true
+
+  - type: textarea
+    id: requested_change
+    attributes:
+      label: Requested change
+      description: Describe exactly what should change
+      placeholder: Update recommended services to include DINE_IN
+    validations:
+      required: true
+
+  - type: textarea
+    id: affected_fields
+    attributes:
+      label: Affected fields
+      description: List the fields that should be changed
+      placeholder: |
+        policy.services.recommended
+        standard.categories
+    validations:
+      required: false
+
+  - type: textarea
+    id: rationale
+    attributes:
+      label: Reason / source
+      description: Why is this update needed?
+    validations:
+      required: true
