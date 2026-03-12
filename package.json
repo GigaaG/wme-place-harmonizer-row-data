@@ -6,5 +6,8 @@
   "scripts": {
     "generate:sdk-values": "node scripts/generate-sdk-values.mjs",
     "validate": "node scripts/validate-data.mjs"
+  },
+  "dependencies": {
+    "ajv": "^8.18.0"
   }
 }

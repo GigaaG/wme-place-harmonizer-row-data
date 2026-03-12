@@ -1,0 +1,68 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "required": ["id", "type", "version", "items"],
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "type": {
+      "const": "chain-dataset"
+    },
+    "version": {
+      "type": "number"
+    },
+    "items": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "canonicalName", "match", "policy"],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "canonicalName": {
+            "type": "string"
+          },
+          "match": {
+            "type": "object",
+            "properties": {
+              "aliases": {
+                "type": "array",
+                "items": { "type": "string" }
+              },
+              "regex": {
+                "type": "array",
+                "items": { "type": "string" }
+              },
+              "categoryAnyOf": {
+                "type": "array",
+                "items": { "type": "string" }
+              }
+            }
+          },
+          "policy": {
+            "type": "object",
+            "properties": {
+              "geometry": {
+                "type": "object"
+              },
+              "lockLevel": {
+                "type": "number"
+              },
+              "services": {
+                "type": "object"
+              },
+              "phone": {
+                "type": "object"
+              },
+              "url": {
+                "type": "object"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
