@@ -1,0 +1,21 @@
+{
+  "geometry": [
+    "point",
+    "polygon"
+  ],
+  "services": [
+    "DRIVETHROUGH",
+    "TAKE_AWAY",
+    "DINE_IN",
+    "RESTROOMS",
+    "PARKING_FOR_CUSTOMERS",
+    "WIFI",
+    "DELIVERIES"
+  ],
+  "mainCategories": [
+    "FOOD_AND_DRINK",
+    "PARKING_LOT",
+    "PROFESSIONAL_AND_PUBLIC",
+    "SHOPPING_AND_SERVICES"
+  ]
+}

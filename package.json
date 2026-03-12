@@ -1,0 +1,10 @@
+{
+  "name": "wme-place-harmonizer-row-data",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "generate:sdk-values": "node scripts/generate-sdk-values.mjs",
+    "validate": "node scripts/validate-data.mjs"
+  }
+}
