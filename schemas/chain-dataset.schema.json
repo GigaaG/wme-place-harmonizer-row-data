@@ -80,23 +80,31 @@
                     "type": "array",
                     "items": { "type": "string" }
                   },
+                  "discouraged": {
+                    "type": "array",
+                    "items": { "type": "string" }
+                  },
                   "forbidden": {
                     "type": "array",
                     "items": { "type": "string" }
                   }
                 }
               },
-              "requirePhone": {
-                "type": "boolean"
+              "phone": {
+                "type": "string",
+                "enum": ["required", "recommended", "discouraged", "forbidden"]
               },
-              "requireUrl": {
-                "type": "boolean"
+              "url": {
+                "type": "string",
+                "enum": ["required", "recommended", "discouraged", "forbidden"]
               },
-              "requireOpeningHours": {
-                "type": "boolean"
+              "openingHours": {
+                "type": "string",
+                "enum": ["required", "recommended", "discouraged", "forbidden"]
               },
-              "requireExternalProvider": {
-                "type": "boolean"
+              "externalProviderIds": {
+                "type": "string",
+                "enum": ["required", "recommended", "discouraged", "forbidden"]
               },
               "address": {
                 "type": "object",

@@ -274,10 +274,10 @@ Runtime normaliseert SDK-categorywaarden naar canonieke sleutels in uppercase sn
 Een category standard kan onder andere bevatten:
 - `geometry`
 - `lockLevel` (integer 1 t/m 6)
-- `requirePhone`
-- `requireUrl`
-- `requireOpeningHours`
-- `requireExternalProvider`
+- `phone`
+- `url`
+- `openingHours`
+- `externalProviderIds`
 - `services`
 - `address`
 
@@ -305,6 +305,7 @@ Voorbeeld:
 Services ondersteunt voor v1:
 - required
 - recommended
+- discouraged
 - forbidden
 
 Voorbeeld:
@@ -313,8 +314,29 @@ Voorbeeld:
   "services": {
     "required": [],
     "recommended": [],
+    "discouraged": [],
     "forbidden": ["DRIVE_THROUGH"]
   }
+}
+```
+
+### Presence-velden
+
+Phone, URL, openingHours en externalProviderIds ondersteunen dezelfde presence-waarden als address:
+- `required`
+- `recommended`
+- `discouraged`
+- `forbidden`
+
+Als een presence-veld ontbreekt in de policy, dan wordt er geen presence-regel afgedwongen.
+
+Voorbeeld:
+```json
+{
+  "phone": "required",
+  "url": "recommended",
+  "openingHours": "required",
+  "externalProviderIds": "forbidden"
 }
 ```
 

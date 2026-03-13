@@ -206,10 +206,10 @@ Binnen `policy` kunnen bijvoorbeeld voorkomen:
 
 - `geometry`
 - `lockLevel` (integer 1 t/m 6)
-- `requirePhone`
-- `requireUrl`
-- `requireOpeningHours`
-- `requireExternalProvider`
+- `phone`
+- `url`
+- `openingHours`
+- `externalProviderIds`
 - `services`
 - `address`
 - `aliasPolicy`
@@ -243,6 +243,7 @@ Services policy ondersteunt:
 
 - `required`
 - `recommended`
+- `discouraged`
 - `forbidden`
 
 Voorbeeld:
@@ -252,6 +253,7 @@ Voorbeeld:
   "services": {
     "required": [],
     "recommended": ["DRIVE_THROUGH"],
+    "discouraged": [],
     "forbidden": []
   }
 }
@@ -279,6 +281,26 @@ Voorbeeld:
     "street": "required",
     "houseNumber": "forbidden"
   }
+}
+```
+
+Phone-, URL-, openingHours- en externalProviderIds-policy ondersteunen dezelfde presence-waarden:
+
+- `required`
+- `recommended`
+- `discouraged`
+- `forbidden`
+
+Als een presence-veld ontbreekt in policy, wordt er geen presence-regel afgedwongen.
+
+Voorbeeld:
+
+```json
+{
+  "phone": "required",
+  "url": "recommended",
+  "openingHours": "required",
+  "externalProviderIds": "forbidden"
 }
 ```
 
@@ -319,13 +341,12 @@ JSON-voorbeeldrecord:
       "allowed": ["point", "polygon"]
     },
     "lockLevel": 3,
-    "requirePhone": true,
-    "requireUrl": false,
-    "requireOpeningHours": false,
-    "requireExternalProvider": false,
+    "phone": "required",
+    "externalProviderIds": "forbidden",
     "services": {
       "required": [],
       "recommended": ["DRIVE_THROUGH"],
+      "discouraged": [],
       "forbidden": []
     }
   },
@@ -364,8 +385,8 @@ Binnen policy kunnen bijvoorbeeld voorkomen:
 
 - geometry
 - lockLevel (integer 1 t/m 6)
-- requirePhone
-- requireUrl
+- phone
+- url
 - address
 - aliasPolicy
 - urlPolicy
@@ -379,8 +400,7 @@ Binnen policy kunnen bijvoorbeeld voorkomen:
   "policy": {
     "geometry": "point",
     "lockLevel": 3,
-    "requirePhone": true,
-    "requireUrl": false
+    "phone": "required"
   }
 }
 ```

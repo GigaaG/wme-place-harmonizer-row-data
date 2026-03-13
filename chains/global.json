@@ -7,37 +7,54 @@
       "id": "mcdonalds",
       "canonicalName": "McDonald's",
       "match": {
-        "aliases": ["mc donalds", "mcdonalds"],
-        "regex": ["^mc\\s?donald'?s$"],
-        "categoryAnyOf": ["FAST_FOOD", "RESTAURANT"]
+        "aliases": [
+          "mc donalds",
+          "mcdonalds"
+        ],
+        "regex": [
+          "^mc\\s?donald'?s$"
+        ],
+        "categoryAnyOf": [
+          "FAST_FOOD",
+          "RESTAURANT"
+        ]
       },
       "standard": {
         "name": "McDonald's",
         "brand": "McDonald's",
-        "categories": ["FAST_FOOD"],
+        "categories": [
+          "FAST_FOOD"
+        ],
         "description": "",
         "url": "",
         "aliases": [],
         "optionalAliases": [],
-        "services": ["TAKEAWAY", "DINE_IN"],
+        "services": [
+          "TAKEAWAY",
+          "DINE_IN"
+        ],
         "openingHoursTemplate": null,
         "externalProviderIds": []
       },
       "policy": {
         "geometry": {
           "recommended": "point",
-          "allowed": ["point", "polygon"]
+          "allowed": [
+            "point",
+            "polygon"
+          ]
         },
         "lockLevel": 5,
-        "requirePhone": true,
-        "requireUrl": true,
-        "requireOpeningHours": false,
-        "requireExternalProvider": false,
+        "phone": "required",
+        "url": "required",
         "services": {
           "required": [],
-          "recommended": ["DRIVETHROUGH"],
+          "recommended": [
+            "DRIVETHROUGH"
+          ],
           "forbidden": []
-        }
+        },
+        "externalProviderIds": "forbidden"
       },
       "scope": {
         "level": "global"

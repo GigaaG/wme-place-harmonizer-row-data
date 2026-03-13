@@ -3,6 +3,12 @@ import path from "node:path";
 import Ajv from "ajv";
 
 const ajv = new Ajv({ allErrors: true });
+const allowedRequirements = [
+  "required",
+  "recommended",
+  "discouraged",
+  "forbidden"
+];
 
 function loadJSON(filePath) {
   return JSON.parse(fs.readFileSync(filePath, "utf8"));
@@ -72,30 +78,28 @@ function validateLockLevel(lockLevel, allowedLockLevels, context) {
   }
 }
 
+function validatePresenceRequirement(requirement, context) {
+  if (requirement === undefined) {
+    return;
+  }
+
+  if (!allowedRequirements.includes(requirement)) {
+    error(
+      `Invalid requirement "${requirement}" in ${context}. Allowed values: ${allowedRequirements.join(", ")}`
+    );
+  }
+}
+
 function validateAddressPolicy(addressPolicy, context) {
   if (!addressPolicy) {
     return;
   }
 
-  const allowedRequirements = [
-    "required",
-    "recommended",
-    "discouraged",
-    "forbidden"
-  ];
-
   for (const fieldName of ["city", "street", "houseNumber"]) {
-    const requirement = addressPolicy[fieldName];
-
-    if (requirement === undefined) {
-      continue;
-    }
-
-    if (!allowedRequirements.includes(requirement)) {
-      error(
-        `Invalid address requirement "${requirement}" in ${context}.${fieldName}. Allowed values: ${allowedRequirements.join(", ")}`
-      );
-    }
+    validatePresenceRequirement(
+      addressPolicy[fieldName],
+      `${context}.${fieldName}`
+    );
   }
 }
 
@@ -130,6 +134,12 @@ function validateChainDataset(chains, context, sdkValues) {
       );
 
       validateServices(
+        services.discouraged,
+        allowedServices,
+        `${context} chain ${chain.id} policy.services.discouraged`
+      );
+
+      validateServices(
         services.forbidden,
         allowedServices,
         `${context} chain ${chain.id} policy.services.forbidden`
@@ -139,6 +149,22 @@ function validateChainDataset(chains, context, sdkValues) {
     validateAddressPolicy(
       chain.policy?.address,
       `${context} chain ${chain.id} policy.address`
+    );
+    validatePresenceRequirement(
+      chain.policy?.phone,
+      `${context} chain ${chain.id} policy.phone`
+    );
+    validatePresenceRequirement(
+      chain.policy?.url,
+      `${context} chain ${chain.id} policy.url`
+    );
+    validatePresenceRequirement(
+      chain.policy?.openingHours,
+      `${context} chain ${chain.id} policy.openingHours`
+    );
+    validatePresenceRequirement(
+      chain.policy?.externalProviderIds,
+      `${context} chain ${chain.id} policy.externalProviderIds`
     );
   }
 }
@@ -236,6 +262,12 @@ function validateConfigObject(config, context, sdkValues) {
         );
 
         validateServices(
+          standard.services.discouraged,
+          allowedServices,
+          `${context}.categoryStandards.${categoryId}.services.discouraged`
+        );
+
+        validateServices(
           standard.services.forbidden,
           allowedServices,
           `${context}.categoryStandards.${categoryId}.services.forbidden`
@@ -245,6 +277,22 @@ function validateConfigObject(config, context, sdkValues) {
       validateAddressPolicy(
         standard.address,
         `${context}.categoryStandards.${categoryId}.address`
+      );
+      validatePresenceRequirement(
+        standard.phone,
+        `${context}.categoryStandards.${categoryId}.phone`
+      );
+      validatePresenceRequirement(
+        standard.url,
+        `${context}.categoryStandards.${categoryId}.url`
+      );
+      validatePresenceRequirement(
+        standard.openingHours,
+        `${context}.categoryStandards.${categoryId}.openingHours`
+      );
+      validatePresenceRequirement(
+        standard.externalProviderIds,
+        `${context}.categoryStandards.${categoryId}.externalProviderIds`
       );
     }
   }
