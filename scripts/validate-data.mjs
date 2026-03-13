@@ -169,6 +169,12 @@ function validateChainDataset(chains, context, sdkValues) {
   }
 
   for (const chain of chains.items) {
+    validateServices(
+      chain.standard?.services,
+      allowedServices,
+      `${context} chain ${chain.id} standard.services`
+    );
+
     validateLockLevel(
       chain.policy?.lockLevel,
       allowedLockLevels,
