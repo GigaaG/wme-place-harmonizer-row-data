@@ -45,6 +45,10 @@
       "enabled": true,
       "severity": "warning"
     },
+    "cityInVenueName": {
+      "enabled": false,
+      "severity": "warning"
+    },
     "phoneValidation": {
       "enabled": true,
       "severity": "warning"
@@ -59,7 +63,7 @@
     },
     "lockLevelRecommendation": {
       "enabled": true,
-      "severity": "info"
+      "severity": "warning"
     },
     "residentialCleanup": {
       "enabled": true,
@@ -70,34 +74,39 @@
     "OFFICES": {
       "geometry": {
         "recommended": "point",
-        "allowed": ["point", "polygon"]
+        "allowed": [
+          "point",
+          "polygon"
+        ]
       },
       "lockLevel": 2,
-      "requirePhone": true,
-      "requireUrl": true,
-      "requireOpeningHours": false,
-      "requireExternalProvider": false,
+      "phone": "required",
+      "url": "required",
       "services": {
         "required": [],
         "recommended": [],
-        "forbidden": ["DRIVETHROUGH"]
-      }
+        "forbidden": [
+          "DRIVETHROUGH"
+        ]
+      },
+      "externalProviderIds": "forbidden"
     },
     "FAST_FOOD": {
       "geometry": {
         "recommended": "point",
-        "allowed": ["point", "polygon"]
+        "allowed": [
+          "point",
+          "polygon"
+        ]
       },
       "lockLevel": 3,
-      "requirePhone": true,
-      "requireUrl": false,
-      "requireOpeningHours": false,
-      "requireExternalProvider": false,
+      "phone": "required",
       "services": {
         "required": [],
         "recommended": [],
         "forbidden": []
-      }
+      },
+      "externalProviderIds": "forbidden"
     }
   },
   "mergeStrategies": {

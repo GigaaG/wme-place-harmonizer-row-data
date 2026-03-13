@@ -12,10 +12,19 @@ const sdkValues = {
     "DRIVETHROUGH",
     "TAKE_AWAY",
     "DINE_IN",
+    "EV_CHARGING",
     "RESTROOMS",
     "PARKING_FOR_CUSTOMERS",
     "WIFI",
     "DELIVERIES"
+  ],
+  lockLevels: [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6
   ],
   mainCategories: [
     "FOOD_AND_DRINK",

@@ -265,17 +265,21 @@ Het `categoryStandards` object bevat standaarden per placecategorie, ook wanneer
 Voorbeelden:
 - `OFFICES`
 - `FAST_FOOD`
+- `CAR_WASH`
 - `PARKING_LOT`
 - `GAS_STATION`
 
+Runtime normaliseert SDK-categorywaarden naar canonieke sleutels in uppercase snake case voordat `categoryStandards` wordt geraadpleegd. Configkeys moeten daarom de canonieke categorie-id gebruiken, bijvoorbeeld `CAR_WASH`.
+
 Een category standard kan onder andere bevatten:
 - `geometry`
-- `lockLevel`
-- `requirePhone`
-- `requireUrl`
-- `requireOpeningHours`
-- `requireExternalProvider`
+- `lockLevel` (integer 1 t/m 6)
+- `phone`
+- `url`
+- `openingHours`
+- `externalProviderIds`
 - `services`
+- `address`
 
 ### Geometry standaard
 
@@ -301,6 +305,7 @@ Voorbeeld:
 Services ondersteunt voor v1:
 - required
 - recommended
+- discouraged
 - forbidden
 
 Voorbeeld:
@@ -309,7 +314,52 @@ Voorbeeld:
   "services": {
     "required": [],
     "recommended": [],
+    "discouraged": [],
     "forbidden": ["DRIVE_THROUGH"]
+  }
+}
+```
+
+### Presence-velden
+
+Phone, URL, openingHours en externalProviderIds ondersteunen dezelfde presence-waarden als address:
+- `required`
+- `recommended`
+- `discouraged`
+- `forbidden`
+
+Als een presence-veld ontbreekt in de policy, dan wordt er geen presence-regel afgedwongen.
+
+Voorbeeld:
+```json
+{
+  "phone": "required",
+  "url": "recommended",
+  "openingHours": "required",
+  "externalProviderIds": "forbidden"
+}
+```
+
+### Address standaard
+
+Address ondersteunt per veld de volgende waarden:
+- `required`
+- `recommended`
+- `discouraged`
+- `forbidden`
+
+Ondersteunde addressvelden:
+- `city`
+- `street`
+- `houseNumber`
+
+Voorbeeld:
+```json
+{
+  "address": {
+    "city": "required",
+    "street": "required",
+    "houseNumber": "recommended"
   }
 }
 ```
@@ -371,7 +421,24 @@ Het formatting object bevat formatteringsconventies die per land of community ku
   "formatting": {
     "phone": {
       "countryCode": "+31",
-      "formatStyle": "national"
+      "formatStyle": "international",
+      "validationPatterns": [
+        "^\\+31 [1-57]\\d \\d{7}$",
+        "^\\+31 [1-57]\\d{2} \\d{6}$",
+        "^\\+31 6 \\d{8}$",
+        "^\\+(?!31)\\d{1,3}(?: \\d{1,14})+$",
+        "^0800 \\d+$",
+        "^0900 \\d+$"
+      ],
+      "validationExamples": [
+        "+31 20 1234567",
+        "+31 113 123456",
+        "+31 6 12345678",
+        "+32 3 123 45 67",
+        "0800 1234",
+        "0900 8844"
+      ],
+      "validationMessage": "Phone number must use Dutch international format (+31 AA BBBBBBB, +31 AAA BBBBBB or +31 6 CBBBBBBB), or another country code in international +CC ... format, unless it is an 0800 or 0900 service number"
     }
   }
 }
@@ -380,6 +447,16 @@ Het formatting object bevat formatteringsconventies die per land of community ku
 ### 9.3 Richtlijn
 
 formatting beschrijft hoe iets er idealiter uit moet zien, niet of een wijziging automatisch toegepast moet worden.
+
+Voor `formatting.phone` kunnen in v1 onder meer de volgende velden gebruikt worden:
+
+- `countryCode`
+- `formatStyle`
+- `validationPatterns`
+- `validationExamples`
+- `validationMessage`
+
+`validationPatterns` bevat regex-patronen die bepalen welke telefoonnotaties in de actieve country/community-config als geldig gelden. `validationExamples` en `validationMessage` geven de runtime extra context voor de foutmelding wanneer een nummer aanwezig is maar niet aan de lokale formatteringsregel voldoet.
 
 ## 10. matching
 
@@ -629,7 +706,24 @@ Voorkom kunstmatige tussenlagen zonder inhoudelijke meerwaarde.
   "formatting": {
     "phone": {
       "countryCode": "+31",
-      "formatStyle": "national"
+      "formatStyle": "international",
+      "validationPatterns": [
+        "^\\+31 [1-57]\\d \\d{7}$",
+        "^\\+31 [1-57]\\d{2} \\d{6}$",
+        "^\\+31 6 \\d{8}$",
+        "^\\+(?!31)\\d{1,3}(?: \\d{1,14})+$",
+        "^0800 \\d+$",
+        "^0900 \\d+$"
+      ],
+      "validationExamples": [
+        "+31 20 1234567",
+        "+31 113 123456",
+        "+31 6 12345678",
+        "+32 3 123 45 67",
+        "0800 1234",
+        "0900 8844"
+      ],
+      "validationMessage": "Phone number must use Dutch international format (+31 AA BBBBBBB, +31 AAA BBBBBB or +31 6 CBBBBBBB), or another country code in international +CC ... format, unless it is an 0800 or 0900 service number"
     }
   }
 }

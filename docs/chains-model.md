@@ -205,12 +205,13 @@ Binnen `standard` kunnen onder andere voorkomen:
 Binnen `policy` kunnen bijvoorbeeld voorkomen:
 
 - `geometry`
-- `lockLevel`
-- `requirePhone`
-- `requireUrl`
-- `requireOpeningHours`
-- `requireExternalProvider`
+- `lockLevel` (integer 1 t/m 6)
+- `phone`
+- `url`
+- `openingHours`
+- `externalProviderIds`
 - `services`
+- `address`
 - `aliasPolicy`
 - `urlPolicy`
 - `phonePolicy`
@@ -242,6 +243,7 @@ Services policy ondersteunt:
 
 - `required`
 - `recommended`
+- `discouraged`
 - `forbidden`
 
 Voorbeeld:
@@ -251,8 +253,54 @@ Voorbeeld:
   "services": {
     "required": [],
     "recommended": ["DRIVE_THROUGH"],
+    "discouraged": [],
     "forbidden": []
   }
+}
+```
+
+Address policy ondersteunt per veld:
+
+- `required`
+- `recommended`
+- `discouraged`
+- `forbidden`
+
+Ondersteunde velden:
+
+- `city`
+- `street`
+- `houseNumber`
+
+Voorbeeld:
+
+```json
+{
+  "address": {
+    "city": "required",
+    "street": "required",
+    "houseNumber": "forbidden"
+  }
+}
+```
+
+Phone-, URL-, openingHours- en externalProviderIds-policy ondersteunen dezelfde presence-waarden:
+
+- `required`
+- `recommended`
+- `discouraged`
+- `forbidden`
+
+Als een presence-veld ontbreekt in policy, wordt er geen presence-regel afgedwongen.
+
+Voorbeeld:
+
+```json
+{
+  "phone": "required",
+  "url": "recommended",
+  "openingHours": "required",
+  "externalProviderIds": "forbidden"
 }
 ```
 
@@ -293,13 +341,12 @@ JSON-voorbeeldrecord:
       "allowed": ["point", "polygon"]
     },
     "lockLevel": 3,
-    "requirePhone": true,
-    "requireUrl": false,
-    "requireOpeningHours": false,
-    "requireExternalProvider": false,
+    "phone": "required",
+    "externalProviderIds": "forbidden",
     "services": {
       "required": [],
       "recommended": ["DRIVE_THROUGH"],
+      "discouraged": [],
       "forbidden": []
     }
   },
@@ -337,9 +384,10 @@ Hiermee kan een community afspreken dat:
 Binnen policy kunnen bijvoorbeeld voorkomen:
 
 - geometry
-- lockLevel
-- requirePhone
-- requireUrl
+- lockLevel (integer 1 t/m 6)
+- phone
+- url
+- address
 - aliasPolicy
 - urlPolicy
 - phonePolicy
@@ -352,8 +400,7 @@ Binnen policy kunnen bijvoorbeeld voorkomen:
   "policy": {
     "geometry": "point",
     "lockLevel": 3,
-    "requirePhone": true,
-    "requireUrl": false
+    "phone": "required"
   }
 }
 ```

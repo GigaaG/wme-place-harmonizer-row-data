@@ -314,7 +314,7 @@ Voor v1 voorzien we functioneel de volgende soorten effecten:
   ```json
   {
     "effect": {
-      "suppressRules": ["phoneValidation"]
+      "suppressRules": ["phoneValidation.required"]
     }
   }
   ```
@@ -545,7 +545,7 @@ Gebruik unieke en stabiele IDs zodat merge-gedrag voorspelbaar blijft.
     "chainIds": ["mcdonalds"]
   },
   "effect": {
-    "suppressRules": ["phoneValidation"]
+    "suppressRules": ["phoneValidation.required"]
   },
   "meta": {
     "description": "Temporary suppression while DACH phone policy is under review",

@@ -1,4 +1,67 @@
 {
+  "id": "nl",
+  "type": "country-config",
+  "version": 1,
+  "extends": "global",
+  "meta": {
+    "name": "Netherlands",
+    "description": "Country-specific rules for the Netherlands"
+  },
+  "scope": {
+    "country": "nl"
+  },
+  "defaults": {
+    "locale": "nl"
+  },
+  "formatting": {
+    "phone": {
+      "countryCode": "+31",
+      "formatStyle": "international",
+      "validationPatterns": [
+        "^\\+31 [1-57]\\d \\d{7}$",
+        "^\\+31 [1-57]\\d{2} \\d{6}$",
+        "^\\+31 6 \\d{8}$",
+        "^\\+(?!31)\\d{1,3}(?: \\d{1,14})+$",
+        "^0800 \\d+$",
+        "^0900 \\d+$"
+      ],
+      "validationExamples": [
+        "+31 20 1234567",
+        "+31 113 123456",
+        "+31 6 12345678",
+        "+32 3 123 45 67",
+        "0800 1234",
+        "0900 8844"
+      ],
+      "validationMessage": "Phone number must use Dutch international format (+31 AA BBBBBBB, +31 AAA BBBBBB or +31 6 CBBBBBBB), or another country code in international +CC ... format, unless it is an 0800 or 0900 service number"
+    },
+    "url": {
+      "validationPatterns": [
+        "^(?:[A-Za-z0-9](?:[A-Za-z0-9-]{0,61}[A-Za-z0-9])?\\.)+[A-Za-z]{2,63}(?::\\d{1,5})?(?:[/?#][^\\s]*)?$"
+      ],
+      "validationExamples": [
+        "www.casca.nl",
+        "tickets.example.nl",
+        "example.com/en",
+        "info.example.co.uk?lang=en"
+      ],
+      "validationMessage": "URL must omit http:// or https:// and use only the hostname, optionally with a port, path, query or fragment"
+    }
+  },
+  "rules": {
+    "cityInVenueName": {
+      "enabled": true,
+      "severity": "warning"
+    },
+    "phoneValidation": {
+      "enabled": true,
+      "severity": "warning"
+    },
+    "categoryValidation": {
+      "enabled": true,
+      "severity": "error"
+    }
+  },
   "categoryStandards": {
     "CAR_WASH": {
       "geometry": {
@@ -9,10 +72,13 @@
         ]
       },
       "lockLevel": 2,
-      "requirePhone": false,
-      "requireUrl": false,
-      "requireOpeningHours": true,
-      "requireExternalProvider": false
+      "address": {
+        "city": "required",
+        "street": "required",
+        "houseNumber": "required"
+      },
+      "openingHours": "required",
+      "externalProviderIds": "required"
     },
     "CHARGING_STATION": {
       "geometry": {
@@ -23,15 +89,12 @@
         ]
       },
       "lockLevel": 3,
-      "requirePhone": false,
-      "requireUrl": false,
-      "requireOpeningHours": false,
-      "requireExternalProvider": false,
       "services": {
         "recommended": [
           "EV_CHARGING"
         ]
-      }
+      },
+      "externalProviderIds": "forbidden"
     },
     "GAS_STATION": {
       "geometry": {
@@ -42,14 +105,13 @@
         ]
       },
       "lockLevel": 3,
-      "requirePhone": true,
-      "requireUrl": false,
-      "requireOpeningHours": true,
+      "phone": "required",
       "services": {
         "recommended": [
           "RESTROOMS"
         ]
-      }
+      },
+      "openingHours": "required"
     },
     "RESTAURANT": {
       "geometry": {
@@ -60,14 +122,13 @@
         ]
       },
       "lockLevel": 3,
-      "requirePhone": true,
-      "requireUrl": false,
-      "requireOpeningHours": true,
+      "phone": "required",
       "services": {
         "recommended": [
           "RESTROOMS"
         ]
-      }
+      },
+      "openingHours": "required"
     },
     "FAST_FOOD": {
       "geometry": {
@@ -78,9 +139,8 @@
         ]
       },
       "lockLevel": 3,
-      "requirePhone": true,
-      "requireUrl": false,
-      "requireOpeningHours": true
+      "phone": "required",
+      "openingHours": "required"
     },
     "CAFE": {
       "geometry": {
@@ -91,9 +151,7 @@
         ]
       },
       "lockLevel": 2,
-      "requirePhone": false,
-      "requireUrl": false,
-      "requireOpeningHours": true
+      "openingHours": "required"
     },
     "BAR": {
       "geometry": {
@@ -104,9 +162,7 @@
         ]
       },
       "lockLevel": 2,
-      "requirePhone": false,
-      "requireUrl": false,
-      "requireOpeningHours": true
+      "openingHours": "required"
     },
     "BAKERY": {
       "geometry": {
@@ -117,9 +173,7 @@
         ]
       },
       "lockLevel": 2,
-      "requirePhone": false,
-      "requireUrl": false,
-      "requireOpeningHours": true
+      "openingHours": "required"
     },
     "HOTEL": {
       "geometry": {
@@ -130,9 +184,8 @@
         ]
       },
       "lockLevel": 3,
-      "requirePhone": true,
-      "requireUrl": true,
-      "requireOpeningHours": false
+      "phone": "required",
+      "url": "required"
     },
     "HOSTEL": {
       "geometry": {
@@ -143,22 +196,17 @@
         ]
       },
       "lockLevel": 3,
-      "requirePhone": true,
-      "requireUrl": true,
-      "requireOpeningHours": false
+      "phone": "required",
+      "url": "required"
     },
     "PARKING_LOT": {
       "geometry": {
-        "recommended": "point",
+        "recommended": "polygon",
         "allowed": [
-          "point",
           "polygon"
         ]
       },
-      "lockLevel": 2,
-      "requirePhone": false,
-      "requireUrl": false,
-      "requireOpeningHours": false
+      "lockLevel": 2
     },
     "AIRPORT": {
       "geometry": {
@@ -169,9 +217,8 @@
         ]
       },
       "lockLevel": 4,
-      "requirePhone": true,
-      "requireUrl": true,
-      "requireOpeningHours": false
+      "phone": "required",
+      "url": "required"
     },
     "TRAIN_STATION": {
       "geometry": {
@@ -182,9 +229,7 @@
         ]
       },
       "lockLevel": 3,
-      "requirePhone": false,
-      "requireUrl": true,
-      "requireOpeningHours": false
+      "url": "required"
     },
     "BUS_STATION": {
       "geometry": {
@@ -194,10 +239,7 @@
           "polygon"
         ]
       },
-      "lockLevel": 2,
-      "requirePhone": false,
-      "requireUrl": false,
-      "requireOpeningHours": false
+      "lockLevel": 2
     },
     "SCHOOL": {
       "geometry": {
@@ -208,9 +250,8 @@
         ]
       },
       "lockLevel": 3,
-      "requirePhone": true,
-      "requireUrl": true,
-      "requireOpeningHours": false
+      "phone": "required",
+      "url": "required"
     },
     "UNIVERSITY": {
       "geometry": {
@@ -221,9 +262,8 @@
         ]
       },
       "lockLevel": 4,
-      "requirePhone": true,
-      "requireUrl": true,
-      "requireOpeningHours": false
+      "phone": "required",
+      "url": "required"
     },
     "HOSPITAL_MEDICAL_CARE": {
       "geometry": {
@@ -234,9 +274,8 @@
         ]
       },
       "lockLevel": 4,
-      "requirePhone": true,
-      "requireUrl": true,
-      "requireOpeningHours": false
+      "phone": "required",
+      "url": "required"
     },
     "PHARMACY": {
       "geometry": {
@@ -247,9 +286,8 @@
         ]
       },
       "lockLevel": 3,
-      "requirePhone": true,
-      "requireUrl": false,
-      "requireOpeningHours": true
+      "phone": "required",
+      "openingHours": "required"
     },
     "BANK_FINANCIAL": {
       "geometry": {
@@ -260,9 +298,9 @@
         ]
       },
       "lockLevel": 3,
-      "requirePhone": true,
-      "requireUrl": true,
-      "requireOpeningHours": true
+      "phone": "required",
+      "url": "required",
+      "openingHours": "required"
     },
     "SUPERMARKET_GROCERY": {
       "geometry": {
@@ -273,9 +311,10 @@
         ]
       },
       "lockLevel": 3,
-      "requirePhone": true,
-      "requireUrl": true,
-      "requireOpeningHours": true
+      "phone": "required",
+      "url": "required",
+      "openingHours": "required",
+      "externalProviderIds": "required"
     },
     "SHOPPING_CENTER": {
       "geometry": {
@@ -286,9 +325,9 @@
         ]
       },
       "lockLevel": 3,
-      "requirePhone": true,
-      "requireUrl": true,
-      "requireOpeningHours": true
+      "phone": "required",
+      "url": "required",
+      "openingHours": "required"
     },
     "MUSEUM": {
       "geometry": {
@@ -299,9 +338,9 @@
         ]
       },
       "lockLevel": 3,
-      "requirePhone": true,
-      "requireUrl": true,
-      "requireOpeningHours": true
+      "phone": "required",
+      "url": "required",
+      "openingHours": "required"
     },
     "MOVIE_THEATER": {
       "geometry": {
@@ -312,9 +351,8 @@
         ]
       },
       "lockLevel": 3,
-      "requirePhone": true,
-      "requireUrl": true,
-      "requireOpeningHours": false
+      "phone": "required",
+      "url": "required"
     },
     "STADIUM_ARENA": {
       "geometry": {
@@ -325,9 +363,8 @@
         ]
       },
       "lockLevel": 3,
-      "requirePhone": true,
-      "requireUrl": true,
-      "requireOpeningHours": false
+      "phone": "required",
+      "url": "required"
     },
     "PARK": {
       "geometry": {
@@ -337,10 +374,7 @@
           "polygon"
         ]
       },
-      "lockLevel": 2,
-      "requirePhone": false,
-      "requireUrl": false,
-      "requireOpeningHours": false
+      "lockLevel": 2
     },
     "BEACH": {
       "geometry": {
@@ -350,10 +384,7 @@
           "polygon"
         ]
       },
-      "lockLevel": 2,
-      "requirePhone": false,
-      "requireUrl": false,
-      "requireOpeningHours": false
+      "lockLevel": 2
     },
     "FOREST": {
       "geometry": {
@@ -363,10 +394,7 @@
           "polygon"
         ]
       },
-      "lockLevel": 2,
-      "requirePhone": false,
-      "requireUrl": false,
-      "requireOpeningHours": false
+      "lockLevel": 2
     }
   }
 }

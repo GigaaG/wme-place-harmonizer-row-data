@@ -1,19 +1,28 @@
-name: Add chain
-description: Request to add a new chain definition
-title: "[Add Chain]: "
-labels: ["data", "chains"]
+name: New chain request
+description: Submit a new chain in a format that maps cleanly to chain-dataset.schema.json
+title: "[New Chain]: "
+labels:
+  - new-chain
 body:
   - type: markdown
     attributes:
       value: |
-        Use this form to request a new chain definition.
+        Use this form to propose a new chain for the ROW data repository.
+
+        Before submitting:
+        - use a unique chain id
+        - keep canonicalName canonical
+        - do not repeat canonicalName in aliases
+        - only use valid SDK/reference values
+        - keep geometry to point or polygon
+        - keep lockLevel between 1 and 6
 
   - type: input
     id: chain_id
     attributes:
-      label: Chain ID
-      description: A unique, lowercase identifier for the chain
-      placeholder: mcdonalds
+      label: Chain id
+      description: Lowercase, stable identifier, e.g. burger-king
+      placeholder: burger-king
     validations:
       required: true
 
@@ -21,8 +30,8 @@ body:
     id: canonical_name
     attributes:
       label: Canonical name
-      description: The exact canonical display name
-      placeholder: McDonald's
+      description: Official chain name as it should appear in data
+      placeholder: Burger King
     validations:
       required: true
 
@@ -30,39 +39,157 @@ body:
     id: aliases
     attributes:
       label: Aliases
-      description: One alias per line
+      description: One alias per line. Do not repeat the canonical name.
       placeholder: |
-        mc donalds
-        mcdonalds
-        mcdonald's
+        burger king
+        bk
     validations:
       required: false
 
   - type: textarea
-    id: categories
+    id: regex
     attributes:
-      label: Categories
-      description: One category per line
+      label: Regex patterns
+      description: One regex per line. Keep these narrow and non-duplicative.
+      placeholder: |
+        ^burger\s?king$
+        ^bk$
+    validations:
+      required: false
+
+  - type: textarea
+    id: categories_any_of
+    attributes:
+      label: Match categories (categoryAnyOf)
+      description: One category per line. Use WME category ids.
       placeholder: |
         FAST_FOOD
         RESTAURANT
     validations:
       required: false
 
-  - type: dropdown
-    id: geometry
+  - type: input
+    id: standard_name
     attributes:
-      label: Recommended geometry
+      label: Standard.name
+      description: Usually same as canonical name
+      placeholder: Burger King
+    validations:
+      required: false
+
+  - type: input
+    id: standard_brand
+    attributes:
+      label: Standard.brand
+      description: Brand value if applicable
+      placeholder: Burger King
+    validations:
+      required: false
+
+  - type: textarea
+    id: standard_categories
+    attributes:
+      label: Standard.categories
+      description: One category per line
+      placeholder: |
+        FAST_FOOD
+    validations:
+      required: false
+
+  - type: textarea
+    id: standard_aliases
+    attributes:
+      label: Standard.aliases
+      description: One alias per line for standardized output
+      placeholder: |
+        BK
+    validations:
+      required: false
+
+  - type: textarea
+    id: optional_aliases
+    attributes:
+      label: Standard.optionalAliases
+      description: One optional alias per line
+      placeholder: |
+        Burger King Drive
+    validations:
+      required: false
+
+  - type: textarea
+    id: standard_services
+    attributes:
+      label: Standard.services
+      description: One service per line. Use only valid reference values.
+      placeholder: |
+        DINE_IN
+        TAKE_AWAY
+    validations:
+      required: false
+
+  - type: dropdown
+    id: geometry_required
+    attributes:
+      label: Policy.geometry.required
+      description: Only choose if geometry is mandatory
       options:
+        - ""
         - point
         - polygon
     validations:
       required: false
 
-  - type: textarea
-    id: required_services
+  - type: dropdown
+    id: geometry_recommended
     attributes:
-      label: Required services
+      label: Policy.geometry.recommended
+      options:
+        - ""
+        - point
+        - polygon
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: geometry_allowed
+    attributes:
+      label: Policy.geometry.allowed
+      description: Select all allowed geometry values
+      options:
+        - label: point
+        - label: polygon
+    validations:
+      required: false
+
+  - type: dropdown
+    id: lock_level
+    attributes:
+      label: Policy.lockLevel
+      options:
+        - "1"
+        - "2"
+        - "3"
+        - "4"
+        - "5"
+        - "6"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: city_in_name
+    attributes:
+      label: Policy.cityInVenueName
+      options:
+        - ""
+        - "true"
+        - "false"
+    validations:
+      required: false
+
+  - type: textarea
+    id: services_required
+    attributes:
+      label: Policy.services.required
       description: One service per line
       placeholder: |
         DRIVETHROUGH
@@ -70,28 +197,168 @@ body:
       required: false
 
   - type: textarea
-    id: recommended_services
+    id: services_recommended
     attributes:
-      label: Recommended services
+      label: Policy.services.recommended
       description: One service per line
       placeholder: |
-        TAKE_AWAY
         DINE_IN
     validations:
       required: false
 
   - type: textarea
-    id: forbidden_services
+    id: services_discouraged
     attributes:
-      label: Forbidden services
+      label: Policy.services.discouraged
       description: One service per line
     validations:
       required: false
 
   - type: textarea
-    id: notes
+    id: services_forbidden
     attributes:
-      label: Notes / motivation
-      description: Why should this chain be added?
+      label: Policy.services.forbidden
+      description: One service per line
+    validations:
+      required: false
+
+  - type: dropdown
+    id: phone_policy
+    attributes:
+      label: Policy.phone
+      options:
+        - ""
+        - required
+        - recommended
+        - discouraged
+        - forbidden
+    validations:
+      required: false
+
+  - type: dropdown
+    id: url_policy
+    attributes:
+      label: Policy.url
+      options:
+        - ""
+        - required
+        - recommended
+        - discouraged
+        - forbidden
+    validations:
+      required: false
+
+  - type: dropdown
+    id: hours_policy
+    attributes:
+      label: Policy.openingHours
+      options:
+        - ""
+        - required
+        - recommended
+        - discouraged
+        - forbidden
+    validations:
+      required: false
+
+  - type: dropdown
+    id: external_provider_ids_policy
+    attributes:
+      label: Policy.externalProviderIds
+      options:
+        - ""
+        - required
+        - recommended
+        - discouraged
+        - forbidden
+    validations:
+      required: false
+
+  - type: dropdown
+    id: address_city
+    attributes:
+      label: Policy.address.city
+      options:
+        - ""
+        - required
+        - recommended
+        - discouraged
+        - forbidden
+    validations:
+      required: false
+
+  - type: dropdown
+    id: address_street
+    attributes:
+      label: Policy.address.street
+      options:
+        - ""
+        - required
+        - recommended
+        - discouraged
+        - forbidden
+    validations:
+      required: false
+
+  - type: dropdown
+    id: address_house_number
+    attributes:
+      label: Policy.address.houseNumber
+      options:
+        - ""
+        - required
+        - recommended
+        - discouraged
+        - forbidden
+    validations:
+      required: false
+
+  - type: dropdown
+    id: scope_level
+    attributes:
+      label: Scope level
+      description: Keep aligned with repository usage
+      options:
+        - global
+        - country
+        - community
+    validations:
+      required: true
+
+  - type: input
+    id: scope_country
+    attributes:
+      label: Scope country code
+      description: Optional, for country/community scoped chains
+      placeholder: NL
+    validations:
+      required: false
+
+  - type: input
+    id: scope_community
+    attributes:
+      label: Scope community id
+      description: Optional, for community scoped chains
+      placeholder: nl-randstad
+    validations:
+      required: false
+
+  - type: textarea
+    id: meta_description
+    attributes:
+      label: Meta description
+      placeholder: Chain definition for Burger King in ROW
+    validations:
+      required: false
+
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Evidence / references
+      description: Links or notes proving naming, categories, services, and policy choices
+      placeholder: |
+        - official site:
+        - WME examples:
+        - local community rule:
     validations:
       required: true
