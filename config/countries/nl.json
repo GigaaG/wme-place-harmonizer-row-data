@@ -28,5 +28,234 @@
       "enabled": true,
       "severity": "error"
     }
+  }, {
+  "categoryStandards": {
+
+    "CAR_WASH": {
+      "geometry": { "recommended": "point", "allowed": ["point","polygon"] },
+      "lockLevel": 2,
+      "requirePhone": false,
+      "requireUrl": false,
+      "requireOpeningHours": true,
+      "requireExternalProvider": false
+    },
+
+    "CHARGING_STATION": {
+      "geometry": { "recommended": "point", "allowed": ["point","polygon"] },
+      "lockLevel": 3,
+      "requirePhone": false,
+      "requireUrl": false,
+      "requireOpeningHours": false,
+      "requireExternalProvider": false,
+      "services": {
+        "recommended": ["EV_CHARGING"]
+      }
+    },
+
+    "GAS_STATION": {
+      "geometry": { "recommended": "point", "allowed": ["point","polygon"] },
+      "lockLevel": 3,
+      "requirePhone": true,
+      "requireUrl": false,
+      "requireOpeningHours": true,
+      "services": {
+        "recommended": ["RESTROOMS"]
+      }
+    },
+
+    "RESTAURANT": {
+      "geometry": { "recommended": "point", "allowed": ["point","polygon"] },
+      "lockLevel": 3,
+      "requirePhone": true,
+      "requireUrl": false,
+      "requireOpeningHours": true,
+      "services": {
+        "recommended": ["RESTROOMS"]
+      }
+    },
+
+    "FAST_FOOD": {
+      "geometry": { "recommended": "point", "allowed": ["point","polygon"] },
+      "lockLevel": 3,
+      "requirePhone": true,
+      "requireUrl": false,
+      "requireOpeningHours": true
+    },
+
+    "CAFE": {
+      "geometry": { "recommended": "point", "allowed": ["point","polygon"] },
+      "lockLevel": 2,
+      "requirePhone": false,
+      "requireUrl": false,
+      "requireOpeningHours": true
+    },
+
+    "BAR": {
+      "geometry": { "recommended": "point", "allowed": ["point","polygon"] },
+      "lockLevel": 2,
+      "requirePhone": false,
+      "requireUrl": false,
+      "requireOpeningHours": true
+    },
+
+    "BAKERY": {
+      "geometry": { "recommended": "point", "allowed": ["point","polygon"] },
+      "lockLevel": 2,
+      "requirePhone": false,
+      "requireUrl": false,
+      "requireOpeningHours": true
+    },
+
+    "HOTEL": {
+      "geometry": { "recommended": "point", "allowed": ["point","polygon"] },
+      "lockLevel": 3,
+      "requirePhone": true,
+      "requireUrl": true,
+      "requireOpeningHours": false
+    },
+
+    "HOSTEL": {
+      "geometry": { "recommended": "point", "allowed": ["point","polygon"] },
+      "lockLevel": 3,
+      "requirePhone": true,
+      "requireUrl": true,
+      "requireOpeningHours": false
+    },
+
+    "PARKING_LOT": {
+      "geometry": { "recommended": "point", "allowed": ["point","polygon"] },
+      "lockLevel": 2,
+      "requirePhone": false,
+      "requireUrl": false,
+      "requireOpeningHours": false
+    },
+
+    "AIRPORT": {
+      "geometry": { "recommended": "polygon", "allowed": ["point","polygon"] },
+      "lockLevel": 4,
+      "requirePhone": true,
+      "requireUrl": true,
+      "requireOpeningHours": false
+    },
+
+    "TRAIN_STATION": {
+      "geometry": { "recommended": "polygon", "allowed": ["point","polygon"] },
+      "lockLevel": 3,
+      "requirePhone": false,
+      "requireUrl": true,
+      "requireOpeningHours": false
+    },
+
+    "BUS_STATION": {
+      "geometry": { "recommended": "point", "allowed": ["point","polygon"] },
+      "lockLevel": 2,
+      "requirePhone": false,
+      "requireUrl": false,
+      "requireOpeningHours": false
+    },
+
+    "SCHOOL": {
+      "geometry": { "recommended": "polygon", "allowed": ["point","polygon"] },
+      "lockLevel": 3,
+      "requirePhone": true,
+      "requireUrl": true,
+      "requireOpeningHours": false
+    },
+
+    "UNIVERSITY": {
+      "geometry": { "recommended": "polygon", "allowed": ["point","polygon"] },
+      "lockLevel": 4,
+      "requirePhone": true,
+      "requireUrl": true,
+      "requireOpeningHours": false
+    },
+
+    "HOSPITAL_MEDICAL_CARE": {
+      "geometry": { "recommended": "polygon", "allowed": ["point","polygon"] },
+      "lockLevel": 4,
+      "requirePhone": true,
+      "requireUrl": true,
+      "requireOpeningHours": false
+    },
+
+    "PHARMACY": {
+      "geometry": { "recommended": "point", "allowed": ["point","polygon"] },
+      "lockLevel": 3,
+      "requirePhone": true,
+      "requireUrl": false,
+      "requireOpeningHours": true
+    },
+
+    "BANK_FINANCIAL": {
+      "geometry": { "recommended": "point", "allowed": ["point","polygon"] },
+      "lockLevel": 3,
+      "requirePhone": true,
+      "requireUrl": true,
+      "requireOpeningHours": true
+    },
+
+    "SUPERMARKET_GROCERY": {
+      "geometry": { "recommended": "point", "allowed": ["point","polygon"] },
+      "lockLevel": 3,
+      "requirePhone": true,
+      "requireUrl": true,
+      "requireOpeningHours": true
+    },
+
+    "SHOPPING_CENTER": {
+      "geometry": { "recommended": "polygon", "allowed": ["point","polygon"] },
+      "lockLevel": 3,
+      "requirePhone": true,
+      "requireUrl": true,
+      "requireOpeningHours": true
+    },
+
+    "MUSEUM": {
+      "geometry": { "recommended": "polygon", "allowed": ["point","polygon"] },
+      "lockLevel": 3,
+      "requirePhone": true,
+      "requireUrl": true,
+      "requireOpeningHours": true
+    },
+
+    "MOVIE_THEATER": {
+      "geometry": { "recommended": "point", "allowed": ["point","polygon"] },
+      "lockLevel": 3,
+      "requirePhone": true,
+      "requireUrl": true,
+      "requireOpeningHours": false
+    },
+
+    "STADIUM_ARENA": {
+      "geometry": { "recommended": "polygon", "allowed": ["point","polygon"] },
+      "lockLevel": 3,
+      "requirePhone": true,
+      "requireUrl": true,
+      "requireOpeningHours": false
+    },
+
+    "PARK": {
+      "geometry": { "recommended": "polygon", "allowed": ["point","polygon"] },
+      "lockLevel": 2,
+      "requirePhone": false,
+      "requireUrl": false,
+      "requireOpeningHours": false
+    },
+
+    "BEACH": {
+      "geometry": { "recommended": "polygon", "allowed": ["point","polygon"] },
+      "lockLevel": 2,
+      "requirePhone": false,
+      "requireUrl": false,
+      "requireOpeningHours": false
+    },
+
+    "FOREST": {
+      "geometry": { "recommended": "polygon", "allowed": ["point","polygon"] },
+      "lockLevel": 2,
+      "requirePhone": false,
+      "requireUrl": false,
+      "requireOpeningHours": false
+    }
   }
 }
