@@ -197,9 +197,8 @@
     },
     "PARKING_LOT": {
       "geometry": {
-        "recommended": "point",
+        "recommended": "polygon",
         "allowed": [
-          "point",
           "polygon"
         ]
       },
