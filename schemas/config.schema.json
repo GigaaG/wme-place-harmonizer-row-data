@@ -63,7 +63,9 @@
             }
           },
           "lockLevel": {
-            "type": "number"
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 6
           },
           "requirePhone": {
             "type": "boolean"

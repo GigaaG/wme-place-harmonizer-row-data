@@ -34,6 +34,7 @@ The validation pipeline currently checks:
 - config schema
 - allowed geometry values
 - allowed service values
+- allowed lock level values
 - duplicate chain ids
 - duplicate aliases within a chain
 - duplicate regex values within a chain
@@ -137,6 +138,7 @@ The validation must pass before opening or merging a pull request.
 
 - geometry values
 - service values
+- lock level values
 - supported severity values
 
 ### Consistency validation
@@ -189,6 +191,7 @@ Chain data belongs in:
 - do not duplicate the canonical name in aliases
 - only use valid SDK service values
 - keep geometry values to point or polygon
+- keep lockLevel values between 1 and 6
 
 ## Adding or editing config data
 
@@ -212,6 +215,7 @@ Config data belongs in:
 - use valid severity values
 - use valid geometry values
 - use valid service values
+- use lockLevel values between 1 and 6
 - keep structures aligned with the schema
 
 ## Locales

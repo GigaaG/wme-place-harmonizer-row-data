@@ -40,17 +40,36 @@ function validateServices(services, allowedServices, context) {
   }
 }
 
+function validateLockLevel(lockLevel, allowedLockLevels, context) {
+  if (lockLevel === undefined) {
+    return;
+  }
+
+  if (!allowedLockLevels.includes(lockLevel)) {
+    error(
+      `Invalid lockLevel "${lockLevel}" in ${context}. Allowed values: ${allowedLockLevels.join(", ")}`
+    );
+  }
+}
+
 function validateChains() {
   const sdkValues = loadJSON("reference/sdk-values.json");
   const chains = loadJSON("chains/global.json");
 
   const allowedServices = sdkValues.services;
+  const allowedLockLevels = sdkValues.lockLevels;
 
   if (!chains.items) {
     error("chains/global.json missing items array");
   }
 
   for (const chain of chains.items) {
+    validateLockLevel(
+      chain.policy?.lockLevel,
+      allowedLockLevels,
+      `chain ${chain.id} policy.lockLevel`
+    );
+
     if (chain.policy?.services) {
       const services = chain.policy.services;
 
@@ -109,6 +128,7 @@ function validateConfig() {
 
   const allowedGeometry = sdkValues.geometry;
   const allowedServices = sdkValues.services;
+  const allowedLockLevels = sdkValues.lockLevels;
   const allowedSeverity = ["info", "warning", "error"];
 
   if (config.rules) {
@@ -123,6 +143,12 @@ function validateConfig() {
 
   if (config.categoryStandards) {
     for (const [categoryId, standard] of Object.entries(config.categoryStandards)) {
+      validateLockLevel(
+        standard.lockLevel,
+        allowedLockLevels,
+        `config.categoryStandards.${categoryId}.lockLevel`
+      );
+
       if (standard.geometry) {
         if (
           standard.geometry.required &&
