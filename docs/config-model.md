@@ -280,6 +280,23 @@ Een category standard kan onder andere bevatten:
 - `externalProviderIds`
 - `services`
 - `address`
+- `editorNotes`
+
+### Editor notes
+
+`editorNotes` bevat vrije informatieve teksten die als info-cards in de feature-editor getoond mogen worden wanneer de categorie op de place matcht.
+
+Gebruik dit voor redactionele context of lokale mapping-uitleg die geen warning of error moet zijn.
+
+Voorbeeld:
+
+```json
+{
+  "editorNotes": [
+    "Bus stops are not considered bus stations in the Netherlands."
+  ]
+}
+```
 
 ### Geometry standaard
 
