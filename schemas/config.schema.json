@@ -48,6 +48,27 @@
             }
           },
           "additionalProperties": true
+        },
+        "url": {
+          "type": "object",
+          "properties": {
+            "validationPatterns": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "validationExamples": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "validationMessage": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": true
         }
       },
       "additionalProperties": true

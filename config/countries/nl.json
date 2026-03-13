@@ -34,6 +34,18 @@
         "0900 8844"
       ],
       "validationMessage": "Phone number must use Dutch international format (+31 AA BBBBBBB, +31 AAA BBBBBB or +31 6 CBBBBBBB), or another country code in international +CC ... format, unless it is an 0800 or 0900 service number"
+    },
+    "url": {
+      "validationPatterns": [
+        "^(?:[A-Za-z0-9](?:[A-Za-z0-9-]{0,61}[A-Za-z0-9])?\\.)+[A-Za-z]{2,63}(?::\\d{1,5})?(?:[/?#][^\\s]*)?$"
+      ],
+      "validationExamples": [
+        "www.casca.nl",
+        "tickets.example.nl",
+        "example.com/en",
+        "info.example.co.uk?lang=en"
+      ],
+      "validationMessage": "URL must omit http:// or https:// and use only the hostname, optionally with a port, path, query or fragment"
     }
   },
   "rules": {

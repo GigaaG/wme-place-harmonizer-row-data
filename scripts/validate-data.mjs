@@ -137,6 +137,29 @@ function validatePhoneFormatting(phoneFormatting, context) {
   }
 }
 
+function validateUrlFormatting(urlFormatting, context) {
+  if (!urlFormatting) {
+    return;
+  }
+
+  if (urlFormatting.validationPatterns) {
+    for (const pattern of urlFormatting.validationPatterns) {
+      try {
+        new RegExp(pattern);
+      } catch (validationError) {
+        const message =
+          validationError instanceof Error
+            ? validationError.message
+            : "Unknown regex error";
+
+        error(
+          `Invalid regex "${pattern}" in ${context}.validationPatterns: ${message}`
+        );
+      }
+    }
+  }
+}
+
 function validateChainDataset(chains, context, sdkValues) {
   const allowedServices = sdkValues.services;
   const allowedLockLevels = sdkValues.lockLevels;
@@ -235,6 +258,7 @@ function validateConfigObject(config, context, sdkValues) {
   const allowedSeverity = ["info", "warning", "error"];
 
   validatePhoneFormatting(config.formatting?.phone, `${context}.formatting.phone`);
+  validateUrlFormatting(config.formatting?.url, `${context}.formatting.url`);
 
   if (config.rules) {
     for (const [ruleId, rule] of Object.entries(config.rules)) {
