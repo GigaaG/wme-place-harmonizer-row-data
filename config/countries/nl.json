@@ -63,6 +63,23 @@
     }
   },
   "categoryStandards": {
+    "CAR_SERVICES": {
+      "geometry": {
+        "recommended": "point",
+        "allowed": [
+          "point",
+          "polygon"
+        ]
+      },
+      "lockLevel": 1,
+      "address": {
+        "city": "required",
+        "street": "required",
+        "houseNumber": "required"
+      },
+      "openingHours": "required",
+      "externalProviderIds": "required"
+    },
     "CAR_WASH": {
       "geometry": {
         "recommended": "point",
@@ -71,7 +88,7 @@
           "polygon"
         ]
       },
-      "lockLevel": 2,
+      "lockLevel": 1,
       "address": {
         "city": "required",
         "street": "required",
@@ -98,20 +115,26 @@
     },
     "GAS_STATION": {
       "geometry": {
-        "recommended": "point",
+        "required": "polygon",
         "allowed": [
-          "point",
           "polygon"
         ]
       },
       "lockLevel": 3,
-      "phone": "required",
+      "address": {
+        "city": "required",
+        "street": "required",
+        "houseNumber": "required"
+      },
+      "phone": "recommended",
       "services": {
         "recommended": [
-          "RESTROOMS"
+          "RESTROOMS",
+          "CREDIT_CARDS"
         ]
       },
-      "openingHours": "required"
+      "openingHours": "required",
+      "externalProviderIds": "required"
     },
     "RESTAURANT": {
       "geometry": {
@@ -210,15 +233,18 @@
     },
     "AIRPORT": {
       "geometry": {
-        "recommended": "polygon",
-        "allowed": [
-          "point",
-          "polygon"
-        ]
+        "required": "polygon"
       },
-      "lockLevel": 4,
+      "lockLevel": 3,
       "phone": "required",
-      "url": "required"
+      "url": "required",
+      "address": {
+        "city": "required",
+        "street": "recommended",
+        "houseNumber": "recommended"
+      },
+      "openingHours": "required",
+      "externalProviderIds": "required"
     },
     "TRAIN_STATION": {
       "geometry": {
