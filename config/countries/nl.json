@@ -265,7 +265,10 @@
           "polygon"
         ]
       },
-      "lockLevel": 2
+      "lockLevel": 2,
+      "editorNotes": [
+        "Bus stops are not considered bus stations in the Netherlands."
+      ]
     },
     "SCHOOL": {
       "geometry": {

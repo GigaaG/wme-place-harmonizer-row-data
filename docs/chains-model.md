@@ -85,13 +85,14 @@ Het chainmodel is gebaseerd op de volgende principes:
 
 ## 5. Opbouw van een chain record
 
-Een chain record bestaat conceptueel uit vijf delen:
+Een chain record bestaat conceptueel uit zes delen:
 
 - Identiteit
 - Match-definitie
 - Standaardisatie
 - Policy
 - Scope
+- Editor notes
 
 ## 6. Identiteit
 
@@ -522,6 +523,7 @@ Een chain record bevat idealiter:
 - match
 - standard
 - policy
+- editorNotes
 - scope
 - meta
 
@@ -553,6 +555,9 @@ Een chain record bevat idealiter:
     "geometry": "point",
     "lockLevel": 3
   },
+  "editorNotes": [
+    "Shared parking with nearby businesses is common for this chain."
+  ],
   "scope": {
     "level": "global"
   },

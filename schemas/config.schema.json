@@ -178,6 +178,12 @@
                 "enum": ["required", "recommended", "discouraged", "forbidden"]
               }
             }
+          },
+          "editorNotes": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
           }
         }
       }
