@@ -127,6 +127,12 @@
                 }
               }
             }
+          },
+          "editorNotes": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
           }
         }
       }
