@@ -48,7 +48,9 @@
                 "type": "object"
               },
               "lockLevel": {
-                "type": "number"
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 6
               },
               "services": {
                 "type": "object"

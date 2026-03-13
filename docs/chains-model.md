@@ -205,7 +205,7 @@ Binnen `standard` kunnen onder andere voorkomen:
 Binnen `policy` kunnen bijvoorbeeld voorkomen:
 
 - `geometry`
-- `lockLevel`
+- `lockLevel` (integer 1 t/m 6)
 - `requirePhone`
 - `requireUrl`
 - `requireOpeningHours`
@@ -337,7 +337,7 @@ Hiermee kan een community afspreken dat:
 Binnen policy kunnen bijvoorbeeld voorkomen:
 
 - geometry
-- lockLevel
+- lockLevel (integer 1 t/m 6)
 - requirePhone
 - requireUrl
 - aliasPolicy

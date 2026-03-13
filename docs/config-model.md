@@ -270,7 +270,7 @@ Voorbeelden:
 
 Een category standard kan onder andere bevatten:
 - `geometry`
-- `lockLevel`
+- `lockLevel` (integer 1 t/m 6)
 - `requirePhone`
 - `requireUrl`
 - `requireOpeningHours`

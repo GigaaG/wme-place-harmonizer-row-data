@@ -17,6 +17,14 @@ const sdkValues = {
     "WIFI",
     "DELIVERIES"
   ],
+  lockLevels: [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6
+  ],
   mainCategories: [
     "FOOD_AND_DRINK",
     "PARKING_LOT",
