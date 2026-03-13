@@ -310,7 +310,8 @@
       "lockLevel": 3,
       "phone": "required",
       "url": "required",
-      "openingHours": "required"
+      "openingHours": "required",
+      "externalProviderIds": "required"
     },
     "SHOPPING_CENTER": {
       "geometry": {
