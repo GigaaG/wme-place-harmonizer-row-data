@@ -45,6 +45,10 @@
       "enabled": true,
       "severity": "warning"
     },
+    "cityInVenueName": {
+      "enabled": false,
+      "severity": "warning"
+    },
     "phoneValidation": {
       "enabled": true,
       "severity": "warning"

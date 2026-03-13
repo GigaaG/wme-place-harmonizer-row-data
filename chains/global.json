@@ -27,14 +27,13 @@
         ],
         "description": "",
         "url": "",
-        "aliases": [],
-        "optionalAliases": [],
+        "aliases": ["MCD"],
+        "optionalAliases": ["McDrive", "McCafe"],
         "services": [
           "TAKEAWAY",
           "DINE_IN"
         ],
-        "openingHoursTemplate": null,
-        "externalProviderIds": []
+        "openingHoursTemplate": null
       },
       "policy": {
         "geometry": {

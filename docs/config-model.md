@@ -421,7 +421,24 @@ Het formatting object bevat formatteringsconventies die per land of community ku
   "formatting": {
     "phone": {
       "countryCode": "+31",
-      "formatStyle": "national"
+      "formatStyle": "international",
+      "validationPatterns": [
+        "^\\+31 [1-57]\\d \\d{7}$",
+        "^\\+31 [1-57]\\d{2} \\d{6}$",
+        "^\\+31 6 \\d{8}$",
+        "^\\+(?!31)\\d{1,3}(?: \\d{1,14})+$",
+        "^0800 \\d+$",
+        "^0900 \\d+$"
+      ],
+      "validationExamples": [
+        "+31 20 1234567",
+        "+31 113 123456",
+        "+31 6 12345678",
+        "+32 3 123 45 67",
+        "0800 1234",
+        "0900 8844"
+      ],
+      "validationMessage": "Phone number must use Dutch international format (+31 AA BBBBBBB, +31 AAA BBBBBB or +31 6 CBBBBBBB), or another country code in international +CC ... format, unless it is an 0800 or 0900 service number"
     }
   }
 }
@@ -430,6 +447,16 @@ Het formatting object bevat formatteringsconventies die per land of community ku
 ### 9.3 Richtlijn
 
 formatting beschrijft hoe iets er idealiter uit moet zien, niet of een wijziging automatisch toegepast moet worden.
+
+Voor `formatting.phone` kunnen in v1 onder meer de volgende velden gebruikt worden:
+
+- `countryCode`
+- `formatStyle`
+- `validationPatterns`
+- `validationExamples`
+- `validationMessage`
+
+`validationPatterns` bevat regex-patronen die bepalen welke telefoonnotaties in de actieve country/community-config als geldig gelden. `validationExamples` en `validationMessage` geven de runtime extra context voor de foutmelding wanneer een nummer aanwezig is maar niet aan de lokale formatteringsregel voldoet.
 
 ## 10. matching
 
@@ -679,7 +706,24 @@ Voorkom kunstmatige tussenlagen zonder inhoudelijke meerwaarde.
   "formatting": {
     "phone": {
       "countryCode": "+31",
-      "formatStyle": "national"
+      "formatStyle": "international",
+      "validationPatterns": [
+        "^\\+31 [1-57]\\d \\d{7}$",
+        "^\\+31 [1-57]\\d{2} \\d{6}$",
+        "^\\+31 6 \\d{8}$",
+        "^\\+(?!31)\\d{1,3}(?: \\d{1,14})+$",
+        "^0800 \\d+$",
+        "^0900 \\d+$"
+      ],
+      "validationExamples": [
+        "+31 20 1234567",
+        "+31 113 123456",
+        "+31 6 12345678",
+        "+32 3 123 45 67",
+        "0800 1234",
+        "0900 8844"
+      ],
+      "validationMessage": "Phone number must use Dutch international format (+31 AA BBBBBBB, +31 AAA BBBBBB or +31 6 CBBBBBBB), or another country code in international +CC ... format, unless it is an 0800 or 0900 service number"
     }
   }
 }
