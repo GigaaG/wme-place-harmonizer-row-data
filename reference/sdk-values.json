@@ -4,14 +4,29 @@
     "polygon"
   ],
   "services": [
+    "AIR_CONDITIONING",
+    "CREDIT_CARDS",
+    "CURBSIDE_PICKUP",
+    "DELIVERIES",
     "DRIVETHROUGH",
-    "TAKE_AWAY",
-    "DINE_IN",
-    "EV_CHARGING",
-    "RESTROOMS",
+    "OUTSIDE_SEATING",
     "PARKING_FOR_CUSTOMERS",
-    "WIFI",
-    "DELIVERIES"
+    "RESERVATIONS",
+    "RESTROOMS",
+    "TAKE_AWAY",
+    "VALLET_SERVICE",
+    "WHEELCHAIR_ACCESSIBLE",
+    "WI_FI",
+    "AIRPORT_SHUTTLE",
+    "CARPOOL_PARKING",
+    "CAR_WASH",
+    "COVERED",
+    "DISABILITY_PARKING",
+    "EV_CHARGING_STATION",
+    "ON_SITE_ATTENDANT",
+    "PARK_AND_RIDE",
+    "SECURITY",
+    "VALET"
   ],
   "lockLevels": [
     1,
@@ -22,9 +37,17 @@
     6
   ],
   "mainCategories": [
+    "CAR_SERVICES",
+    "CRISIS_LOCATIONS",
+    "CULTURE_AND_ENTERTAINEMENT",
     "FOOD_AND_DRINK",
+    "LODGING",
+    "NATURAL_FEATURES",
+    "OTHER",
+    "OUTDOORS",
     "PARKING_LOT",
     "PROFESSIONAL_AND_PUBLIC",
-    "SHOPPING_AND_SERVICES"
+    "SHOPPING_AND_SERVICES",
+    "TRANSPORTATION"
   ]
 }
