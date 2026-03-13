@@ -45,7 +45,24 @@
             "type": "object",
             "properties": {
               "geometry": {
-                "type": "object"
+                "type": "object",
+                "properties": {
+                  "required": {
+                    "type": "string",
+                    "enum": ["point", "polygon"]
+                  },
+                  "recommended": {
+                    "type": "string",
+                    "enum": ["point", "polygon"]
+                  },
+                  "allowed": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "enum": ["point", "polygon"]
+                    }
+                  }
+                }
               },
               "lockLevel": {
                 "type": "integer",
@@ -53,13 +70,50 @@
                 "maximum": 6
               },
               "services": {
-                "type": "object"
+                "type": "object",
+                "properties": {
+                  "required": {
+                    "type": "array",
+                    "items": { "type": "string" }
+                  },
+                  "recommended": {
+                    "type": "array",
+                    "items": { "type": "string" }
+                  },
+                  "forbidden": {
+                    "type": "array",
+                    "items": { "type": "string" }
+                  }
+                }
               },
-              "phone": {
-                "type": "object"
+              "requirePhone": {
+                "type": "boolean"
               },
-              "url": {
-                "type": "object"
+              "requireUrl": {
+                "type": "boolean"
+              },
+              "requireOpeningHours": {
+                "type": "boolean"
+              },
+              "requireExternalProvider": {
+                "type": "boolean"
+              },
+              "address": {
+                "type": "object",
+                "properties": {
+                  "city": {
+                    "type": "string",
+                    "enum": ["required", "recommended", "discouraged", "forbidden"]
+                  },
+                  "street": {
+                    "type": "string",
+                    "enum": ["required", "recommended", "discouraged", "forbidden"]
+                  },
+                  "houseNumber": {
+                    "type": "string",
+                    "enum": ["required", "recommended", "discouraged", "forbidden"]
+                  }
+                }
               }
             }
           }

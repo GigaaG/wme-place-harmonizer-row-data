@@ -265,8 +265,11 @@ Het `categoryStandards` object bevat standaarden per placecategorie, ook wanneer
 Voorbeelden:
 - `OFFICES`
 - `FAST_FOOD`
+- `CAR_WASH`
 - `PARKING_LOT`
 - `GAS_STATION`
+
+Runtime normaliseert SDK-categorywaarden naar canonieke sleutels in uppercase snake case voordat `categoryStandards` wordt geraadpleegd. Configkeys moeten daarom de canonieke categorie-id gebruiken, bijvoorbeeld `CAR_WASH`.
 
 Een category standard kan onder andere bevatten:
 - `geometry`
@@ -276,6 +279,7 @@ Een category standard kan onder andere bevatten:
 - `requireOpeningHours`
 - `requireExternalProvider`
 - `services`
+- `address`
 
 ### Geometry standaard
 
@@ -310,6 +314,30 @@ Voorbeeld:
     "required": [],
     "recommended": [],
     "forbidden": ["DRIVE_THROUGH"]
+  }
+}
+```
+
+### Address standaard
+
+Address ondersteunt per veld de volgende waarden:
+- `required`
+- `recommended`
+- `discouraged`
+- `forbidden`
+
+Ondersteunde addressvelden:
+- `city`
+- `street`
+- `houseNumber`
+
+Voorbeeld:
+```json
+{
+  "address": {
+    "city": "required",
+    "street": "required",
+    "houseNumber": "recommended"
   }
 }
 ```

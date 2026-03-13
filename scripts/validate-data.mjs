@@ -1,4 +1,5 @@
 import fs from "node:fs";
+import path from "node:path";
 import Ajv from "ajv";
 
 const ajv = new Ajv({ allErrors: true });
@@ -8,7 +9,7 @@ function loadJSON(filePath) {
 }
 
 function error(message) {
-  console.error("❌", message);
+  console.error("ERROR", message);
   process.exit(1);
 }
 
@@ -20,10 +21,29 @@ function validateSchema(filePath, schemaPath) {
   const valid = validate(data);
 
   if (!valid) {
-    console.error(`❌ Schema validation failed for ${filePath}`);
+    console.error(`Schema validation failed for ${filePath}`);
     console.error(validate.errors);
     process.exit(1);
   }
+}
+
+function listJsonFiles(rootDir) {
+  const files = [];
+
+  for (const entry of fs.readdirSync(rootDir, { withFileTypes: true })) {
+    const fullPath = path.join(rootDir, entry.name);
+
+    if (entry.isDirectory()) {
+      files.push(...listJsonFiles(fullPath));
+      continue;
+    }
+
+    if (entry.isFile() && entry.name.endsWith(".json")) {
+      files.push(fullPath);
+    }
+  }
+
+  return files.sort();
 }
 
 function validateServices(services, allowedServices, context) {
@@ -52,22 +72,46 @@ function validateLockLevel(lockLevel, allowedLockLevels, context) {
   }
 }
 
-function validateChains() {
-  const sdkValues = loadJSON("reference/sdk-values.json");
-  const chains = loadJSON("chains/global.json");
+function validateAddressPolicy(addressPolicy, context) {
+  if (!addressPolicy) {
+    return;
+  }
 
+  const allowedRequirements = [
+    "required",
+    "recommended",
+    "discouraged",
+    "forbidden"
+  ];
+
+  for (const fieldName of ["city", "street", "houseNumber"]) {
+    const requirement = addressPolicy[fieldName];
+
+    if (requirement === undefined) {
+      continue;
+    }
+
+    if (!allowedRequirements.includes(requirement)) {
+      error(
+        `Invalid address requirement "${requirement}" in ${context}.${fieldName}. Allowed values: ${allowedRequirements.join(", ")}`
+      );
+    }
+  }
+}
+
+function validateChainDataset(chains, context, sdkValues) {
   const allowedServices = sdkValues.services;
   const allowedLockLevels = sdkValues.lockLevels;
 
-  if (!chains.items) {
-    error("chains/global.json missing items array");
+  if (!Array.isArray(chains.items)) {
+    error(`${context} missing items array`);
   }
 
   for (const chain of chains.items) {
     validateLockLevel(
       chain.policy?.lockLevel,
       allowedLockLevels,
-      `chain ${chain.id} policy.lockLevel`
+      `${context} chain ${chain.id} policy.lockLevel`
     );
 
     if (chain.policy?.services) {
@@ -76,21 +120,26 @@ function validateChains() {
       validateServices(
         services.required,
         allowedServices,
-        `chain ${chain.id} policy.services.required`
+        `${context} chain ${chain.id} policy.services.required`
       );
 
       validateServices(
         services.recommended,
         allowedServices,
-        `chain ${chain.id} policy.services.recommended`
+        `${context} chain ${chain.id} policy.services.recommended`
       );
 
       validateServices(
         services.forbidden,
         allowedServices,
-        `chain ${chain.id} policy.services.forbidden`
+        `${context} chain ${chain.id} policy.services.forbidden`
       );
     }
+
+    validateAddressPolicy(
+      chain.policy?.address,
+      `${context} chain ${chain.id} policy.address`
+    );
   }
 }
 
@@ -109,10 +158,7 @@ function validateManifest() {
       error(`Manifest entry for ${fileKey} must be an object`);
     }
 
-    if (
-      "required" in fileInfo &&
-      typeof fileInfo.required !== "boolean"
-    ) {
+    if ("required" in fileInfo && typeof fileInfo.required !== "boolean") {
       error(`Manifest entry for ${fileKey} has non-boolean 'required' value`);
     }
 
@@ -122,10 +168,7 @@ function validateManifest() {
   }
 }
 
-function validateConfig() {
-  const sdkValues = loadJSON("reference/sdk-values.json");
-  const config = loadJSON("config/global.json");
-
+function validateConfigObject(config, context, sdkValues) {
   const allowedGeometry = sdkValues.geometry;
   const allowedServices = sdkValues.services;
   const allowedLockLevels = sdkValues.lockLevels;
@@ -135,7 +178,7 @@ function validateConfig() {
     for (const [ruleId, rule] of Object.entries(config.rules)) {
       if (!allowedSeverity.includes(rule.severity)) {
         error(
-          `Invalid severity "${rule.severity}" in config.rules.${ruleId}. Allowed values: ${allowedSeverity.join(", ")}`
+          `Invalid severity "${rule.severity}" in ${context}.rules.${ruleId}. Allowed values: ${allowedSeverity.join(", ")}`
         );
       }
     }
@@ -146,7 +189,7 @@ function validateConfig() {
       validateLockLevel(
         standard.lockLevel,
         allowedLockLevels,
-        `config.categoryStandards.${categoryId}.lockLevel`
+        `${context}.categoryStandards.${categoryId}.lockLevel`
       );
 
       if (standard.geometry) {
@@ -155,7 +198,7 @@ function validateConfig() {
           !allowedGeometry.includes(standard.geometry.required)
         ) {
           error(
-            `Invalid geometry "${standard.geometry.required}" in config.categoryStandards.${categoryId}.geometry.required`
+            `Invalid geometry "${standard.geometry.required}" in ${context}.categoryStandards.${categoryId}.geometry.required`
           );
         }
 
@@ -164,7 +207,7 @@ function validateConfig() {
           !allowedGeometry.includes(standard.geometry.recommended)
         ) {
           error(
-            `Invalid geometry "${standard.geometry.recommended}" in config.categoryStandards.${categoryId}.geometry.recommended`
+            `Invalid geometry "${standard.geometry.recommended}" in ${context}.categoryStandards.${categoryId}.geometry.recommended`
           );
         }
 
@@ -172,7 +215,7 @@ function validateConfig() {
           for (const geometry of standard.geometry.allowed) {
             if (!allowedGeometry.includes(geometry)) {
               error(
-                `Invalid geometry "${geometry}" in config.categoryStandards.${categoryId}.geometry.allowed`
+                `Invalid geometry "${geometry}" in ${context}.categoryStandards.${categoryId}.geometry.allowed`
               );
             }
           }
@@ -183,21 +226,26 @@ function validateConfig() {
         validateServices(
           standard.services.required,
           allowedServices,
-          `config.categoryStandards.${categoryId}.services.required`
+          `${context}.categoryStandards.${categoryId}.services.required`
         );
 
         validateServices(
           standard.services.recommended,
           allowedServices,
-          `config.categoryStandards.${categoryId}.services.recommended`
+          `${context}.categoryStandards.${categoryId}.services.recommended`
         );
 
         validateServices(
           standard.services.forbidden,
           allowedServices,
-          `config.categoryStandards.${categoryId}.services.forbidden`
+          `${context}.categoryStandards.${categoryId}.services.forbidden`
         );
       }
+
+      validateAddressPolicy(
+        standard.address,
+        `${context}.categoryStandards.${categoryId}.address`
+      );
     }
   }
 }
@@ -214,18 +262,16 @@ function ensureUniqueStrings(values, context) {
   }
 }
 
-function validateChainDuplicates() {
-  const chains = loadJSON("chains/global.json");
-
+function validateChainDuplicates(chains, context) {
   if (!Array.isArray(chains.items)) {
-    error("chains/global.json missing items array");
+    error(`${context} missing items array`);
   }
 
   const seenChainIds = new Set();
 
   for (const chain of chains.items) {
     if (seenChainIds.has(chain.id)) {
-      error(`Duplicate chain id "${chain.id}" found in chains/global.json`);
+      error(`Duplicate chain id "${chain.id}" found in ${context}`);
     }
 
     seenChainIds.add(chain.id);
@@ -233,14 +279,14 @@ function validateChainDuplicates() {
     const aliases = chain.match?.aliases ?? [];
     ensureUniqueStrings(
       aliases,
-      `chain ${chain.id} match.aliases`
+      `${context} chain ${chain.id} match.aliases`
     );
 
     const canonicalName = chain.canonicalName?.trim().toLowerCase();
     for (const alias of aliases) {
       if (alias.trim().toLowerCase() === canonicalName) {
         error(
-          `Alias "${alias}" in chain ${chain.id} duplicates canonicalName "${chain.canonicalName}"`
+          `Alias "${alias}" in ${context} chain ${chain.id} duplicates canonicalName "${chain.canonicalName}"`
         );
       }
     }
@@ -248,31 +294,32 @@ function validateChainDuplicates() {
     const regexList = chain.match?.regex ?? [];
     ensureUniqueStrings(
       regexList,
-      `chain ${chain.id} match.regex`
+      `${context} chain ${chain.id} match.regex`
     );
   }
 }
 
 function runValidation() {
+  const sdkValues = loadJSON("reference/sdk-values.json");
+
   console.log("Running data validation...");
 
   validateManifest();
 
-  validateSchema(
-    "config/global.json",
-    "schemas/config.schema.json"
-  );
+  for (const filePath of listJsonFiles("config")) {
+    validateSchema(filePath, "schemas/config.schema.json");
+    validateConfigObject(loadJSON(filePath), filePath, sdkValues);
+  }
 
-  validateSchema(
-    "chains/global.json",
-    "schemas/chain-dataset.schema.json"
-  );
+  for (const filePath of listJsonFiles("chains")) {
+    const dataset = loadJSON(filePath);
 
-  validateConfig();
-  validateChains();
-  validateChainDuplicates();
+    validateSchema(filePath, "schemas/chain-dataset.schema.json");
+    validateChainDataset(dataset, filePath, sdkValues);
+    validateChainDuplicates(dataset, filePath);
+  }
 
-  console.log("✅ Data validation passed");
+  console.log("OK Data validation passed");
 }
 
 runValidation();

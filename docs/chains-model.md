@@ -211,6 +211,7 @@ Binnen `policy` kunnen bijvoorbeeld voorkomen:
 - `requireOpeningHours`
 - `requireExternalProvider`
 - `services`
+- `address`
 - `aliasPolicy`
 - `urlPolicy`
 - `phonePolicy`
@@ -252,6 +253,31 @@ Voorbeeld:
     "required": [],
     "recommended": ["DRIVE_THROUGH"],
     "forbidden": []
+  }
+}
+```
+
+Address policy ondersteunt per veld:
+
+- `required`
+- `recommended`
+- `discouraged`
+- `forbidden`
+
+Ondersteunde velden:
+
+- `city`
+- `street`
+- `houseNumber`
+
+Voorbeeld:
+
+```json
+{
+  "address": {
+    "city": "required",
+    "street": "required",
+    "houseNumber": "forbidden"
   }
 }
 ```
@@ -340,6 +366,7 @@ Binnen policy kunnen bijvoorbeeld voorkomen:
 - lockLevel (integer 1 t/m 6)
 - requirePhone
 - requireUrl
+- address
 - aliasPolicy
 - urlPolicy
 - phonePolicy

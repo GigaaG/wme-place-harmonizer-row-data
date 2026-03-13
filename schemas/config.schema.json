@@ -95,6 +95,23 @@
                 "items": { "type": "string" }
               }
             }
+          },
+          "address": {
+            "type": "object",
+            "properties": {
+              "city": {
+                "type": "string",
+                "enum": ["required", "recommended", "discouraged", "forbidden"]
+              },
+              "street": {
+                "type": "string",
+                "enum": ["required", "recommended", "discouraged", "forbidden"]
+              },
+              "houseNumber": {
+                "type": "string",
+                "enum": ["required", "recommended", "discouraged", "forbidden"]
+              }
+            }
           }
         }
       }
