@@ -37,7 +37,7 @@
       "requirePhone": false,
       "requireUrl": false,
       "requireOpeningHours": true,
-      "requireExternalProvider": false
+      "requireExternalProvider": true
     },
 
     "CHARGING_STATION": {
