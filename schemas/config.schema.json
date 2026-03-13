@@ -18,6 +18,40 @@
     "defaults": {
       "type": "object"
     },
+    "formatting": {
+      "type": "object",
+      "properties": {
+        "phone": {
+          "type": "object",
+          "properties": {
+            "countryCode": {
+              "type": "string"
+            },
+            "formatStyle": {
+              "type": "string",
+              "enum": ["national", "international"]
+            },
+            "validationPatterns": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "validationExamples": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "validationMessage": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": true
+        }
+      },
+      "additionalProperties": true
+    },
     "highlighting": {
       "type": "object"
     },

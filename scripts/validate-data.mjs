@@ -103,6 +103,40 @@ function validateAddressPolicy(addressPolicy, context) {
   }
 }
 
+function validatePhoneFormatting(phoneFormatting, context) {
+  if (!phoneFormatting) {
+    return;
+  }
+
+  const allowedFormatStyles = ["national", "international"];
+
+  if (
+    phoneFormatting.formatStyle !== undefined &&
+    !allowedFormatStyles.includes(phoneFormatting.formatStyle)
+  ) {
+    error(
+      `Invalid formatStyle "${phoneFormatting.formatStyle}" in ${context}.formatStyle. Allowed values: ${allowedFormatStyles.join(", ")}`
+    );
+  }
+
+  if (phoneFormatting.validationPatterns) {
+    for (const pattern of phoneFormatting.validationPatterns) {
+      try {
+        new RegExp(pattern);
+      } catch (validationError) {
+        const message =
+          validationError instanceof Error
+            ? validationError.message
+            : "Unknown regex error";
+
+        error(
+          `Invalid regex "${pattern}" in ${context}.validationPatterns: ${message}`
+        );
+      }
+    }
+  }
+}
+
 function validateChainDataset(chains, context, sdkValues) {
   const allowedServices = sdkValues.services;
   const allowedLockLevels = sdkValues.lockLevels;
@@ -199,6 +233,8 @@ function validateConfigObject(config, context, sdkValues) {
   const allowedServices = sdkValues.services;
   const allowedLockLevels = sdkValues.lockLevels;
   const allowedSeverity = ["info", "warning", "error"];
+
+  validatePhoneFormatting(config.formatting?.phone, `${context}.formatting.phone`);
 
   if (config.rules) {
     for (const [ruleId, rule] of Object.entries(config.rules)) {
