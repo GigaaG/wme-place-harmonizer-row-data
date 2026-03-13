@@ -279,6 +279,7 @@ Een category standard kan onder andere bevatten:
 - `requireOpeningHours`
 - `requireExternalProvider`
 - `services`
+- `address`
 
 ### Geometry standaard
 
@@ -313,6 +314,30 @@ Voorbeeld:
     "required": [],
     "recommended": [],
     "forbidden": ["DRIVE_THROUGH"]
+  }
+}
+```
+
+### Address standaard
+
+Address ondersteunt per veld de volgende waarden:
+- `required`
+- `recommended`
+- `discouraged`
+- `forbidden`
+
+Ondersteunde addressvelden:
+- `city`
+- `street`
+- `houseNumber`
+
+Voorbeeld:
+```json
+{
+  "address": {
+    "city": "required",
+    "street": "required",
+    "houseNumber": "recommended"
   }
 }
 ```

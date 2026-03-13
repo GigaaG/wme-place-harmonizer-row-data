@@ -37,7 +37,12 @@
       "requirePhone": false,
       "requireUrl": false,
       "requireOpeningHours": true,
-      "requireExternalProvider": true
+      "requireExternalProvider": true,
+      "address": {
+        "city": "required",
+        "street": "required",
+        "houseNumber": "required"
+      }
     },
 
     "CHARGING_STATION": {

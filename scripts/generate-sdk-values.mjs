@@ -12,6 +12,7 @@ const sdkValues = {
     "DRIVETHROUGH",
     "TAKE_AWAY",
     "DINE_IN",
+    "EV_CHARGING",
     "RESTROOMS",
     "PARKING_FOR_CUSTOMERS",
     "WIFI",
