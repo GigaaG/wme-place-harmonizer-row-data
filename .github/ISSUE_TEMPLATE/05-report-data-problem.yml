@@ -1,0 +1,56 @@
+name: Report data problem
+description: Report a problem in existing data
+title: "[Data Problem]: "
+labels: ["bug", "data"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use this form to report incorrect or broken data.
+
+  - type: dropdown
+    id: data_area
+    attributes:
+      label: Data area
+      options:
+        - manifest
+        - config
+        - chains
+        - exceptions
+        - locales
+        - validation
+    validations:
+      required: true
+
+  - type: input
+    id: file_path
+    attributes:
+      label: File path
+      description: Which file appears to have the problem?
+      placeholder: chains/global.json
+    validations:
+      required: false
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem description
+      description: What is wrong?
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected_behavior
+    attributes:
+      label: Expected behavior
+      description: What should happen instead?
+    validations:
+      required: false
+
+  - type: textarea
+    id: additional_context
+    attributes:
+      label: Additional context
+      description: Add screenshots, examples or related PRs/issues if useful
+    validations:
+      required: false

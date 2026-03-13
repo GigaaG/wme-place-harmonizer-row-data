@@ -1,0 +1,65 @@
+name: Update config
+description: Request changes to an existing config file
+title: "[Update Config]: "
+labels: ["data", "config"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use this form to request changes to an existing config file.
+
+  - type: dropdown
+    id: config_type
+    attributes:
+      label: Config type
+      options:
+        - global
+        - country
+        - community
+        - state
+    validations:
+      required: true
+
+  - type: input
+    id: config_id
+    attributes:
+      label: Config identifier
+      description: Example global, nl, dach, us-ca
+      placeholder: global
+    validations:
+      required: true
+
+  - type: textarea
+    id: current_behavior
+    attributes:
+      label: Current behavior
+      description: What does the current config do now?
+    validations:
+      required: true
+
+  - type: textarea
+    id: requested_change
+    attributes:
+      label: Requested change
+      description: Describe the exact config change that is needed
+    validations:
+      required: true
+
+  - type: textarea
+    id: affected_fields
+    attributes:
+      label: Affected fields
+      description: List the fields that should be updated
+      placeholder: |
+        rules.phoneValidation.severity
+        categoryStandards.OFFICES.geometry.recommended
+    validations:
+      required: false
+
+  - type: textarea
+    id: rationale
+    attributes:
+      label: Reason / source
+      description: Why is this config update needed?
+    validations:
+      required: true

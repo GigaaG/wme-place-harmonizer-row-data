@@ -1,0 +1,54 @@
+name: Add config
+description: Request to add a new config file
+title: "[Add Config]: "
+labels: ["data", "config"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use this form to request a new config file.
+
+  - type: dropdown
+    id: config_type
+    attributes:
+      label: Config type
+      options:
+        - country
+        - community
+        - state
+    validations:
+      required: true
+
+  - type: input
+    id: config_id
+    attributes:
+      label: Config identifier
+      description: Example nl, dach, us-ca
+      placeholder: nl
+    validations:
+      required: true
+
+  - type: input
+    id: parent
+    attributes:
+      label: Parent config
+      description: If applicable, which config should this extend?
+      placeholder: global
+    validations:
+      required: false
+
+  - type: textarea
+    id: requested_rules
+    attributes:
+      label: Requested rules / standards
+      description: Describe the most important rules that should be included
+    validations:
+      required: true
+
+  - type: textarea
+    id: rationale
+    attributes:
+      label: Reason / source
+      description: Why is this config needed?
+    validations:
+      required: true

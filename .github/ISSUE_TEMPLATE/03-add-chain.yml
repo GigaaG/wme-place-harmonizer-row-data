@@ -1,0 +1,97 @@
+name: Add chain
+description: Request to add a new chain definition
+title: "[Add Chain]: "
+labels: ["data", "chains"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use this form to request a new chain definition.
+
+  - type: input
+    id: chain_id
+    attributes:
+      label: Chain ID
+      description: A unique, lowercase identifier for the chain
+      placeholder: mcdonalds
+    validations:
+      required: true
+
+  - type: input
+    id: canonical_name
+    attributes:
+      label: Canonical name
+      description: The exact canonical display name
+      placeholder: McDonald's
+    validations:
+      required: true
+
+  - type: textarea
+    id: aliases
+    attributes:
+      label: Aliases
+      description: One alias per line
+      placeholder: |
+        mc donalds
+        mcdonalds
+        mcdonald's
+    validations:
+      required: false
+
+  - type: textarea
+    id: categories
+    attributes:
+      label: Categories
+      description: One category per line
+      placeholder: |
+        FAST_FOOD
+        RESTAURANT
+    validations:
+      required: false
+
+  - type: dropdown
+    id: geometry
+    attributes:
+      label: Recommended geometry
+      options:
+        - point
+        - polygon
+    validations:
+      required: false
+
+  - type: textarea
+    id: required_services
+    attributes:
+      label: Required services
+      description: One service per line
+      placeholder: |
+        DRIVETHROUGH
+    validations:
+      required: false
+
+  - type: textarea
+    id: recommended_services
+    attributes:
+      label: Recommended services
+      description: One service per line
+      placeholder: |
+        TAKE_AWAY
+        DINE_IN
+    validations:
+      required: false
+
+  - type: textarea
+    id: forbidden_services
+    attributes:
+      label: Forbidden services
+      description: One service per line
+    validations:
+      required: false
+
+  - type: textarea
+    id: notes
+    attributes:
+      label: Notes / motivation
+      description: Why should this chain be added?
+    validations:
+      required: true

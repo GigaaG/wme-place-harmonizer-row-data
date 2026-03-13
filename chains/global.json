@@ -28,7 +28,7 @@
           "recommended": "point",
           "allowed": ["point", "polygon"]
         },
-        "lockLevel": 3,
+        "lockLevel": 5,
         "requirePhone": true,
         "requireUrl": true,
         "requireOpeningHours": false,
