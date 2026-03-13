@@ -59,7 +59,7 @@
     },
     "lockLevelRecommendation": {
       "enabled": true,
-      "severity": "info"
+      "severity": "warning"
     },
     "residentialCleanup": {
       "enabled": true,
