@@ -49,6 +49,10 @@
     }
   },
   "rules": {
+    "cityInVenueName": {
+      "enabled": true,
+      "severity": "warning"
+    },
     "phoneValidation": {
       "enabled": true,
       "severity": "warning"
