@@ -30,8 +30,7 @@
         "aliases": ["MCD"],
         "optionalAliases": ["McDrive", "McCafe"],
         "services": [
-          "TAKEAWAY",
-          "DINE_IN"
+          "TAKE_AWAY"
         ],
         "openingHoursTemplate": null
       },

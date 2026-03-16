@@ -169,6 +169,12 @@ function validateChainDataset(chains, context, sdkValues) {
   }
 
   for (const chain of chains.items) {
+    validateServices(
+      chain.standard?.services,
+      allowedServices,
+      `${context} chain ${chain.id} standard.services`
+    );
+
     validateLockLevel(
       chain.policy?.lockLevel,
       allowedLockLevels,
@@ -218,6 +224,10 @@ function validateChainDataset(chains, context, sdkValues) {
     validatePresenceRequirement(
       chain.policy?.openingHours,
       `${context} chain ${chain.id} policy.openingHours`
+    );
+    validatePresenceRequirement(
+      chain.policy?.navigationPoints,
+      `${context} chain ${chain.id} policy.navigationPoints`
     );
     validatePresenceRequirement(
       chain.policy?.externalProviderIds,
@@ -349,6 +359,10 @@ function validateConfigObject(config, context, sdkValues) {
       validatePresenceRequirement(
         standard.openingHours,
         `${context}.categoryStandards.${categoryId}.openingHours`
+      );
+      validatePresenceRequirement(
+        standard.navigationPoints,
+        `${context}.categoryStandards.${categoryId}.navigationPoints`
       );
       validatePresenceRequirement(
         standard.externalProviderIds,

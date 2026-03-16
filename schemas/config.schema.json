@@ -137,6 +137,10 @@
             "type": "string",
             "enum": ["required", "recommended", "discouraged", "forbidden"]
           },
+          "navigationPoints": {
+            "type": "string",
+            "enum": ["required", "recommended", "discouraged", "forbidden"]
+          },
           "externalProviderIds": {
             "type": "string",
             "enum": ["required", "recommended", "discouraged", "forbidden"]

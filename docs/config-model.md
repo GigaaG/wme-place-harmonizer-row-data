@@ -274,9 +274,11 @@ Runtime normaliseert SDK-categorywaarden naar canonieke sleutels in uppercase sn
 Een category standard kan onder andere bevatten:
 - `geometry`
 - `lockLevel` (integer 1 t/m 6)
+- `cityInVenueName` (boolean override voor de globale rule)
 - `phone`
 - `url`
 - `openingHours`
+- `navigationPoints`
 - `externalProviderIds`
 - `services`
 - `address`
@@ -337,9 +339,24 @@ Voorbeeld:
 }
 ```
 
+### City-in-venue-name override
+
+`cityInVenueName` op category- of chain-policy-niveau overschrijft de globale `rules.cityInVenueName.enabled` instelling voor die specifieke policy.
+
+Gebruik:
+- `true` om de check voor die categorie of chain expliciet aan te zetten
+- `false` om de check voor die categorie of chain expliciet uit te zetten
+
+Voorbeeld:
+```json
+{
+  "cityInVenueName": false
+}
+```
+
 ### Presence-velden
 
-Phone, URL, openingHours en externalProviderIds ondersteunen dezelfde presence-waarden als address:
+Phone, URL, openingHours, navigationPoints en externalProviderIds ondersteunen dezelfde presence-waarden als address:
 - `required`
 - `recommended`
 - `discouraged`
@@ -347,12 +364,15 @@ Phone, URL, openingHours en externalProviderIds ondersteunen dezelfde presence-w
 
 Als een presence-veld ontbreekt in de policy, dan wordt er geen presence-regel afgedwongen.
 
+`navigationPoints` wordt alleen gecontroleerd voor polygon-venues. Bij `required` of `recommended` betekent dit dat er minimaal een navigation point op de venue aanwezig moet zijn.
+
 Voorbeeld:
 ```json
 {
   "phone": "required",
   "url": "recommended",
   "openingHours": "required",
+  "navigationPoints": "required",
   "externalProviderIds": "forbidden"
 }
 ```

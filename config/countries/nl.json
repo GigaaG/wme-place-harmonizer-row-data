@@ -108,7 +108,7 @@
       "lockLevel": 3,
       "services": {
         "recommended": [
-          "EV_CHARGING"
+          "EV_CHARGING_STATION"
         ]
       },
       "externalProviderIds": "forbidden"
@@ -255,6 +255,7 @@
         ]
       },
       "lockLevel": 3,
+      "cityInVenueName": false,
       "url": "required"
     },
     "BUS_STATION": {

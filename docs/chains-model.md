@@ -210,6 +210,7 @@ Binnen `policy` kunnen bijvoorbeeld voorkomen:
 - `phone`
 - `url`
 - `openingHours`
+- `navigationPoints`
 - `externalProviderIds`
 - `services`
 - `address`
@@ -285,7 +286,7 @@ Voorbeeld:
 }
 ```
 
-Phone-, URL-, openingHours- en externalProviderIds-policy ondersteunen dezelfde presence-waarden:
+Phone-, URL-, openingHours-, navigationPoints- en externalProviderIds-policy ondersteunen dezelfde presence-waarden:
 
 - `required`
 - `recommended`
@@ -294,6 +295,8 @@ Phone-, URL-, openingHours- en externalProviderIds-policy ondersteunen dezelfde 
 
 Als een presence-veld ontbreekt in policy, wordt er geen presence-regel afgedwongen.
 
+`navigationPoints` wordt alleen gevalideerd voor polygon-venues. Bij `required` of `recommended` betekent dit dat er minimaal een navigation point op de venue aanwezig moet zijn.
+
 Voorbeeld:
 
 ```json
@@ -301,6 +304,7 @@ Voorbeeld:
   "phone": "required",
   "url": "recommended",
   "openingHours": "required",
+  "navigationPoints": "required",
   "externalProviderIds": "forbidden"
 }
 ```
@@ -343,6 +347,7 @@ JSON-voorbeeldrecord:
     },
     "lockLevel": 3,
     "phone": "required",
+    "navigationPoints": "required",
     "externalProviderIds": "forbidden",
     "services": {
       "required": [],
@@ -388,6 +393,7 @@ Binnen policy kunnen bijvoorbeeld voorkomen:
 - lockLevel (integer 1 t/m 6)
 - phone
 - url
+- navigationPoints
 - address
 - aliasPolicy
 - urlPolicy
@@ -401,7 +407,8 @@ Binnen policy kunnen bijvoorbeeld voorkomen:
   "policy": {
     "geometry": "point",
     "lockLevel": 3,
-    "phone": "required"
+    "phone": "required",
+    "navigationPoints": "required"
   }
 }
 ```
