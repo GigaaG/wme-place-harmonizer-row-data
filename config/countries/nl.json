@@ -987,6 +987,9 @@
           "polygon"
         ]
       },
+      "openingHours": "recommended",
+      "phone": "recommended",
+      "url": "recommended",
       "externalProviderIds": "required"
     },
     "ARTS_AND_CRAFTS": {
