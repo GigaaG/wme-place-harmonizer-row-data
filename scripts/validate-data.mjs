@@ -226,6 +226,10 @@ function validateChainDataset(chains, context, sdkValues) {
       `${context} chain ${chain.id} policy.openingHours`
     );
     validatePresenceRequirement(
+      chain.policy?.navigationPoints,
+      `${context} chain ${chain.id} policy.navigationPoints`
+    );
+    validatePresenceRequirement(
       chain.policy?.externalProviderIds,
       `${context} chain ${chain.id} policy.externalProviderIds`
     );
@@ -355,6 +359,10 @@ function validateConfigObject(config, context, sdkValues) {
       validatePresenceRequirement(
         standard.openingHours,
         `${context}.categoryStandards.${categoryId}.openingHours`
+      );
+      validatePresenceRequirement(
+        standard.navigationPoints,
+        `${context}.categoryStandards.${categoryId}.navigationPoints`
       );
       validatePresenceRequirement(
         standard.externalProviderIds,

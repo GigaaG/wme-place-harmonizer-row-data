@@ -278,6 +278,7 @@ Een category standard kan onder andere bevatten:
 - `phone`
 - `url`
 - `openingHours`
+- `navigationPoints`
 - `externalProviderIds`
 - `services`
 - `address`
@@ -355,7 +356,7 @@ Voorbeeld:
 
 ### Presence-velden
 
-Phone, URL, openingHours en externalProviderIds ondersteunen dezelfde presence-waarden als address:
+Phone, URL, openingHours, navigationPoints en externalProviderIds ondersteunen dezelfde presence-waarden als address:
 - `required`
 - `recommended`
 - `discouraged`
@@ -363,12 +364,15 @@ Phone, URL, openingHours en externalProviderIds ondersteunen dezelfde presence-w
 
 Als een presence-veld ontbreekt in de policy, dan wordt er geen presence-regel afgedwongen.
 
+`navigationPoints` wordt alleen gecontroleerd voor polygon-venues. Bij `required` of `recommended` betekent dit dat er minimaal een navigation point op de venue aanwezig moet zijn.
+
 Voorbeeld:
 ```json
 {
   "phone": "required",
   "url": "recommended",
   "openingHours": "required",
+  "navigationPoints": "required",
   "externalProviderIds": "forbidden"
 }
 ```
