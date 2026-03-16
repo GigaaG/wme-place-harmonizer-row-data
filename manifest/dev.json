@@ -1,8 +1,8 @@
 {
   "channel": "dev",
-  "version": "0.1.0-dev",
-  "generatedAt": "2026-03-13T00:00:00Z",
-  "dataRevision": "2026-03-13-url-format-dev",
+  "version": "0.1.1-dev",
+  "generatedAt": "2026-03-16T20:00:00Z",
+  "dataRevision": "2026-03-16-closed-beta",
   "files": {
     "config/global.json": {
       "required": true
