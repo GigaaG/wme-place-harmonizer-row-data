@@ -107,8 +107,7 @@
         ]
       },
       "lockLevel": 3,
-      "externalProviderIds": "recommended",
-      "phone": "discouraged"
+      "externalProviderIds": "recommended"
     },
     "GARAGE_AUTOMOTIVE_SHOP": {
       "geometry": {
