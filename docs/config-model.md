@@ -274,6 +274,7 @@ Runtime normaliseert SDK-categorywaarden naar canonieke sleutels in uppercase sn
 Een category standard kan onder andere bevatten:
 - `geometry`
 - `lockLevel` (integer 1 t/m 6)
+- `cityInVenueName` (boolean override voor de globale rule)
 - `phone`
 - `url`
 - `openingHours`
@@ -334,6 +335,21 @@ Voorbeeld:
     "discouraged": [],
     "forbidden": ["DRIVE_THROUGH"]
   }
+}
+```
+
+### City-in-venue-name override
+
+`cityInVenueName` op category- of chain-policy-niveau overschrijft de globale `rules.cityInVenueName.enabled` instelling voor die specifieke policy.
+
+Gebruik:
+- `true` om de check voor die categorie of chain expliciet aan te zetten
+- `false` om de check voor die categorie of chain expliciet uit te zetten
+
+Voorbeeld:
+```json
+{
+  "cityInVenueName": false
 }
 ```
 

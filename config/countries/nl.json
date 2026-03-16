@@ -229,6 +229,7 @@
         ]
       },
       "lockLevel": 3,
+      "cityInVenueName": false,
       "url": "required"
     },
     "BUS_STATION": {
