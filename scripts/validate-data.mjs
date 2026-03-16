@@ -66,6 +66,20 @@ function validateServices(services, allowedServices, context) {
   }
 }
 
+function validateCategories(categories, allowedCategories, context) {
+  if (!categories) {
+    return;
+  }
+
+  for (const category of categories) {
+    if (!allowedCategories.includes(category)) {
+      error(
+        `Invalid category "${category}" in ${context}. Allowed values: ${allowedCategories.join(", ")}`
+      );
+    }
+  }
+}
+
 function validateLockLevel(lockLevel, allowedLockLevels, context) {
   if (lockLevel === undefined) {
     return;
@@ -161,6 +175,7 @@ function validateUrlFormatting(urlFormatting, context) {
 }
 
 function validateChainDataset(chains, context, sdkValues) {
+  const allowedCategories = sdkValues.categoryIds;
   const allowedServices = sdkValues.services;
   const allowedLockLevels = sdkValues.lockLevels;
 
@@ -169,6 +184,18 @@ function validateChainDataset(chains, context, sdkValues) {
   }
 
   for (const chain of chains.items) {
+    validateCategories(
+      chain.match?.categoryAnyOf,
+      allowedCategories,
+      `${context} chain ${chain.id} match.categoryAnyOf`
+    );
+
+    validateCategories(
+      chain.standard?.categories,
+      allowedCategories,
+      `${context} chain ${chain.id} standard.categories`
+    );
+
     validateServices(
       chain.standard?.services,
       allowedServices,
@@ -262,6 +289,7 @@ function validateManifest() {
 }
 
 function validateConfigObject(config, context, sdkValues) {
+  const allowedCategories = sdkValues.categoryIds;
   const allowedGeometry = sdkValues.geometry;
   const allowedServices = sdkValues.services;
   const allowedLockLevels = sdkValues.lockLevels;
@@ -282,6 +310,12 @@ function validateConfigObject(config, context, sdkValues) {
 
   if (config.categoryStandards) {
     for (const [categoryId, standard] of Object.entries(config.categoryStandards)) {
+      validateCategories(
+        [categoryId],
+        allowedCategories,
+        `${context}.categoryStandards`
+      );
+
       validateLockLevel(
         standard.lockLevel,
         allowedLockLevels,

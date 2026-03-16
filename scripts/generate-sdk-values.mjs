@@ -111,6 +111,43 @@ function extractDeclaredConstValues(sourceText, constName) {
   return values;
 }
 
+function extractDeclaredConstStringValue(sourceText, constName) {
+  const declarationPattern = new RegExp(
+    `export declare const ${constName} = "([A-Z0-9_]+)";`
+  );
+  const match = sourceText.match(declarationPattern);
+
+  if (!match) {
+    throw new Error(`Could not find SDK declaration for ${constName}`);
+  }
+
+  return match[1];
+}
+
+function extractVenueSubcategories(sourceText) {
+  const declarationPattern = /declare const VENUE_SUBCATEGORIES: \{([\s\S]*?)\n\};/;
+  const match = sourceText.match(declarationPattern);
+
+  if (!match) {
+    throw new Error("Could not find SDK declaration for VENUE_SUBCATEGORIES");
+  }
+
+  const categoryMap = {};
+
+  for (const groupMatch of match[1].matchAll(/\s+([A-Z_]+):\s+([\s\S]*?);/g)) {
+    const mainCategory = groupMatch[1];
+    const subcategories = [];
+
+    for (const valueMatch of groupMatch[2].matchAll(/"([A-Z0-9_]+)"/g)) {
+      subcategories.push(valueMatch[1]);
+    }
+
+    categoryMap[mainCategory] = subcategories;
+  }
+
+  return categoryMap;
+}
+
 function extractVenueGeometryValues(sourceText) {
   const venueMatch = sourceText.match(
     /export interface Venue\s*\{[\s\S]*?\bgeometry:\s*([A-Za-z0-9_$]+)\s*\|\s*([A-Za-z0-9_$]+);/
@@ -142,6 +179,22 @@ async function main() {
   const archiveBuffer = await loadArchiveBuffer(archiveSource);
   const typingsSource = extractTarEntry(archiveBuffer, "package/index.d.ts")
     .toString("utf8");
+  const mainCategories = extractDeclaredConstValues(
+    typingsSource,
+    "VENUE_MAIN_CATEGORY"
+  );
+  const subCategoriesByMainCategory = extractVenueSubcategories(typingsSource);
+  const residentialCategory = extractDeclaredConstStringValue(
+    typingsSource,
+    "VENUE_RESIDENTIAL"
+  );
+  const categoryIds = [
+    ...mainCategories,
+    ...mainCategories.flatMap(
+      (mainCategory) => subCategoriesByMainCategory[mainCategory] ?? []
+    ),
+    residentialCategory
+  ];
 
   const sdkValues = {
     geometry: extractVenueGeometryValues(typingsSource),
@@ -150,7 +203,9 @@ async function main() {
       ...extractDeclaredConstValues(typingsSource, "PARKING_LOT_SERVICE_TYPE")
     ].filter((value, index, values) => values.indexOf(value) === index),
     lockLevels: extractLockLevels(typingsSource),
-    mainCategories: extractDeclaredConstValues(typingsSource, "VENUE_MAIN_CATEGORY")
+    mainCategories,
+    subCategoriesByMainCategory,
+    categoryIds
   };
 
   fs.mkdirSync(path.dirname(outputPath), { recursive: true });

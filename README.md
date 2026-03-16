@@ -139,6 +139,7 @@ The validation must pass before opening or merging a pull request.
 - geometry values
 - service values
 - lock level values
+- category ids
 - supported severity values
 
 ### Consistency validation

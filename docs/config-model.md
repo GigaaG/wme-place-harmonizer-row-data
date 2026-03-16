@@ -271,6 +271,8 @@ Voorbeelden:
 
 Runtime normaliseert SDK-categorywaarden naar canonieke sleutels in uppercase snake case voordat `categoryStandards` wordt geraadpleegd. Configkeys moeten daarom de canonieke categorie-id gebruiken, bijvoorbeeld `CAR_WASH`.
 
+Beschikbare categorie-ids volgen de officiële WME SDK `VenueCategoryId` snapshot in `reference/sdk-values.json`, inclusief main categories, subcategories en `RESIDENTIAL`.
+
 Een category standard kan onder andere bevatten:
 - `geometry`
 - `lockLevel` (integer 1 t/m 6)
