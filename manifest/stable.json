@@ -1,8 +1,8 @@
 {
   "channel": "stable",
   "version": "0.1.0",
-  "generatedAt": "2026-03-13T00:00:00Z",
-  "dataRevision": "2026-03-13-url-format",
+  "generatedAt": "2026-03-16T00:00:00Z",
+  "dataRevision": "2026-03-16-nl-url-protocol",
   "files": {
     "config/global.json": {
       "required": true
