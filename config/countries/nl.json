@@ -431,7 +431,7 @@
           "polygon"
         ]
       },
-      "lockLevel": 3,
+      "lockLevel": 2,
       "phone": "required",
       "services": {
         "recommended": [
