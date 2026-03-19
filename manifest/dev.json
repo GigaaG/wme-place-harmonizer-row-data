@@ -1,8 +1,8 @@
 {
   "channel": "dev",
   "version": "0.1.1-dev",
-  "generatedAt": "2026-03-16T20:00:00Z",
-  "dataRevision": "2026-03-16-closed-beta",
+  "generatedAt": "2026-03-19T00:00:00Z",
+  "dataRevision": "2026-03-19-i18n",
   "files": {
     "config/global.json": {
       "required": true
@@ -20,6 +20,12 @@
       "required": true
     },
     "locales/en.json": {
+      "required": true
+    },
+    "locales/nl.json": {
+      "required": true
+    },
+    "locales/fr.json": {
       "required": true
     }
   }

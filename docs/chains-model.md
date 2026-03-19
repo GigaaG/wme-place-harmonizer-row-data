@@ -562,9 +562,17 @@ Een chain record bevat idealiter:
     "geometry": "point",
     "lockLevel": 3
   },
-  "editorNotes": [
-    "Shared parking with nearby businesses is common for this chain."
-  ],
+  "editorNotes": {
+    "en": [
+      "Shared parking with nearby businesses is common for this chain."
+    ],
+    "nl": [
+      "Gedeelde parkeerruimte met omliggende bedrijven komt vaak voor bij deze keten."
+    ],
+    "fr": [
+      "Le stationnement partage avec les commerces voisins est courant pour cette chaine."
+    ]
+  },
   "scope": {
     "level": "global"
   },
@@ -573,6 +581,8 @@ Een chain record bevat idealiter:
   }
 }
 ```
+
+`editorNotes` in chain data volgt dezelfde locale-keyed structuur als config `editorNotes` en blijft buiten de gedeelde locale-catalogus.
 
 ## 14. Meta
 

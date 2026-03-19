@@ -87,6 +87,8 @@ manifest/stable.json
 config/global.json
 chains/global.json
 locales/en.json
+locales/nl.json
+locales/fr.json
 
 ## How runtime loading works
 
@@ -133,6 +135,7 @@ The validation must pass before opening or merging a pull request.
 - required fields
 - valid object structure
 - expected data types
+- locale file schema validation
 
 ### Enum / SDK value validation
 
@@ -226,6 +229,9 @@ Locale files belong in:
 - locales/
 
 For MVP, locale files should remain simple and valid JSON.
+Use `locales/template.json` as the starting point for new languages and keep `en`, `nl`, `fr`, and the template in sync when user-facing text changes.
+
+`editorNotes` are the one exception to the shared locale catalog. They stay in config/chain data as locale-keyed note objects because they are data-bound guidance, not shared UI messages.
 
 ## Pull request expectations
 

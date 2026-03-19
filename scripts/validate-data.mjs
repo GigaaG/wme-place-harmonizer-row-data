@@ -264,26 +264,28 @@ function validateChainDataset(chains, context, sdkValues) {
 }
 
 function validateManifest() {
-  const manifest = loadJSON("manifest/stable.json");
+  for (const manifestPath of listJsonFiles("manifest")) {
+    const manifest = loadJSON(manifestPath);
 
-  if (!manifest.files || typeof manifest.files !== "object") {
-    error("manifest/stable.json missing 'files' object");
-  }
-
-  for (const [fileKey, fileInfo] of Object.entries(manifest.files)) {
-    const filePath =
-      typeof fileInfo?.path === "string" ? fileInfo.path : fileKey;
-
-    if (typeof fileInfo !== "object" || fileInfo === null) {
-      error(`Manifest entry for ${fileKey} must be an object`);
+    if (!manifest.files || typeof manifest.files !== "object") {
+      error(`${manifestPath} missing 'files' object`);
     }
 
-    if ("required" in fileInfo && typeof fileInfo.required !== "boolean") {
-      error(`Manifest entry for ${fileKey} has non-boolean 'required' value`);
-    }
+    for (const [fileKey, fileInfo] of Object.entries(manifest.files)) {
+      const filePath =
+        typeof fileInfo?.path === "string" ? fileInfo.path : fileKey;
 
-    if (!fs.existsSync(filePath)) {
-      error(`Manifest references missing file: ${filePath}`);
+      if (typeof fileInfo !== "object" || fileInfo === null) {
+        error(`Manifest entry for ${fileKey} in ${manifestPath} must be an object`);
+      }
+
+      if ("required" in fileInfo && typeof fileInfo.required !== "boolean") {
+        error(`Manifest entry for ${fileKey} in ${manifestPath} has non-boolean 'required' value`);
+      }
+
+      if (!fs.existsSync(filePath)) {
+        error(`${manifestPath} references missing file: ${filePath}`);
+      }
     }
   }
 }
@@ -473,6 +475,10 @@ function runValidation() {
     validateSchema(filePath, "schemas/chain-dataset.schema.json");
     validateChainDataset(dataset, filePath, sdkValues);
     validateChainDuplicates(dataset, filePath);
+  }
+
+  for (const filePath of listJsonFiles("locales")) {
+    validateSchema(filePath, "schemas/locale.schema.json");
   }
 
   console.log("OK Data validation passed");

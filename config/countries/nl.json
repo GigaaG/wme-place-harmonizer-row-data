@@ -34,7 +34,7 @@
         "0800 1234",
         "0900 8844"
       ],
-      "validationMessage": "Phone number must use Dutch international format (+31 AA BBBBBBB, +31 AAA BBBBBB or +31 6 CBBBBBBB), or another country code in international +CC ... format, unless it is an 0800 or 0900 service number"
+      "validationMessageKey": "config.validation.phone.nl"
     },
     "url": {
       "validationPatterns": [
@@ -46,7 +46,7 @@
         "https://example.com/en",
         "https://info.example.co.uk?lang=en"
       ],
-      "validationMessage": "URL must include http:// or https:// and use a valid hostname, optionally with a port, path, query or fragment"
+      "validationMessageKey": "config.validation.url.generic"
     }
   },
   "rules": {
@@ -73,11 +73,6 @@
         ]
       },
       "lockLevel": 1,
-      "address": {
-        "city": "required",
-        "street": "required",
-        "houseNumber": "required"
-      },
       "openingHours": "required",
       "externalProviderIds": "required"
     },
@@ -319,9 +314,17 @@
           "polygon"
         ]
       },
-      "editorNotes": [
-        "Use a polygon when the attraction itself functions as a landmark."
-      ],
+      "editorNotes": {
+        "en": [
+          "Use a polygon when the attraction itself functions as a landmark."
+        ],
+        "nl": [
+          "Gebruik een polygoon wanneer de attractie zelf als landmark fungeert."
+        ],
+        "fr": [
+          "Utilisez un polygone lorsque l'attraction elle-meme sert de repere."
+        ]
+      },
       "externalProviderIds": "required"
     },
     "ZOO_AQUARIUM": {
@@ -542,9 +545,17 @@
           "polygon"
         ]
       },
-      "editorNotes": [
-        "Do not map farmland as an area place. Remove area places that only represent farmland."
-      ]
+      "editorNotes": {
+        "en": [
+          "Do not map farmland as an area place. Remove area places that only represent farmland."
+        ],
+        "nl": [
+          "Teken landbouwgrond niet als area place. Verwijder area places die alleen landbouwgrond voorstellen."
+        ],
+        "fr": [
+          "Ne cartographiez pas les terres agricoles comme area place. Supprimez les area places qui representent uniquement des terres agricoles."
+        ]
+      }
     },
     "FOREST_GROVE": {
       "geometry": {
@@ -609,9 +620,17 @@
           "polygon"
         ]
       },
-      "editorNotes": [
-        "Add only when relevant on the map and remove it again when the construction work is finished."
-      ]
+      "editorNotes": {
+        "en": [
+          "Add only when relevant on the map and remove it again when the construction work is finished."
+        ],
+        "nl": [
+          "Voeg alleen toe wanneer het relevant is op de kaart en verwijder het weer zodra de werkzaamheden klaar zijn."
+        ],
+        "fr": [
+          "Ajoutez uniquement si c'est pertinent sur la carte et supprimez-le une fois les travaux termines."
+        ]
+      }
     },
     "OUTDOORS": {
       "geometry": {
@@ -678,9 +697,17 @@
           "polygon"
         ]
       },
-      "editorNotes": [
-        "Use SEA_LAKE_POOL as the first category so the area remains blue on the map."
-      ]
+      "editorNotes": {
+        "en": [
+          "Use SEA_LAKE_POOL as the first category so the area remains blue on the map."
+        ],
+        "nl": [
+          "Gebruik SEA_LAKE_POOL als eerste categorie zodat het gebied blauw blijft op de kaart."
+        ],
+        "fr": [
+          "Utilisez SEA_LAKE_POOL comme premiere categorie afin que la zone reste bleue sur la carte."
+        ]
+      }
     },
     "PROMENADE": {
       "geometry": {
@@ -842,9 +869,17 @@
           "polygon"
         ]
       },
-      "editorNotes": [
-        "Use a polygon only when the government buildings are large enough to stand out on the map."
-      ]
+      "editorNotes": {
+        "en": [
+          "Use a polygon only when the government buildings are large enough to stand out on the map."
+        ],
+        "nl": [
+          "Gebruik alleen een polygoon wanneer de overheidsgebouwen groot genoeg zijn om op de kaart op te vallen."
+        ],
+        "fr": [
+          "Utilisez un polygone uniquement lorsque les batiments gouvernementaux sont assez grands pour ressortir sur la carte."
+        ]
+      }
     },
     "HOSPITAL_URGENT_CARE": {
       "geometry": {
@@ -952,9 +987,17 @@
           "polygon"
         ]
       },
-      "editorNotes": [
-        "Churches are often distinctive enough to draw as an area place."
-      ],
+      "editorNotes": {
+        "en": [
+          "Churches are often distinctive enough to draw as an area place."
+        ],
+        "nl": [
+          "Kerken zijn vaak opvallend genoeg om als area place te tekenen."
+        ],
+        "fr": [
+          "Les eglises sont souvent suffisamment distinctives pour etre dessinees comme area place."
+        ]
+      },
       "externalProviderIds": "required"
     },
     "SCHOOL": {
@@ -1044,9 +1087,17 @@
           "polygon"
         ]
       },
-      "editorNotes": [
-        "If the location also has a gas station, use GAS_STATION as the main category."
-      ],
+      "editorNotes": {
+        "en": [
+          "If the location also has a gas station, use GAS_STATION as the main category."
+        ],
+        "nl": [
+          "Als de locatie ook een tankstation heeft, gebruik dan GAS_STATION als hoofdcategorie."
+        ],
+        "fr": [
+          "Si le lieu comprend aussi une station-service, utilisez GAS_STATION comme categorie principale."
+        ]
+      },
       "externalProviderIds": "required"
     },
     "CAR_RENTAL": {
@@ -1057,9 +1108,17 @@
           "polygon"
         ]
       },
-      "editorNotes": [
-        "Mark ordinary car return areas that are regular parking lots with PARKING_LOT as well."
-      ],
+      "editorNotes": {
+        "en": [
+          "Mark ordinary car return areas that are regular parking lots with PARKING_LOT as well."
+        ],
+        "nl": [
+          "Markeer gewone inleverzones voor auto's die feitelijk parkeerterreinen zijn ook met PARKING_LOT."
+        ],
+        "fr": [
+          "Marquez egalement avec PARKING_LOT les zones ordinaires de retour de voitures qui sont en realite des parkings."
+        ]
+      },
       "externalProviderIds": "required"
     },
     "CONVENIENCE_STORE": {
@@ -1370,9 +1429,17 @@
         ]
       },
       "lockLevel": 2,
-      "editorNotes": [
-        "Bus stops are not considered bus stations in the Netherlands."
-      ],
+      "editorNotes": {
+        "en": [
+          "Bus stops are not considered bus stations in the Netherlands."
+        ],
+        "nl": [
+          "Bushaltes worden in Nederland niet beschouwd als busstations."
+        ],
+        "fr": [
+          "Aux Pays-Bas, les arrets de bus ne sont pas consideres comme des gares routieres."
+        ]
+      },
       "externalProviderIds": "required"
     },
     "CARPOOL_SPOT": {
@@ -1396,6 +1463,7 @@
     },
     "JUNCTION_INTERCHANGE": {
       "geometry": {
+        "recommended": "polygon",
         "allowed": [
           "point",
           "polygon"
@@ -1421,9 +1489,17 @@
           "polygon"
         ]
       },
-      "editorNotes": [
-        "Use SEA_LAKE_POOL as the first category so the area remains blue on the map."
-      ],
+      "editorNotes": {
+        "en": [
+          "Use SEA_LAKE_POOL as the first category so the area remains blue on the map."
+        ],
+        "nl": [
+          "Gebruik SEA_LAKE_POOL als eerste categorie zodat het gebied blauw blijft op de kaart."
+        ],
+        "fr": [
+          "Utilisez SEA_LAKE_POOL comme premiere categorie afin que la zone reste bleue sur la carte."
+        ]
+      },
       "externalProviderIds": "required"
     },
     "SUBWAY_STATION": {

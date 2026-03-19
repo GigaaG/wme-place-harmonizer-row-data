@@ -214,6 +214,8 @@ Voor v1 moet een datasetpublicatie minimaal deze globale basis kunnen beschrijve
 - `chains/global.json`
 - `exceptions/global.json`
 - `locales/en.json`
+- `locales/nl.json`
+- `locales/fr.json`
 
 Andere bestanden mogen optioneel zijn, afhankelijk van beschikbare communities en landen.
 
@@ -226,11 +228,15 @@ Andere bestanden mogen optioneel zijn, afhankelijk van beschikbare communities e
     "chains/global.json": { "required": true },
     "exceptions/global.json": { "required": true },
     "locales/en.json": { "required": true },
+    "locales/nl.json": { "required": true },
+    "locales/fr.json": { "required": true },
     "config/communities/dach.json": { "required": false },
     "config/countries/nl.json": { "required": false }
   }
 }
 ```
+
+Het locale-templatebestand `locales/template.json` hoort niet in het manifest; het is alleen bedoeld als bronbestand voor nieuwe vertalingen.
 
 ## 8. Stable en dev channel
 
@@ -357,6 +363,12 @@ De manifestflow in runtime is als volgt:
     },
     "locales/en.json": {
       "required": true
+    },
+    "locales/nl.json": {
+      "required": true
+    },
+    "locales/fr.json": {
+      "required": true
     }
   }
 }
@@ -387,6 +399,12 @@ De manifestflow in runtime is als volgt:
       "required": true
     },
     "locales/en.json": {
+      "required": true
+    },
+    "locales/nl.json": {
+      "required": true
+    },
+    "locales/fr.json": {
       "required": true
     }
   }

@@ -289,6 +289,7 @@ Een category standard kan onder andere bevatten:
 ### Editor notes
 
 `editorNotes` bevat vrije informatieve teksten die als info-cards in de feature-editor getoond mogen worden wanneer de categorie op de place matcht.
+Deze notities zitten bewust niet in de gedeelde locale-catalogus. Gebruik in plaats daarvan een locale-keyed object zodat dezelfde note per taal meegeleverd kan worden.
 
 Gebruik dit voor redactionele context of lokale mapping-uitleg die geen warning of error moet zijn.
 
@@ -296,9 +297,17 @@ Voorbeeld:
 
 ```json
 {
-  "editorNotes": [
-    "Bus stops are not considered bus stations in the Netherlands."
-  ]
+  "editorNotes": {
+    "en": [
+      "Bus stops are not considered bus stations in the Netherlands."
+    ],
+    "nl": [
+      "Bushaltes worden in Nederland niet beschouwd als busstations."
+    ],
+    "fr": [
+      "Aux Pays-Bas, les arrets de bus ne sont pas consideres comme des gares routieres."
+    ]
+  }
 }
 ```
 
@@ -477,7 +486,7 @@ Het formatting object bevat formatteringsconventies die per land of community ku
         "0800 1234",
         "0900 8844"
       ],
-      "validationMessage": "Phone number must use Dutch international format (+31 AA BBBBBBB, +31 AAA BBBBBB or +31 6 CBBBBBBB), or another country code in international +CC ... format, unless it is an 0800 or 0900 service number"
+      "validationMessageKey": "config.validation.phone.nl"
     }
   }
 }
@@ -494,8 +503,9 @@ Voor `formatting.phone` kunnen in v1 onder meer de volgende velden gebruikt word
 - `validationPatterns`
 - `validationExamples`
 - `validationMessage`
+- `validationMessageKey`
 
-`validationPatterns` bevat regex-patronen die bepalen welke telefoonnotaties in de actieve country/community-config als geldig gelden. `validationExamples` en `validationMessage` geven de runtime extra context voor de foutmelding wanneer een nummer aanwezig is maar niet aan de lokale formatteringsregel voldoet.
+`validationPatterns` bevat regex-patronen die bepalen welke telefoonnotaties in de actieve country/community-config als geldig gelden. `validationExamples` en `validationMessageKey` geven de runtime extra context voor de foutmelding wanneer een nummer aanwezig is maar niet aan de lokale formatteringsregel voldoet. Gebruik voor nieuwe i18n-veilige data bij voorkeur `validationMessageKey`; `validationMessage` is alleen legacy fallback.
 
 ## 10. matching
 
@@ -762,7 +772,7 @@ Voorkom kunstmatige tussenlagen zonder inhoudelijke meerwaarde.
         "0800 1234",
         "0900 8844"
       ],
-      "validationMessage": "Phone number must use Dutch international format (+31 AA BBBBBBB, +31 AAA BBBBBB or +31 6 CBBBBBBB), or another country code in international +CC ... format, unless it is an 0800 or 0900 service number"
+      "validationMessageKey": "config.validation.phone.nl"
     }
   }
 }

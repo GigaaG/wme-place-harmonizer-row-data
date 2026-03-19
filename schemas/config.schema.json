@@ -45,6 +45,9 @@
             },
             "validationMessage": {
               "type": "string"
+            },
+            "validationMessageKey": {
+              "type": "string"
             }
           },
           "additionalProperties": true
@@ -65,6 +68,9 @@
               }
             },
             "validationMessage": {
+              "type": "string"
+            },
+            "validationMessageKey": {
               "type": "string"
             }
           },
@@ -184,9 +190,12 @@
             }
           },
           "editorNotes": {
-            "type": "array",
-            "items": {
-              "type": "string"
+            "type": "object",
+            "additionalProperties": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
             }
           }
         }

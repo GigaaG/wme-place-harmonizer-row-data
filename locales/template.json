@@ -1,5 +1,5 @@
 {
-  "locale": "en",
+  "locale": "template",
   "messages": {
     "app.name": "WME Place Harmonizer ROW Edition",
     "app.sidebarTabTitle": "Place Harmonizer",
