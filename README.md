@@ -127,6 +127,40 @@ npm run validate
 
 The validation must pass before opening or merging a pull request.
 
+### Export a config to Excel
+
+```bash
+npm run config:excel:export -- config/countries/nl.json exports/nl-config.xlsx
+```
+
+This creates a workbook with:
+
+- an overview tab for core config metadata
+- a rules tab
+- a formatting tab
+- a category standards tab with one row per SDK category
+- a separate editor notes tab
+- an extra JSON tab for sections that do not fit well into fixed columns
+
+List-style values such as `geometry.allowed` and `services.*` use one value per line inside a cell.
+Blank cells remove a field on import. The `isDefined` column on the category sheet controls whether an otherwise empty category row should still exist in JSON.
+
+### Import a config from Excel
+
+```bash
+npm run config:excel:import -- exports/nl-config.xlsx config/countries/nl.json
+```
+
+The Excel workbook is treated as the source of truth and written back to formatted JSON.
+
+### Verify round-trip safety
+
+```bash
+npm run config:excel:roundtrip -- config/countries/nl.json
+```
+
+Use this to verify that exporting and immediately re-importing a config preserves the JSON structure exactly.
+
 ## What the validator checks
 
 ### Structure validation

@@ -286,6 +286,24 @@ Een category standard kan onder andere bevatten:
 - `address`
 - `editorNotes`
 
+### Excel import/export
+
+Voor onderhoud buiten JSON kan een configbestand ook naar Excel geëxporteerd en weer geïmporteerd worden.
+
+De workbook is bewust opgesplitst in meerdere tabbladen:
+- `Overview` voor basisvelden zoals `id`, `type`, `scope` en `defaults.locale`
+- `Rules` voor rule toggles en severity
+- `Formatting` voor formatteringsvelden
+- `Category Standards` voor één categorie per rij
+- `Editor Notes` voor meertalige notes
+- `Extra JSON` voor resterende configsecties die niet goed in vaste kolommen passen
+
+Richtlijnen:
+- Lege cellen betekenen dat een veld uit de JSON verwijderd wordt
+- Lijstvelden gebruiken één waarde per regel binnen dezelfde Excel-cel
+- `isDefined` op het category-tabblad bepaalt of een categorie-entry expliciet in `categoryStandards` moet blijven bestaan, ook wanneer verder alle velden leeg zijn
+- Het `Extra JSON` tabblad bewaart round-trip-veilige restdata zodat export/import geen informatie verliest
+
 ### Editor notes
 
 `editorNotes` bevat vrije informatieve teksten die als info-cards in de feature-editor getoond mogen worden wanneer de categorie op de place matcht.

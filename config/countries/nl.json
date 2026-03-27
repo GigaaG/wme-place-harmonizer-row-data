@@ -320,9 +320,6 @@
         ],
         "nl": [
           "Gebruik een polygoon wanneer de attractie zelf als landmark fungeert."
-        ],
-        "fr": [
-          "Utilisez un polygone lorsque l'attraction elle-meme sert de repere."
         ]
       },
       "externalProviderIds": "required"
@@ -752,7 +749,8 @@
           "polygon"
         ]
       },
-      "lockLevel": 2
+      "lockLevel": 2,
+      "cityInVenueName": false
     },
     "PROFESSIONAL_AND_PUBLIC": {
       "geometry": {
@@ -968,6 +966,14 @@
           "polygon"
         ]
       },
+      "openingHours": "required",
+      "address": {
+        "city": "required",
+        "street": "required",
+        "houseNumber": "required"
+      },
+      "phone": "required",
+      "url": "required",
       "externalProviderIds": "required"
     },
     "PRISON_CORRECTIONAL_FACILITY": {
@@ -977,11 +983,11 @@
           "point",
           "polygon"
         ]
-      }
+      },
+      "externalProviderIds": "required"
     },
     "RELIGIOUS_CENTER": {
       "geometry": {
-        "recommended": "point",
         "allowed": [
           "point",
           "polygon"
@@ -993,9 +999,6 @@
         ],
         "nl": [
           "Kerken zijn vaak opvallend genoeg om als area place te tekenen."
-        ],
-        "fr": [
-          "Les eglises sont souvent suffisamment distinctives pour etre dessinees comme area place."
         ]
       },
       "externalProviderIds": "required"

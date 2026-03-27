@@ -6,7 +6,10 @@
   "type": "module",
   "scripts": {
     "generate:sdk-values": "node scripts/generate-sdk-values.mjs",
-    "validate": "node scripts/validate-data.mjs"
+    "validate": "node scripts/validate-data.mjs",
+    "config:excel:export": "python scripts/config-excel.py export",
+    "config:excel:import": "python scripts/config-excel.py import",
+    "config:excel:roundtrip": "python scripts/config-excel.py roundtrip"
   },
   "dependencies": {
     "ajv": "^8.18.0"
