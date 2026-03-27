@@ -1,8 +1,8 @@
 {
   "channel": "dev",
   "version": "0.1.1-dev",
-  "generatedAt": "2026-03-19T00:00:00Z",
-  "dataRevision": "2026-03-19-i18n",
+  "generatedAt": "2026-03-27T00:00:00Z",
+  "dataRevision": "2026-03-27-nl-google-validation",
   "files": {
     "config/global.json": {
       "required": true

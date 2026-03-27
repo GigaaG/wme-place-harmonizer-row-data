@@ -50,6 +50,7 @@ The current runtime actively depends on these config fields:
 - `formatting.phone`
 - `formatting.url`
 - `rules.cityInVenueName`
+- `googleMapsValidation`
 - `categoryStandards`
 
 `categoryStandards` can contain:
@@ -65,6 +66,39 @@ The current runtime actively depends on these config fields:
 - `services`
 - `address`
 - `editorNotes`
+
+## Google Maps validation policy
+
+`googleMapsValidation` allows country or community data to disable linked Google Place validation globally or per check.
+
+Supported fields:
+
+- `googleMapsValidation.enabled`
+- `googleMapsValidation.checks.notFound`
+- `googleMapsValidation.checks.closed`
+- `googleMapsValidation.checks.locationDrift`
+- `googleMapsValidation.checks.nameMismatch`
+- `googleMapsValidation.checks.category`
+- `googleMapsValidation.checks.openingHours`
+
+Behavior:
+
+- if `enabled` is `false`, users cannot enable Google-linked validation locally
+- if an individual check is `false`, that check is disabled in the UI and not executed by the runtime
+- omitted fields inherit from the parent config, then default to enabled
+
+Example:
+
+```json
+{
+  "googleMapsValidation": {
+    "checks": {
+      "openingHours": false,
+      "locationDrift": false
+    }
+  }
+}
+```
 
 ## Fields that are not active runtime contracts
 

@@ -98,6 +98,39 @@
         }
       }
     },
+    "googleMapsValidation": {
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "type": "boolean"
+        },
+        "checks": {
+          "type": "object",
+          "properties": {
+            "notFound": {
+              "type": "boolean"
+            },
+            "closed": {
+              "type": "boolean"
+            },
+            "locationDrift": {
+              "type": "boolean"
+            },
+            "nameMismatch": {
+              "type": "boolean"
+            },
+            "category": {
+              "type": "boolean"
+            },
+            "openingHours": {
+              "type": "boolean"
+            }
+          },
+          "additionalProperties": true
+        }
+      },
+      "additionalProperties": true
+    },
     "categoryStandards": {
       "type": "object",
       "additionalProperties": {
