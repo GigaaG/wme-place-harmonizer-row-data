@@ -7,6 +7,7 @@
     "common.enabled": "Enabled",
     "common.disabled": "Disabled",
     "common.missing": "missing",
+    "common.twentyFourSeven": "24/7",
     "severity.error": "Error",
     "severity.warning": "Warning",
     "severity.info": "Info",

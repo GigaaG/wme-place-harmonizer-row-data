@@ -7,6 +7,7 @@
     "common.enabled": "Ingeschakeld",
     "common.disabled": "Uitgeschakeld",
     "common.missing": "ontbreekt",
+    "common.twentyFourSeven": "24/7",
     "severity.error": "Fout",
     "severity.warning": "Waarschuwing",
     "severity.info": "Info",

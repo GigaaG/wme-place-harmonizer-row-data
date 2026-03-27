@@ -7,6 +7,7 @@
     "common.enabled": "Active",
     "common.disabled": "Desactive",
     "common.missing": "absent",
+    "common.twentyFourSeven": "24/7",
     "severity.error": "Erreur",
     "severity.warning": "Avertissement",
     "severity.info": "Info",
