@@ -15,6 +15,17 @@
       "severity": "warning"
     }
   },
+  "googleMapsValidation": {
+    "enabled": true,
+    "severity": {
+      "notFound": "warning",
+      "closed": "warning",
+      "locationDrift": "warning",
+      "nameMismatch": "info",
+      "category": "info",
+      "openingHours": "info"
+    }
+  },
   "categoryStandards": {
     "CAR_SERVICES": {},
     "CAR_WASH": {},

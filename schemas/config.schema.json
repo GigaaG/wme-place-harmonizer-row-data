@@ -127,6 +127,36 @@
             }
           },
           "additionalProperties": true
+        },
+        "severity": {
+          "type": "object",
+          "properties": {
+            "notFound": {
+              "type": "string",
+              "enum": ["info", "warning", "error"]
+            },
+            "closed": {
+              "type": "string",
+              "enum": ["info", "warning", "error"]
+            },
+            "locationDrift": {
+              "type": "string",
+              "enum": ["info", "warning", "error"]
+            },
+            "nameMismatch": {
+              "type": "string",
+              "enum": ["info", "warning", "error"]
+            },
+            "category": {
+              "type": "string",
+              "enum": ["info", "warning", "error"]
+            },
+            "openingHours": {
+              "type": "string",
+              "enum": ["info", "warning", "error"]
+            }
+          },
+          "additionalProperties": true
         }
       },
       "additionalProperties": true

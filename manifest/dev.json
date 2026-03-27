@@ -2,7 +2,7 @@
   "channel": "dev",
   "version": "0.1.1-dev",
   "generatedAt": "2026-03-27T00:00:00Z",
-  "dataRevision": "2026-03-27-nl-google-validation",
+  "dataRevision": "2026-03-27-google-validation-severity",
   "files": {
     "config/global.json": {
       "required": true

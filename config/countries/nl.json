@@ -64,7 +64,12 @@
     }
   },
   "googleMapsValidation": {
-    "enabled": true
+    "enabled": true,
+    "severity": {
+      "nameMismatch": "warning",
+      "category": "warning",
+      "openingHours": "warning"
+    }
   },
   "categoryStandards": {
     "CAR_SERVICES": {

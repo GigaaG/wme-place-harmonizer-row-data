@@ -69,7 +69,7 @@ The current validation pipeline checks:
 
 The current validator does not validate exception dataset structure yet.
 
-Country or community config can also disable Google-linked venue validation globally or per check through the `googleMapsValidation` config section. See [docs/config-model.md](docs/config-model.md).
+Country or community config can also disable Google-linked venue validation globally or per check, and can override the per-check issue severity, through the `googleMapsValidation` config section. See [docs/config-model.md](docs/config-model.md).
 
 ## Excel config workflow
 

@@ -80,11 +80,18 @@ Supported fields:
 - `googleMapsValidation.checks.nameMismatch`
 - `googleMapsValidation.checks.category`
 - `googleMapsValidation.checks.openingHours`
+- `googleMapsValidation.severity.notFound`
+- `googleMapsValidation.severity.closed`
+- `googleMapsValidation.severity.locationDrift`
+- `googleMapsValidation.severity.nameMismatch`
+- `googleMapsValidation.severity.category`
+- `googleMapsValidation.severity.openingHours`
 
 Behavior:
 
 - if `enabled` is `false`, users cannot enable Google-linked validation locally
 - if an individual check is `false`, that check is disabled in the UI and not executed by the runtime
+- severity values control the issue severity used in the feature editor and in visible-venue scan highlighting
 - omitted fields inherit from the parent config, then default to enabled
 
 Example:
@@ -92,6 +99,9 @@ Example:
 ```json
 {
   "googleMapsValidation": {
+    "severity": {
+      "openingHours": "warning"
+    },
     "checks": {
       "openingHours": false,
       "locationDrift": false
