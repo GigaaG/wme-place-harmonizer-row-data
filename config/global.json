@@ -7,66 +7,11 @@
     "description": "Base defaults for WME Place Harmonizer ROW Edition"
   },
   "defaults": {
-    "locale": "en",
-    "countryResolution": {
-      "preferPlaceCountry": true,
-      "fallbackToMapContext": true,
-      "allowManualFallback": true
-    },
-    "matching": {
-      "caseInsensitive": true,
-      "normalizeWhitespace": true,
-      "stripCommonPunctuation": true
-    },
-    "ui": {
-      "showDebugTab": false,
-      "defaultChannel": "stable"
-    }
-  },
-  "highlighting": {
-    "statuses": {
-      "ok": "green",
-      "warning": "orange",
-      "error": "red",
-      "whitelisted": "blue",
-      "unknown": "gray"
-    }
+    "locale": "en"
   },
   "rules": {
-    "nameNormalization": {
-      "enabled": true,
-      "severity": "warning"
-    },
-    "aliasNormalization": {
-      "enabled": true,
-      "severity": "warning"
-    },
-    "brandHarmonization": {
-      "enabled": true,
-      "severity": "warning"
-    },
     "cityInVenueName": {
       "enabled": false,
-      "severity": "warning"
-    },
-    "phoneValidation": {
-      "enabled": true,
-      "severity": "warning"
-    },
-    "urlValidation": {
-      "enabled": true,
-      "severity": "warning"
-    },
-    "categoryValidation": {
-      "enabled": true,
-      "severity": "error"
-    },
-    "lockLevelRecommendation": {
-      "enabled": true,
-      "severity": "warning"
-    },
-    "residentialCleanup": {
-      "enabled": true,
       "severity": "warning"
     }
   },
@@ -203,18 +148,5 @@
     "TRAIN_STATION": {},
     "TUNNEL": {},
     "RESIDENTIAL": {}
-  },
-  "mergeStrategies": {
-    "chains.items": {
-      "mode": "keyedMerge",
-      "key": "id"
-    },
-    "exceptions.items": {
-      "mode": "keyedMerge",
-      "key": "id"
-    },
-    "matching.synonyms": {
-      "mode": "appendUnique"
-    }
   }
 }
