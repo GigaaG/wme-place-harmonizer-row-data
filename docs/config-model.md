@@ -51,6 +51,7 @@ The current runtime actively depends on these config fields:
 - `formatting.url`
 - `rules.cityInVenueName`
 - `googleMapsValidation`
+- `googleMapsValidation.nameLocales`
 - `categoryStandards`
 
 `categoryStandards` can contain:
@@ -80,6 +81,7 @@ Supported fields:
 - `googleMapsValidation.checks.nameMismatch`
 - `googleMapsValidation.checks.category`
 - `googleMapsValidation.checks.openingHours`
+- `googleMapsValidation.nameLocales`
 - `googleMapsValidation.severity.notFound`
 - `googleMapsValidation.severity.closed`
 - `googleMapsValidation.severity.locationDrift`
@@ -92,6 +94,7 @@ Behavior:
 - if `enabled` is `false`, users cannot enable Google-linked validation locally
 - if an individual check is `false`, that check is disabled in the UI and not executed by the runtime
 - severity values control the issue severity used in the feature editor and in visible-venue scan highlighting
+- `nameLocales` is an ordered list of locale codes used to request Google Place details for name comparison; the runtime tries them in order and falls back to the current WME locale and English
 - omitted fields inherit from the parent config, then default to enabled
 
 Example:

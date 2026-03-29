@@ -65,6 +65,9 @@
   },
   "googleMapsValidation": {
     "enabled": true,
+    "nameLocales": [
+      "nl"
+    ],
     "severity": {
       "nameMismatch": "warning",
       "category": "warning",

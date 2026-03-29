@@ -17,6 +17,9 @@
   },
   "googleMapsValidation": {
     "enabled": true,
+    "nameLocales": [
+      "en"
+    ],
     "severity": {
       "notFound": "warning",
       "closed": "warning",
