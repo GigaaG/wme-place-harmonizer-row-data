@@ -61,8 +61,7 @@ The manifest may list more files than the runtime actively consumes. For example
 - locale files
 - exception dataset files
 
-Locale entries are used by the runtime.
-Exception entries are currently informative only because the userscript does not consume exception datasets yet.
+Locale entries are used by the runtime. Exception entries are currently informative only because the userscript does not consume exception datasets yet.
 
 ## Runtime behavior
 
@@ -83,19 +82,3 @@ When editing manifests:
 - update `dataRevision` when the published dataset changes in a meaningful way
 - keep `config/global.json` and `chains/global.json` listed as required
 - do not imply that a published entry is necessarily an active runtime dependency
-
-## Example
-
-```json
-{
-  "channel": "stable",
-  "version": "0.1.0",
-  "generatedAt": "2026-03-19T00:00:00Z",
-  "dataRevision": "2026-03-19-i18n",
-  "files": {
-    "config/global.json": { "required": true },
-    "chains/global.json": { "required": true },
-    "locales/en.json": { "required": true }
-  }
-}
-```

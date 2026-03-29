@@ -1,6 +1,6 @@
 # WME Place Harmonizer ROW Edition Configuration Model
 
-This document describes the configuration structure that is currently relevant to the checked-in userscript runtime.
+This document describes the configuration structure that matters to the checked-in userscript runtime.
 
 ## Config file types and locations
 
@@ -22,21 +22,14 @@ The schema accepts multiple config types:
 
 ## Current runtime loading model
 
-The current userscript runtime loads:
-
-1. `config/global.json`
-2. an optional country config such as `config/countries/nl.json`
-
-If a loaded config file contains `extends`, the loader resolves the parent path and deep-merges the parent into the child.
-
-Current `extends` forms supported by the loader:
+The runtime currently loads `config/global.json` plus an optional country config such as `config/countries/nl.json`. If a loaded config file contains `extends`, the loader resolves the parent path and deep-merges the parent into the child. Supported `extends` forms are:
 
 - `global`
 - `community:<id>`
 - `country:<id>`
 - `state:<id>`
 
-This means community and state files can participate in inheritance, even though the top-level loader currently starts from global plus country.
+Community and state files can participate in inheritance, even though the top-level loader currently starts from global plus country.
 
 ## Runtime-consumed fields
 
@@ -70,9 +63,7 @@ The current runtime actively depends on these config fields:
 
 ## Google Maps validation policy
 
-`googleMapsValidation` allows country or community data to disable linked Google Place validation globally or per check.
-
-Supported fields:
+`googleMapsValidation` allows country or community data to disable linked Google Place validation globally or per check. Supported fields:
 
 - `googleMapsValidation.enabled`
 - `googleMapsValidation.checks.notFound`
@@ -115,9 +106,7 @@ Example:
 
 ## Fields that are not active runtime contracts
 
-The config schema is broader than the current runtime.
-
-Do not treat the following as active userscript behavior unless the code-side runtime starts consuming them explicitly:
+The config schema is broader than the current runtime. Do not treat the following as active userscript behavior unless the code-side runtime starts consuming them explicitly:
 
 - `mergeStrategies`
 - `highlighting`
@@ -148,15 +137,11 @@ Category keys must use the canonical SDK category id format, for example:
 - `PARKING_LOT`
 - `RESIDENTIAL`
 
-The data validator checks category ids against `reference/sdk-values.json`.
-
-`editorNotes` stay inside config data as locale-keyed text lists because they are data-bound guidance, not shared UI locale catalog entries.
+The data validator checks category ids against `reference/sdk-values.json`. `editorNotes` stay inside config data as locale-keyed text lists because they are data-bound guidance, not shared UI locale catalog entries.
 
 ## Excel import and export
 
-Config files can be maintained through the Excel workflow in `scripts/config-excel.py`.
-
-The workbook uses these sheets:
+Config files can be maintained through the Excel workflow in `scripts/config-excel.py`. The workbook uses these sheets:
 
 - `Overview`
 - `Rules`

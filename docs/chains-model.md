@@ -68,9 +68,7 @@ The current runtime and proposal generation pipeline actively use:
 
 ## Fields that are present but not strong runtime contracts
 
-Some fields appear in schemas, examples, or existing data but are not currently strong runtime dependencies.
-
-In particular:
+Some fields appear in schemas, examples, or existing data but are not currently strong runtime dependencies. In particular:
 
 - `match.categoryAnyOf` is part of the model and validation surface, but the current matcher only checks canonical name, aliases, and regex
 - `scope` and `meta` are useful for maintenance and debugging, but not central to matching
@@ -98,9 +96,7 @@ When editing chain data:
 
 ## Validation
 
-Chain datasets are validated in the data repository before publication.
-
-Current validation covers:
+Chain datasets are validated in the data repository before publication. Current validation covers:
 
 - schema compliance
 - duplicate chain ids
