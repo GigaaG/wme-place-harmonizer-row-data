@@ -1,786 +1,167 @@
-# WME Place Harmonizer ROW Edition — Configuration Model
+# WME Place Harmonizer ROW Edition Configuration Model
 
-## 1. Doel van dit document
+This document describes the configuration structure that matters to the checked-in userscript runtime.
 
-Dit document beschrijft het configuratiemodel voor WME Place Harmonizer ROW Edition.
+## Config file types and locations
 
-Het doel is om vast te leggen:
+The repository stores config files under:
 
-- Welke soorten configuratiebestanden bestaan
-- Welke velden daarin voorkomen
-- Hoe inheritance werkt
-- Hoe merge-strategieën worden toegepast
-- Hoe communities en landen aan elkaar gekoppeld worden
-- Welke aannames de userscript-runtime over configuratie mag maken
+```text
+config/global.json
+config/communities/*.json
+config/countries/*.json
+config/states/*.json
+```
 
-Dit document beschrijft het model op functioneel en structureel niveau. De exacte machine-validatie wordt later vastgelegd in JSON schema’s.
-
----
-
-## 2. Configuratiebestandstypen
-
-Binnen de data-repository worden de volgende configuratietypen onderscheiden:
+The schema accepts multiple config types:
 
 - `global-config`
 - `community-config`
 - `country-config`
 - `state-config`
 
-Niet elk niveau is verplicht aanwezig.
+## Current runtime loading model
 
-### 2.1 Global config
+The runtime currently loads `config/global.json` plus an optional country config such as `config/countries/nl.json`. If a loaded config file contains `extends`, the loader resolves the parent path and deep-merges the parent into the child. Supported `extends` forms are:
 
-Het globale configuratiebestand bevat de basisdefaults voor alle communities en landen.
+- `global`
+- `community:<id>`
+- `country:<id>`
+- `state:<id>`
 
-**Voorbeeldlocatie:**
+Community and state files can participate in inheritance, even though the top-level loader currently starts from global plus country.
 
-`config/global.json`
+## Runtime-consumed fields
 
-### 2.2 Community config
-
-Een community-config bevat regels en defaults die voor meerdere landen of een grotere community-groep gelden.
-
-**Voorbeeldlocatie:**
-
-`config/communities/dach.json`
-
-### 2.3 Country config
-
-Een country-config bevat land-specifieke regels, formattering en overrides.
-
-**Voorbeeldlocatie:**
-
-`config/countries/nl.json`
-
-### 2.4 State config
-
-Een state-config bevat optionele subnationale overrides, bijvoorbeeld voor een Duitse deelstaat of een regionale community.
-
-**Voorbeeldlocatie:**
-
-`config/states/de-bw.json`
-
-State-config wordt in de architectuur voorbereid, maar is geen harde v1-eis voor runtime-gebruik.
-
-## 3. Configuratiehiërarchie
-
-De beoogde hiërarchie is:
-
-```
-global
-→ community
-→ country
-→ state
-```
-
-Lagere niveaus kunnen hogere niveaus overschrijven of uitbreiden.
-
-### 3.1 Resolutievolgorde
-
-De runtime-resolutie verloopt in principe als volgt:
-
-1. Laad global config
-2. Laad community config indien van toepassing
-3. Laad country config
-4. Laad state config indien van toepassing
-5. Merge alle configuraties in vaste volgorde
-
-### 3.2 Leidend niveau
-
-Voor v1 geldt:
-
-- Place country is leidend indien beschikbaar
-- Anders wordt map/editor-context gebruikt
-- Bij onvoldoende zekerheid mag handmatige fallback plaatsvinden
-
-## 4. Verplichte top-level velden
-
-Elk configuratiebestand bevat minimaal de volgende top-level velden:
+The current runtime actively depends on these config fields:
 
 - `id`
 - `type`
 - `version`
-- `meta`
+- optional `extends`
+- `defaults.locale`
+- `formatting.phone`
+- `formatting.url`
+- `rules.cityInVenueName`
+- `googleMapsValidation`
+- `googleMapsValidation.nameLocales`
+- `categoryStandards`
 
-### 4.1 id
+`categoryStandards` can contain:
 
-Unieke identifier van het configuratiebestand.
-
-**Voorbeelden:**
-
-- `global`
-- `dach`
-- `nl`
-- `de-bw`
-
-### 4.2 type
-
-Geeft het configuratietype aan.
-
-**Toegestane waarden:**
-
-- `global-config`
-- `community-config`
-- `country-config`
-- `state-config`
-
-### 4.3 version
-
-Numerieke versie van de configuratiestructuur.
-
-Voor v1 gebruiken we:
-
-```json
-{
-  "version": 1
-}
-```
-
-### 4.4 meta
-
-Bevat beschrijvende metadata.
-
-**Minimaal aanbevolen velden:**
-
-- `name`
-- `description`
-
-**Voorbeeld:**
-
-```json
-{
-  "meta": {
-    "name": "Netherlands",
-    "description": "Country-specific rules for the Netherlands"
-  }
-}
-```
-
-## 5. Optionele top-level velden
-
-Een configuratiebestand kan daarnaast de volgende velden bevatten:
-
-- `extends`
-- `scope`
-- `defaults`
-- `formatting`
-- `matching`
-- `highlighting`
-- `rules`
-- `mergeStrategies`
-
-Niet elk type config hoeft al deze velden te bevatten.
-
-## 6. extends
-
-### 6.1 Doel
-
-Het `extends` veld geeft aan van welke bovenliggende configuratie het bestand erft.
-
-### 6.2 Toegestane patronen
-
-Voor v1 ondersteunen we functioneel de volgende vormen:
-
-- `"global"`
-- `"community:<id>"`
-- `"country:<id>"`
-- `"state:<id>"`
-
-**Voorbeelden:**
-
-```json
-{
-  "extends": "global"
-}
-{
-  "extends": "community:dach"
-}
-```
-
-### 6.3 Verwacht gebruik per type
-
-Gebruik per type:
-
-- `community-config` extends meestal `global`
-- `country-config` extends meestal `global` of `community:<id>`
-- `state-config` extends meestal `country:<id>`
-
-### 6.4 Beperkingen
-
-Voor v1 gelden de volgende beperkingen:
-
-- Slechts één directe parent per configuratiebestand
-- Geen meervoudige inheritance
-- Geen circulaire inheritance
-- Runtime moet een duidelijke fout tonen bij ongeldige inheritance
-
-## 7. scope
-
-### 7.1 Doel
-
-Het scope veld beschrijft op welk geografisch of logisch domein de configuratie van toepassing is.
-
-### 7.2 Voorbeelden
-
-Community-config
-```json
-{
-  "scope": {
-    "countries": ["de", "at", "ch"]
-  }
-}
-```
-
-Country-config
-```json
-{
-  "scope": {
-    "country": "nl"
-  }
-}
-```
-
-State-config
-```json
-{
-  "scope": {
-    "country": "de",
-    "state": "bw"
-  }
-}
-```
-
-### 7.3 Gebruik
-
-Het script gebruikt scope voor:
-
-- Config-resolutie
-- Debug-weergave
-- Validatie van inheritance en consistentie
-
-### `categoryStandards`
-
-Het `categoryStandards` object bevat standaarden per placecategorie, ook wanneer een place geen onderdeel is van een chain.
-
-Voorbeelden:
-- `OFFICES`
-- `FAST_FOOD`
-- `CAR_WASH`
-- `PARKING_LOT`
-- `GAS_STATION`
-
-Runtime normaliseert SDK-categorywaarden naar canonieke sleutels in uppercase snake case voordat `categoryStandards` wordt geraadpleegd. Configkeys moeten daarom de canonieke categorie-id gebruiken, bijvoorbeeld `CAR_WASH`.
-
-Een category standard kan onder andere bevatten:
 - `geometry`
-- `lockLevel` (integer 1 t/m 6)
+- `lockLevel`
+- `cityInVenueName`
 - `phone`
 - `url`
 - `openingHours`
+- `navigationPoints`
 - `externalProviderIds`
 - `services`
 - `address`
 - `editorNotes`
 
-### Editor notes
+## Google Maps validation policy
 
-`editorNotes` bevat vrije informatieve teksten die als info-cards in de feature-editor getoond mogen worden wanneer de categorie op de place matcht.
+`googleMapsValidation` allows country or community data to disable linked Google Place validation globally or per check. Supported fields:
 
-Gebruik dit voor redactionele context of lokale mapping-uitleg die geen warning of error moet zijn.
+- `googleMapsValidation.enabled`
+- `googleMapsValidation.checks.notFound`
+- `googleMapsValidation.checks.closed`
+- `googleMapsValidation.checks.locationDrift`
+- `googleMapsValidation.checks.nameMismatch`
+- `googleMapsValidation.checks.category`
+- `googleMapsValidation.checks.openingHours`
+- `googleMapsValidation.nameLocales`
+- `googleMapsValidation.severity.notFound`
+- `googleMapsValidation.severity.closed`
+- `googleMapsValidation.severity.locationDrift`
+- `googleMapsValidation.severity.nameMismatch`
+- `googleMapsValidation.severity.category`
+- `googleMapsValidation.severity.openingHours`
 
-Voorbeeld:
+Behavior:
 
-```json
-{
-  "editorNotes": [
-    "Bus stops are not considered bus stations in the Netherlands."
-  ]
-}
-```
+- if `enabled` is `false`, users cannot enable Google-linked validation locally
+- if an individual check is `false`, that check is disabled in the UI and not executed by the runtime
+- severity values control the issue severity used in the feature editor and in visible-venue scan highlighting
+- `nameLocales` is an ordered list of locale codes used to request Google Place details for name comparison; the runtime tries them in order and falls back to the current WME locale and English
+- omitted fields inherit from the parent config, then default to enabled
 
-### Geometry standaard
-
-Geometry ondersteunt voor v1:
-
-- `required`
-- `recommended`
-- `allowed`
-
-Voorbeeld:
-
-```json
-{
-  "geometry": {
-    "recommended": "point",
-    "allowed": ["point", "polygon"]
-  }
-}
-```
-
-### Services standaard
-
-Services ondersteunt voor v1:
-- required
-- recommended
-- discouraged
-- forbidden
-
-Voorbeeld:
-```json
-{
-  "services": {
-    "required": [],
-    "recommended": [],
-    "discouraged": [],
-    "forbidden": ["DRIVE_THROUGH"]
-  }
-}
-```
-
-### Presence-velden
-
-Phone, URL, openingHours en externalProviderIds ondersteunen dezelfde presence-waarden als address:
-- `required`
-- `recommended`
-- `discouraged`
-- `forbidden`
-
-Als een presence-veld ontbreekt in de policy, dan wordt er geen presence-regel afgedwongen.
-
-Voorbeeld:
-```json
-{
-  "phone": "required",
-  "url": "recommended",
-  "openingHours": "required",
-  "externalProviderIds": "forbidden"
-}
-```
-
-### Address standaard
-
-Address ondersteunt per veld de volgende waarden:
-- `required`
-- `recommended`
-- `discouraged`
-- `forbidden`
-
-Ondersteunde addressvelden:
-- `city`
-- `street`
-- `houseNumber`
-
-Voorbeeld:
-```json
-{
-  "address": {
-    "city": "required",
-    "street": "required",
-    "houseNumber": "recommended"
-  }
-}
-```
-
-## 8. defaults
-
-### 8.1 Doel
-
-Het defaults object bevat algemene standaardwaarden die door de runtime en UI gebruikt kunnen worden.
-
-### 8.2 Voorbeelden van toegestane inhoud
-
-- Standaard locale
-- Country-resolution voorkeuren
-- UI defaults
-- Matching defaults
-
-**Voorbeeld:**
+Example:
 
 ```json
 {
-  "defaults": {
-    "locale": "nl",
-    "countryResolution": {
-      "preferPlaceCountry": true,
-      "fallbackToMapContext": true,
-      "allowManualFallback": true
+  "googleMapsValidation": {
+    "severity": {
+      "openingHours": "warning"
     },
-    "ui": {
-      "showDebugTab": false,
-      "defaultChannel": "stable"
+    "checks": {
+      "openingHours": false,
+      "locationDrift": false
     }
   }
 }
 ```
 
-### 8.3 Richtlijn
+## Fields that are not active runtime contracts
 
-Plaats alleen echt generieke defaults in dit veld.
-Rule-specifieke instellingen horen onder rules.
+The config schema is broader than the current runtime. Do not treat the following as active userscript behavior unless the code-side runtime starts consuming them explicitly:
 
-## 9. formatting
+- `mergeStrategies`
+- `highlighting`
+- generic `matching` settings
+- rule toggles other than the fields actively read by the runtime
+- extra `defaults` substructures that are not consumed by the code
 
-### 9.1 Doel
+These fields may exist for compatibility, future work, or local experimentation, but they are not the current code-side contract.
 
-Het formatting object bevat formatteringsconventies die per land of community kunnen verschillen.
-
-### 9.2 Voorbeelden
-
-- Telefoonnotatie
-- URL-beleid
-- Naamgevingsvoorkeuren
-- Alias-beleid
-
-**Voorbeeld:**
-
-```json
-{
-  "formatting": {
-    "phone": {
-      "countryCode": "+31",
-      "formatStyle": "international",
-      "validationPatterns": [
-        "^\\+31 [1-57]\\d \\d{7}$",
-        "^\\+31 [1-57]\\d{2} \\d{6}$",
-        "^\\+31 6 \\d{8}$",
-        "^\\+(?!31)\\d{1,3}(?: \\d{1,14})+$",
-        "^0800 \\d+$",
-        "^0900 \\d+$"
-      ],
-      "validationExamples": [
-        "+31 20 1234567",
-        "+31 113 123456",
-        "+31 6 12345678",
-        "+32 3 123 45 67",
-        "0800 1234",
-        "0900 8844"
-      ],
-      "validationMessage": "Phone number must use Dutch international format (+31 AA BBBBBBB, +31 AAA BBBBBB or +31 6 CBBBBBBB), or another country code in international +CC ... format, unless it is an 0800 or 0900 service number"
-    }
-  }
-}
-```
-
-### 9.3 Richtlijn
-
-formatting beschrijft hoe iets er idealiter uit moet zien, niet of een wijziging automatisch toegepast moet worden.
+## Merge behavior
 
-Voor `formatting.phone` kunnen in v1 onder meer de volgende velden gebruikt worden:
+The current config merge behavior is code-side deep merge:
 
-- `countryCode`
-- `formatStyle`
-- `validationPatterns`
-- `validationExamples`
-- `validationMessage`
+- scalar values overwrite the parent
+- nested objects merge recursively
+- arrays are overwritten by the child value
 
-`validationPatterns` bevat regex-patronen die bepalen welke telefoonnotaties in de actieve country/community-config als geldig gelden. `validationExamples` en `validationMessage` geven de runtime extra context voor de foutmelding wanneer een nummer aanwezig is maar niet aan de lokale formatteringsregel voldoet.
+The runtime does not execute data-defined merge strategies.
 
-## 10. matching
+## Category standards
 
-### 10.1 Doel
+`categoryStandards` defines policy for categories even when no chain matches.
 
-Het matching object bevat instellingen die de matching engine kan gebruiken.
+Category keys must use the canonical SDK category id format, for example:
 
-### 10.2 Voorbeelden
+- `FAST_FOOD`
+- `GAS_STATION`
+- `PARKING_LOT`
+- `RESIDENTIAL`
 
-- Case-insensitive matching
-- Whitespace normalisatie
-- Punctuation stripping
-- Synoniemen
-- Matcher thresholds
+The data validator checks category ids against `reference/sdk-values.json`. `editorNotes` stay inside config data as locale-keyed text lists because they are data-bound guidance, not shared UI locale catalog entries.
 
-**Voorbeeld:**
+## Excel import and export
 
-```json
-{
-  "matching": {
-    "caseInsensitive": true,
-    "normalizeWhitespace": true,
-    "stripCommonPunctuation": true,
-    "synonyms": ["centre", "center"]
-  }
-}
-```
+Config files can be maintained through the Excel workflow in `scripts/config-excel.py`. The workbook uses these sheets:
 
-### 10.3 Richtlijn
+- `Overview`
+- `Rules`
+- `Formatting`
+- `Category Standards`
+- `Editor Notes`
+- `Extra JSON`
 
-Structurele matching-voorkeuren horen hier thuis.
-Concrete chain-data hoort in de chain-datasets.
+Important behavior:
 
-## 11. highlighting
+- blank cells remove a field during import
+- list values use one value per line inside a cell
+- `isDefined` on the category sheet preserves otherwise empty category entries
+- `Extra JSON` keeps unsupported sections round-trip safe
 
-### 11.1 Doel
+## Editing guidance
 
-Het highlighting object bevat logische statusinstellingen voor kaartmarkeringen.
+When editing config:
 
-**Voorbeeld:**
-
-```json
-{
-  "highlighting": {
-    "statuses": {
-      "ok": "green",
-      "warning": "orange",
-      "error": "red",
-      "whitelisted": "blue",
-      "unknown": "gray"
-    }
-  }
-}
-```
-
-### 11.2 Richtlijn
-
-Gebruik stabiele statusnamen.
-De uiteindelijke visuele vertaling naar kleuren kan later in code of config worden aangepast.
-
-## 12. rules
-
-### 12.1 Doel
-
-Het rules object beschrijft welke validatie- en harmonisatieregels actief zijn en hoe ze zich gedragen.
-
-### 12.2 Structuur
-
-Elke rule-key verwijst naar een ruleconfig.
-
-**Voorbeeld:**
-
-```json
-{
-  "rules": {
-    "nameNormalization": {
-      "enabled": true,
-      "severity": "warning"
-    },
-    "categoryValidation": {
-      "enabled": true,
-      "severity": "error"
-    }
-  }
-}
-```
-
-### 12.3 Minimale rule-velden voor v1
-
-Per rule zijn voor v1 minimaal de volgende velden voorzien:
-
-- `enabled`
-- `severity`
-
-Later kunnen hier velden bijkomen zoals:
-
-- `useGlobal`
-- `override`
-- `options`
-- `scopes`
-
-### 12.4 Severity
-
-Aanbevolen severity-waarden voor v1:
-
-- `info`
-- `warning`
-- `error`
-
-### 12.5 Richtlijn
-
-Rules bepalen of iets geëvalueerd en gerapporteerd wordt.
-Rules bepalen niet zelfstandig dat iets automatisch moet worden opgeslagen.
-
-## 13. mergeStrategies
-
-### 13.1 Doel
-
-mergeStrategies definieert hoe samengestelde objecten en arrays gemerged worden.
-
-### 13.2 Waarom expliciet
-
-Zonder expliciete merge-strategieën wordt gedrag onvoorspelbaar, vooral bij arrays en datasets zoals chains, exceptions en synoniemen.
-
-### 13.3 Ondersteunde strategieën voor v1
-
-- `replace`
-- `appendUnique`
-- `keyedMerge`
-
-### 13.4 Voorbeelden
-```json
-{
-  "mergeStrategies": {
-    "chains.items": {
-      "mode": "keyedMerge",
-      "key": "id"
-    },
-    "exceptions.items": {
-      "mode": "keyedMerge",
-      "key": "id"
-    },
-    "matching.synonyms": {
-      "mode": "appendUnique"
-    }
-  }
-}
-```
-
-### 13.5 Richtlijn
-
-Voor v1 geldt:
-
-- Primitives: child overschrijft parent
-- Objects: deep merge
-- Arrays: alleen volgens expliciete strategie
-
-## 14. Community ↔ country koppeling
-
-### 14.1 Doel
-
-Sommige communities beheren standaarden voor meerdere landen.
-Het configuratiemodel moet dit ondersteunen zonder duplicatie.
-
-### 14.2 Aanpak
-
-Een country-config kan erven van een community-config.
-
-**Voorbeeld:**
-
-```json
-{
-  "id": "de",
-  "type": "country-config",
-  "extends": "community:dach"
-}
-```
-
-### 14.3 Gevolg
-
-Hierdoor kunnen gedeelde DACH-regels centraal worden onderhouden, terwijl Duitsland, Oostenrijk en Zwitserland daar elk beperkte land-specifieke overrides bovenop kunnen plaatsen.
-
-### 14.4 Richtlijn
-
-Gebruik een community-config alleen wanneer er daadwerkelijk gedeelde standaarden zijn.
-Voorkom kunstmatige tussenlagen zonder inhoudelijke meerwaarde.
-
-## 15. Voorbeeld globale config
-```json
-{
-  "id": "global",
-  "type": "global-config",
-  "version": 1,
-  "meta": {
-    "name": "Global Default Configuration",
-    "description": "Base defaults for WME Place Harmonizer ROW Edition"
-  },
-  "defaults": {
-    "locale": "en"
-  },
-  "rules": {
-    "nameNormalization": {
-      "enabled": true,
-      "severity": "warning"
-    }
-  }
-}
-```
-
-## 16. Voorbeeld community-config
-```json
-{
-  "id": "dach",
-  "type": "community-config",
-  "version": 1,
-  "extends": "global",
-  "meta": {
-    "name": "DACH Community",
-    "description": "Shared community rules for Germany, Austria and Switzerland"
-  },
-  "scope": {
-    "countries": ["de", "at", "ch"]
-  },
-  "defaults": {
-    "locale": "de"
-  }
-}
-```
-
-## 17. Voorbeeld country-config
-```json
-{
-  "id": "nl",
-  "type": "country-config",
-  "version": 1,
-  "extends": "global",
-  "meta": {
-    "name": "Netherlands",
-    "description": "Country-specific rules for the Netherlands"
-  },
-  "scope": {
-    "country": "nl"
-  },
-  "defaults": {
-    "locale": "nl"
-  },
-  "formatting": {
-    "phone": {
-      "countryCode": "+31",
-      "formatStyle": "international",
-      "validationPatterns": [
-        "^\\+31 [1-57]\\d \\d{7}$",
-        "^\\+31 [1-57]\\d{2} \\d{6}$",
-        "^\\+31 6 \\d{8}$",
-        "^\\+(?!31)\\d{1,3}(?: \\d{1,14})+$",
-        "^0800 \\d+$",
-        "^0900 \\d+$"
-      ],
-      "validationExamples": [
-        "+31 20 1234567",
-        "+31 113 123456",
-        "+31 6 12345678",
-        "+32 3 123 45 67",
-        "0800 1234",
-        "0900 8844"
-      ],
-      "validationMessage": "Phone number must use Dutch international format (+31 AA BBBBBBB, +31 AAA BBBBBB or +31 6 CBBBBBBB), or another country code in international +CC ... format, unless it is an 0800 or 0900 service number"
-    }
-  }
-}
-```
-
-## 18. Wat v1 nog niet vereist
-
-De volgende onderdelen zijn voorbereid, maar nog geen harde v1-verplichting:
-
-- Volledige state/region runtime-ondersteuning
-- Complexe per-rule override-objecten
-- Geavanceerde conflictresolutie
-- Multi-parent inheritance
-- Conditionele config op basis van editorrol
-- Server-side configuratiebeheer
-
-## 19. Ontwerpregels voor maintainers
-
-Bij het toevoegen van nieuwe configuratiebestanden gelden de volgende ontwerpregels:
-
-- Houd inheritance zo eenvoudig mogelijk
-- Gebruik community-config alleen bij echt gedeeld beheer
-- Zet generieke defaults zo hoog mogelijk in de hiërarchie
-- Zet land-specifieke formattering alleen in country-config
-- Leg uitzonderingen niet vast in config als ze in exceptions thuishoren
-- Gebruik stabiele IDs
-- Documenteer afwijkende keuzes in docs/
-
-## 20. Samenvatting
-
-Het configuratiemodel van WME Place Harmonizer ROW Edition is ontworpen om:
-
-- Voorspelbaar te zijn
-- Herbruikbaar te zijn
-- Verschillende community-structuren te ondersteunen
-- Veilig te kunnen worden gevalideerd
-- Geschikt te zijn voor een GitHub-managed config-first architectuur
-
-De kern is een eenvoudige hiërarchie van:
-
-global → community → country → state
-
-met expliciete inheritance, duidelijke merge-regels en ruimte voor verdere uitbreiding in latere versies.
+- keep `config/global.json` minimal and truthful to current runtime behavior
+- use country config overlays for country-specific formatting or category policy
+- update docs when a field becomes an active runtime dependency
+- do not document or promote inactive config surface as if it were implemented behavior

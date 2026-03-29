@@ -55,6 +55,7 @@ Cross-repository impact commonly includes:
 - changed parser or mapper behavior
 - changed tests
 - changed docs
+- changed locale catalogs or the locale template
 
 A task is not complete until cross-repository impact has been evaluated.
 
@@ -81,11 +82,25 @@ Behavior or contract changes normally require:
 - fixture or sample data updates
 - test updates
 - documentation updates
+- locale updates for user-facing text
 
 If accepted input or contract behavior changes and no schema was updated, explain why.
 If fixtures or examples remain unchanged after a contract change, explain why.
 If behavior changes and no tests were updated, explain why.
 If documentation was not updated, explain why.
+If user-facing text changed and locale files were not updated, explain why.
+
+## Internationalization policy
+This repository is the source of truth for WME Place Harmonizer translations.
+
+When adding or changing user-facing text:
+- update `locales/en.json`
+- update `locales/nl.json`
+- update `locales/fr.json`
+- update `locales/template.json`
+- keep locale keys stable and descriptive
+- use locale keys for formatting/help text instead of raw localized strings where possible
+- keep `editorNotes` in the dedicated locale-keyed editor-notes data structure rather than the shared locale catalog
 
 ## Data consistency policy
 When changing any of the following:

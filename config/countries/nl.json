@@ -18,7 +18,7 @@
       "countryCode": "+31",
       "formatStyle": "international",
       "validationPatterns": [
-        "^\\+31 [1-57]\\d \\d{7}$",
+        "^\\+31 (?:[1-57]\\d|88) \\d{7}$",
         "^\\+31 [1-57]\\d{2} \\d{6}$",
         "^\\+31 6 \\d{8}$",
         "^\\+(?!31)\\d{1,3}(?: \\d{1,14})+$",
@@ -28,24 +28,25 @@
       "validationExamples": [
         "+31 20 1234567",
         "+31 113 123456",
+        "+31 88 0708090",
         "+31 6 12345678",
         "+32 3 123 45 67",
         "0800 1234",
         "0900 8844"
       ],
-      "validationMessage": "Phone number must use Dutch international format (+31 AA BBBBBBB, +31 AAA BBBBBB or +31 6 CBBBBBBB), or another country code in international +CC ... format, unless it is an 0800 or 0900 service number"
+      "validationMessageKey": "config.validation.phone.nl"
     },
     "url": {
       "validationPatterns": [
-        "^(?:[A-Za-z0-9](?:[A-Za-z0-9-]{0,61}[A-Za-z0-9])?\\.)+[A-Za-z]{2,63}(?::\\d{1,5})?(?:[/?#][^\\s]*)?$"
+        "^https?:\\/\\/(?:[A-Za-z0-9](?:[A-Za-z0-9-]{0,61}[A-Za-z0-9])?\\.)+[A-Za-z]{2,63}(?::\\d{1,5})?(?:[/?#][^\\s]*)?$"
       ],
       "validationExamples": [
-        "www.casca.nl",
-        "tickets.example.nl",
-        "example.com/en",
-        "info.example.co.uk?lang=en"
+        "https://www.casca.nl",
+        "https://tickets.example.nl",
+        "https://example.com/en",
+        "https://info.example.co.uk?lang=en"
       ],
-      "validationMessage": "URL must omit http:// or https:// and use only the hostname, optionally with a port, path, query or fragment"
+      "validationMessageKey": "config.validation.url.generic"
     }
   },
   "rules": {
@@ -62,7 +63,30 @@
       "severity": "error"
     }
   },
+  "googleMapsValidation": {
+    "enabled": true,
+    "nameLocales": [
+      "nl"
+    ],
+    "severity": {
+      "nameMismatch": "warning",
+      "category": "warning",
+      "openingHours": "warning"
+    }
+  },
   "categoryStandards": {
+    "CAR_SERVICES": {
+      "geometry": {
+        "recommended": "point",
+        "allowed": [
+          "point",
+          "polygon"
+        ]
+      },
+      "lockLevel": 1,
+      "openingHours": "required",
+      "externalProviderIds": "required"
+    },
     "CAR_WASH": {
       "geometry": {
         "recommended": "point",
@@ -71,7 +95,7 @@
           "polygon"
         ]
       },
-      "lockLevel": 2,
+      "lockLevel": 1,
       "address": {
         "city": "required",
         "street": "required",
@@ -89,31 +113,119 @@
         ]
       },
       "lockLevel": 3,
-      "services": {
-        "recommended": [
-          "EV_CHARGING_STATION"
+      "externalProviderIds": "recommended"
+    },
+    "GARAGE_AUTOMOTIVE_SHOP": {
+      "geometry": {
+        "recommended": "point",
+        "allowed": [
+          "point",
+          "polygon"
         ]
       },
-      "externalProviderIds": "forbidden"
+      "externalProviderIds": "required"
     },
     "GAS_STATION": {
       "geometry": {
+        "required": "polygon",
+        "allowed": [
+          "polygon"
+        ]
+      },
+      "lockLevel": 3,
+      "address": {
+        "city": "required",
+        "street": "required",
+        "houseNumber": "required"
+      },
+      "phone": "recommended",
+      "services": {
+        "recommended": [
+          "RESTROOMS",
+          "CREDIT_CARDS"
+        ]
+      },
+      "openingHours": "required",
+      "externalProviderIds": "required"
+    },
+    "CRISIS_LOCATIONS": {
+      "geometry": {
+        "recommended": "point",
+        "allowed": [
+          "point",
+          "polygon"
+        ]
+      }
+    },
+    "DONATION_CENTERS": {
+      "geometry": {
+        "recommended": "point",
+        "allowed": [
+          "point",
+          "polygon"
+        ]
+      }
+    },
+    "SHELTER_LOCATIONS": {
+      "geometry": {
+        "recommended": "point",
+        "allowed": [
+          "point",
+          "polygon"
+        ]
+      }
+    },
+    "CULTURE_AND_ENTERTAINEMENT": {
+      "geometry": {
         "recommended": "point",
         "allowed": [
           "point",
           "polygon"
         ]
       },
-      "lockLevel": 3,
-      "phone": "required",
-      "services": {
-        "recommended": [
-          "RESTROOMS"
+      "externalProviderIds": "required"
+    },
+    "ART_GALLERY": {
+      "geometry": {
+        "recommended": "point",
+        "allowed": [
+          "point",
+          "polygon"
         ]
       },
-      "openingHours": "required"
+      "externalProviderIds": "required"
     },
-    "RESTAURANT": {
+    "CASINO": {
+      "geometry": {
+        "recommended": "point",
+        "allowed": [
+          "point",
+          "polygon"
+        ]
+      },
+      "externalProviderIds": "required"
+    },
+    "CLUB": {
+      "geometry": {
+        "recommended": "point",
+        "allowed": [
+          "point",
+          "polygon"
+        ]
+      },
+      "externalProviderIds": "required"
+    },
+    "GAME_CLUB": {
+      "geometry": {
+        "recommended": "point",
+        "allowed": [
+          "point",
+          "polygon"
+        ]
+      },
+      "externalProviderIds": "required"
+    },
+    "MOVIE_THEATER": {
       "geometry": {
         "recommended": "point",
         "allowed": [
@@ -123,12 +235,171 @@
       },
       "lockLevel": 3,
       "phone": "required",
-      "services": {
-        "recommended": [
-          "RESTROOMS"
+      "url": "required",
+      "externalProviderIds": "required"
+    },
+    "MUSEUM": {
+      "geometry": {
+        "recommended": "point",
+        "allowed": [
+          "point",
+          "polygon"
         ]
       },
-      "openingHours": "required"
+      "lockLevel": 3,
+      "phone": "required",
+      "url": "required",
+      "openingHours": "required",
+      "externalProviderIds": "required"
+    },
+    "MUSIC_VENUE": {
+      "geometry": {
+        "recommended": "point",
+        "allowed": [
+          "point",
+          "polygon"
+        ]
+      },
+      "phone": "required",
+      "url": "required",
+      "externalProviderIds": "required"
+    },
+    "PERFORMING_ARTS_VENUE": {
+      "geometry": {
+        "recommended": "point",
+        "allowed": [
+          "point",
+          "polygon"
+        ]
+      },
+      "externalProviderIds": "required"
+    },
+    "RACING_TRACK": {
+      "geometry": {
+        "recommended": "polygon",
+        "allowed": [
+          "point",
+          "polygon"
+        ]
+      },
+      "externalProviderIds": "required"
+    },
+    "STADIUM_ARENA": {
+      "geometry": {
+        "recommended": "polygon",
+        "allowed": [
+          "point",
+          "polygon"
+        ]
+      },
+      "lockLevel": 3,
+      "phone": "required",
+      "url": "required",
+      "externalProviderIds": "required"
+    },
+    "THEATER": {
+      "geometry": {
+        "recommended": "point",
+        "allowed": [
+          "point",
+          "polygon"
+        ]
+      },
+      "externalProviderIds": "required"
+    },
+    "THEME_PARK": {
+      "geometry": {
+        "recommended": "polygon",
+        "allowed": [
+          "point",
+          "polygon"
+        ]
+      },
+      "externalProviderIds": "required"
+    },
+    "TOURIST_ATTRACTION_HISTORIC_SITE": {
+      "geometry": {
+        "recommended": "point",
+        "allowed": [
+          "point",
+          "polygon"
+        ]
+      },
+      "editorNotes": {
+        "en": [
+          "Use a polygon when the attraction itself functions as a landmark."
+        ],
+        "nl": [
+          "Gebruik een polygoon wanneer de attractie zelf als landmark fungeert."
+        ]
+      },
+      "externalProviderIds": "required"
+    },
+    "ZOO_AQUARIUM": {
+      "geometry": {
+        "recommended": "polygon",
+        "allowed": [
+          "point",
+          "polygon"
+        ]
+      },
+      "externalProviderIds": "required"
+    },
+    "FOOD_AND_DRINK": {
+      "geometry": {
+        "recommended": "point",
+        "allowed": [
+          "point",
+          "polygon"
+        ]
+      },
+      "externalProviderIds": "required"
+    },
+    "BAKERY": {
+      "geometry": {
+        "recommended": "point",
+        "allowed": [
+          "point",
+          "polygon"
+        ]
+      },
+      "lockLevel": 2,
+      "openingHours": "required",
+      "externalProviderIds": "required"
+    },
+    "BAR": {
+      "geometry": {
+        "recommended": "point",
+        "allowed": [
+          "point",
+          "polygon"
+        ]
+      },
+      "lockLevel": 2,
+      "openingHours": "required",
+      "externalProviderIds": "required"
+    },
+    "CAFE": {
+      "geometry": {
+        "recommended": "point",
+        "allowed": [
+          "point",
+          "polygon"
+        ]
+      },
+      "lockLevel": 2,
+      "openingHours": "required",
+      "externalProviderIds": "required"
+    },
+    "DESSERT": {
+      "geometry": {
+        "recommended": "point",
+        "allowed": [
+          "point",
+          "polygon"
+        ]
+      },
+      "externalProviderIds": "required"
     },
     "FAST_FOOD": {
       "geometry": {
@@ -140,9 +411,10 @@
       },
       "lockLevel": 3,
       "phone": "required",
-      "openingHours": "required"
+      "openingHours": "required",
+      "externalProviderIds": "required"
     },
-    "CAFE": {
+    "FOOD_COURT": {
       "geometry": {
         "recommended": "point",
         "allowed": [
@@ -150,10 +422,9 @@
           "polygon"
         ]
       },
-      "lockLevel": 2,
-      "openingHours": "required"
+      "externalProviderIds": "required"
     },
-    "BAR": {
+    "ICE_CREAM": {
       "geometry": {
         "recommended": "point",
         "allowed": [
@@ -161,10 +432,9 @@
           "polygon"
         ]
       },
-      "lockLevel": 2,
-      "openingHours": "required"
+      "externalProviderIds": "required"
     },
-    "BAKERY": {
+    "RESTAURANT": {
       "geometry": {
         "recommended": "point",
         "allowed": [
@@ -172,20 +442,55 @@
           "polygon"
         ]
       },
-      "lockLevel": 2,
-      "openingHours": "required"
-    },
-    "HOTEL": {
-      "geometry": {
-        "recommended": "point",
-        "allowed": [
-          "point",
-          "polygon"
-        ]
-      },
-      "lockLevel": 3,
+      "lockLevel": 1,
       "phone": "required",
-      "url": "required"
+      "services": {
+        "recommended": [
+          "RESTROOMS"
+        ]
+      },
+      "openingHours": "required",
+      "externalProviderIds": "required"
+    },
+    "LODGING": {
+      "geometry": {
+        "recommended": "point",
+        "allowed": [
+          "point",
+          "polygon"
+        ]
+      },
+      "externalProviderIds": "required"
+    },
+    "BED_AND_BREAKFAST": {
+      "geometry": {
+        "recommended": "point",
+        "allowed": [
+          "point",
+          "polygon"
+        ]
+      },
+      "externalProviderIds": "required"
+    },
+    "CAMPING_TRAILER_PARK": {
+      "geometry": {
+        "recommended": "polygon",
+        "allowed": [
+          "point",
+          "polygon"
+        ]
+      },
+      "externalProviderIds": "required"
+    },
+    "COTTAGE_CABIN": {
+      "geometry": {
+        "recommended": "point",
+        "allowed": [
+          "point",
+          "polygon"
+        ]
+      },
+      "externalProviderIds": "required"
     },
     "HOSTEL": {
       "geometry": {
@@ -197,18 +502,296 @@
       },
       "lockLevel": 3,
       "phone": "required",
-      "url": "required"
+      "url": "required",
+      "externalProviderIds": "required"
     },
-    "PARKING_LOT": {
+    "HOTEL": {
+      "geometry": {
+        "recommended": "point",
+        "allowed": [
+          "point",
+          "polygon"
+        ]
+      },
+      "lockLevel": 3,
+      "phone": "required",
+      "url": "required",
+      "externalProviderIds": "required"
+    },
+    "NATURAL_FEATURES": {
       "geometry": {
         "recommended": "polygon",
         "allowed": [
+          "point",
+          "polygon"
+        ]
+      }
+    },
+    "CANAL": {
+      "geometry": {
+        "recommended": "polygon",
+        "allowed": [
+          "point",
+          "polygon"
+        ]
+      }
+    },
+    "DAM": {
+      "geometry": {
+        "recommended": "polygon",
+        "allowed": [
+          "point",
+          "polygon"
+        ]
+      }
+    },
+    "FARM": {
+      "geometry": {
+        "recommended": "point",
+        "allowed": [
+          "point",
+          "polygon"
+        ]
+      },
+      "editorNotes": {
+        "en": [
+          "Do not map farmland as an area place. Remove area places that only represent farmland."
+        ],
+        "nl": [
+          "Teken landbouwgrond niet als area place. Verwijder area places die alleen landbouwgrond voorstellen."
+        ],
+        "fr": [
+          "Ne cartographiez pas les terres agricoles comme area place. Supprimez les area places qui representent uniquement des terres agricoles."
+        ]
+      }
+    },
+    "FOREST_GROVE": {
+      "geometry": {
+        "recommended": "polygon",
+        "allowed": [
+          "point",
           "polygon"
         ]
       },
       "lockLevel": 2
     },
-    "AIRPORT": {
+    "ISLAND": {
+      "geometry": {
+        "recommended": "polygon",
+        "allowed": [
+          "point",
+          "polygon"
+        ]
+      }
+    },
+    "RIVER_STREAM": {
+      "geometry": {
+        "recommended": "polygon",
+        "allowed": [
+          "point",
+          "polygon"
+        ]
+      }
+    },
+    "SEA_LAKE_POOL": {
+      "geometry": {
+        "recommended": "polygon",
+        "allowed": [
+          "point",
+          "polygon"
+        ]
+      }
+    },
+    "SWAMP_MARSH": {
+      "geometry": {
+        "recommended": "polygon",
+        "allowed": [
+          "point",
+          "polygon"
+        ]
+      }
+    },
+    "OTHER": {
+      "geometry": {
+        "recommended": "point",
+        "allowed": [
+          "point",
+          "polygon"
+        ]
+      }
+    },
+    "CONSTRUCTION_SITE": {
+      "geometry": {
+        "recommended": "polygon",
+        "allowed": [
+          "point",
+          "polygon"
+        ]
+      },
+      "editorNotes": {
+        "en": [
+          "Add only when relevant on the map and remove it again when the construction work is finished."
+        ],
+        "nl": [
+          "Voeg alleen toe wanneer het relevant is op de kaart en verwijder het weer zodra de werkzaamheden klaar zijn."
+        ],
+        "fr": [
+          "Ajoutez uniquement si c'est pertinent sur la carte et supprimez-le une fois les travaux termines."
+        ]
+      }
+    },
+    "OUTDOORS": {
+      "geometry": {
+        "recommended": "polygon",
+        "allowed": [
+          "point",
+          "polygon"
+        ]
+      }
+    },
+    "BEACH": {
+      "geometry": {
+        "recommended": "polygon",
+        "allowed": [
+          "point",
+          "polygon"
+        ]
+      },
+      "lockLevel": 2
+    },
+    "GOLF_COURSE": {
+      "geometry": {
+        "recommended": "polygon",
+        "allowed": [
+          "point",
+          "polygon"
+        ]
+      },
+      "externalProviderIds": "required"
+    },
+    "PARK": {
+      "geometry": {
+        "recommended": "polygon",
+        "allowed": [
+          "point",
+          "polygon"
+        ]
+      },
+      "lockLevel": 2
+    },
+    "PLAYGROUND": {
+      "geometry": {
+        "recommended": "point",
+        "allowed": [
+          "point",
+          "polygon"
+        ]
+      }
+    },
+    "PLAZA": {
+      "geometry": {
+        "recommended": "polygon",
+        "allowed": [
+          "point",
+          "polygon"
+        ]
+      }
+    },
+    "POOL": {
+      "geometry": {
+        "recommended": "polygon",
+        "allowed": [
+          "point",
+          "polygon"
+        ]
+      },
+      "editorNotes": {
+        "en": [
+          "Use SEA_LAKE_POOL as the first category so the area remains blue on the map."
+        ],
+        "nl": [
+          "Gebruik SEA_LAKE_POOL als eerste categorie zodat het gebied blauw blijft op de kaart."
+        ],
+        "fr": [
+          "Utilisez SEA_LAKE_POOL comme premiere categorie afin que la zone reste bleue sur la carte."
+        ]
+      }
+    },
+    "PROMENADE": {
+      "geometry": {
+        "recommended": "polygon",
+        "allowed": [
+          "point",
+          "polygon"
+        ]
+      }
+    },
+    "SCENIC_LOOKOUT_VIEWPOINT": {
+      "geometry": {
+        "recommended": "point",
+        "allowed": [
+          "point",
+          "polygon"
+        ]
+      }
+    },
+    "SKI_AREA": {
+      "geometry": {
+        "recommended": "polygon",
+        "allowed": [
+          "point",
+          "polygon"
+        ]
+      }
+    },
+    "SPORTS_COURT": {
+      "geometry": {
+        "recommended": "polygon",
+        "allowed": [
+          "point",
+          "polygon"
+        ]
+      }
+    },
+    "PARKING_LOT": {
+      "geometry": {
+        "required": "polygon",
+        "allowed": [
+          "polygon"
+        ]
+      },
+      "lockLevel": 2,
+      "cityInVenueName": false
+    },
+    "PROFESSIONAL_AND_PUBLIC": {
+      "geometry": {
+        "recommended": "point",
+        "allowed": [
+          "point",
+          "polygon"
+        ]
+      }
+    },
+    "CEMETERY": {
+      "geometry": {
+        "recommended": "polygon",
+        "allowed": [
+          "point",
+          "polygon"
+        ]
+      }
+    },
+    "CITY_HALL": {
+      "geometry": {
+        "recommended": "polygon",
+        "allowed": [
+          "point",
+          "polygon"
+        ]
+      },
+      "externalProviderIds": "required"
+    },
+    "COLLEGE_UNIVERSITY": {
       "geometry": {
         "recommended": "polygon",
         "allowed": [
@@ -218,9 +801,10 @@
       },
       "lockLevel": 4,
       "phone": "required",
-      "url": "required"
+      "url": "required",
+      "externalProviderIds": "required"
     },
-    "TRAIN_STATION": {
+    "CONVENTIONS_EVENT_CENTER": {
       "geometry": {
         "recommended": "polygon",
         "allowed": [
@@ -228,10 +812,19 @@
           "polygon"
         ]
       },
-      "lockLevel": 3,
-      "url": "required"
+      "externalProviderIds": "required"
     },
-    "BUS_STATION": {
+    "COURTHOUSE": {
+      "geometry": {
+        "recommended": "polygon",
+        "allowed": [
+          "point",
+          "polygon"
+        ]
+      },
+      "externalProviderIds": "required"
+    },
+    "DOCTOR_CLINIC": {
       "geometry": {
         "recommended": "point",
         "allowed": [
@@ -239,10 +832,187 @@
           "polygon"
         ]
       },
-      "lockLevel": 2,
-      "editorNotes": [
-        "Bus stops are not considered bus stations in the Netherlands."
-      ]
+      "externalProviderIds": "required"
+    },
+    "EMBASSY_CONSULATE": {
+      "geometry": {
+        "recommended": "point",
+        "allowed": [
+          "point",
+          "polygon"
+        ]
+      }
+    },
+    "EMERGENCY_SHELTER": {
+      "geometry": {
+        "recommended": "point",
+        "allowed": [
+          "point",
+          "polygon"
+        ]
+      }
+    },
+    "FACTORY_INDUSTRIAL": {
+      "geometry": {
+        "recommended": "polygon",
+        "allowed": [
+          "point",
+          "polygon"
+        ]
+      }
+    },
+    "FIRE_DEPARTMENT": {
+      "geometry": {
+        "recommended": "polygon",
+        "allowed": [
+          "point",
+          "polygon"
+        ]
+      }
+    },
+    "GOVERNMENT": {
+      "geometry": {
+        "recommended": "point",
+        "allowed": [
+          "point",
+          "polygon"
+        ]
+      },
+      "editorNotes": {
+        "en": [
+          "Use a polygon only when the government buildings are large enough to stand out on the map."
+        ],
+        "nl": [
+          "Gebruik alleen een polygoon wanneer de overheidsgebouwen groot genoeg zijn om op de kaart op te vallen."
+        ],
+        "fr": [
+          "Utilisez un polygone uniquement lorsque les batiments gouvernementaux sont assez grands pour ressortir sur la carte."
+        ]
+      }
+    },
+    "HOSPITAL_URGENT_CARE": {
+      "geometry": {
+        "recommended": "polygon",
+        "allowed": [
+          "point",
+          "polygon"
+        ]
+      },
+      "lockLevel": 4,
+      "phone": "required",
+      "url": "required",
+      "externalProviderIds": "required"
+    },
+    "INFORMATION_POINT": {
+      "geometry": {
+        "recommended": "point",
+        "allowed": [
+          "point",
+          "polygon"
+        ]
+      }
+    },
+    "KINDERGARDEN": {
+      "geometry": {
+        "recommended": "point",
+        "allowed": [
+          "point",
+          "polygon"
+        ]
+      },
+      "externalProviderIds": "required"
+    },
+    "LIBRARY": {
+      "geometry": {
+        "recommended": "point",
+        "allowed": [
+          "point",
+          "polygon"
+        ]
+      },
+      "externalProviderIds": "required"
+    },
+    "MILITARY": {
+      "geometry": {
+        "recommended": "polygon",
+        "allowed": [
+          "point",
+          "polygon"
+        ]
+      }
+    },
+    "OFFICES": {
+      "geometry": {
+        "recommended": "point",
+        "allowed": [
+          "point",
+          "polygon"
+        ]
+      },
+      "lockLevel": 2
+    },
+    "ORGANIZATION_OR_ASSOCIATION": {
+      "geometry": {
+        "recommended": "point",
+        "allowed": [
+          "point",
+          "polygon"
+        ]
+      }
+    },
+    "POLICE_STATION": {
+      "geometry": {
+        "recommended": "polygon",
+        "allowed": [
+          "point",
+          "polygon"
+        ]
+      }
+    },
+    "POST_OFFICE": {
+      "geometry": {
+        "recommended": "point",
+        "allowed": [
+          "point",
+          "polygon"
+        ]
+      },
+      "openingHours": "required",
+      "address": {
+        "city": "required",
+        "street": "required",
+        "houseNumber": "required"
+      },
+      "phone": "required",
+      "url": "required",
+      "externalProviderIds": "required"
+    },
+    "PRISON_CORRECTIONAL_FACILITY": {
+      "geometry": {
+        "recommended": "polygon",
+        "allowed": [
+          "point",
+          "polygon"
+        ]
+      },
+      "externalProviderIds": "required"
+    },
+    "RELIGIOUS_CENTER": {
+      "geometry": {
+        "allowed": [
+          "point",
+          "polygon"
+        ]
+      },
+      "editorNotes": {
+        "en": [
+          "Churches are often distinctive enough to draw as an area place."
+        ],
+        "nl": [
+          "Kerken zijn vaak opvallend genoeg om als area place te tekenen."
+        ]
+      },
+      "externalProviderIds": "required"
     },
     "SCHOOL": {
       "geometry": {
@@ -254,33 +1024,19 @@
       },
       "lockLevel": 3,
       "phone": "required",
-      "url": "required"
+      "url": "required",
+      "externalProviderIds": "required"
     },
-    "UNIVERSITY": {
+    "TRASH_AND_RECYCLING_FACILITIES": {
       "geometry": {
-        "recommended": "polygon",
+        "recommended": "point",
         "allowed": [
           "point",
           "polygon"
         ]
-      },
-      "lockLevel": 4,
-      "phone": "required",
-      "url": "required"
+      }
     },
-    "HOSPITAL_MEDICAL_CARE": {
-      "geometry": {
-        "recommended": "polygon",
-        "allowed": [
-          "point",
-          "polygon"
-        ]
-      },
-      "lockLevel": 4,
-      "phone": "required",
-      "url": "required"
-    },
-    "PHARMACY": {
+    "SHOPPING_AND_SERVICES": {
       "geometry": {
         "recommended": "point",
         "allowed": [
@@ -288,9 +1044,30 @@
           "polygon"
         ]
       },
-      "lockLevel": 3,
-      "phone": "required",
-      "openingHours": "required"
+      "openingHours": "recommended",
+      "phone": "recommended",
+      "url": "recommended",
+      "externalProviderIds": "required"
+    },
+    "ARTS_AND_CRAFTS": {
+      "geometry": {
+        "recommended": "point",
+        "allowed": [
+          "point",
+          "polygon"
+        ]
+      },
+      "externalProviderIds": "required"
+    },
+    "ATM": {
+      "geometry": {
+        "recommended": "point",
+        "allowed": [
+          "point",
+          "polygon"
+        ]
+      },
+      "externalProviderIds": "required"
     },
     "BANK_FINANCIAL": {
       "geometry": {
@@ -303,7 +1080,267 @@
       "lockLevel": 3,
       "phone": "required",
       "url": "required",
-      "openingHours": "required"
+      "openingHours": "required",
+      "externalProviderIds": "required"
+    },
+    "BOOKSTORE": {
+      "geometry": {
+        "recommended": "point",
+        "allowed": [
+          "point",
+          "polygon"
+        ]
+      },
+      "externalProviderIds": "required"
+    },
+    "CAR_DEALERSHIP": {
+      "geometry": {
+        "recommended": "point",
+        "allowed": [
+          "point",
+          "polygon"
+        ]
+      },
+      "editorNotes": {
+        "en": [
+          "If the location also has a gas station, use GAS_STATION as the main category."
+        ],
+        "nl": [
+          "Als de locatie ook een tankstation heeft, gebruik dan GAS_STATION als hoofdcategorie."
+        ],
+        "fr": [
+          "Si le lieu comprend aussi une station-service, utilisez GAS_STATION comme categorie principale."
+        ]
+      },
+      "externalProviderIds": "required"
+    },
+    "CAR_RENTAL": {
+      "geometry": {
+        "recommended": "point",
+        "allowed": [
+          "point",
+          "polygon"
+        ]
+      },
+      "editorNotes": {
+        "en": [
+          "Mark ordinary car return areas that are regular parking lots with PARKING_LOT as well."
+        ],
+        "nl": [
+          "Markeer gewone inleverzones voor auto's die feitelijk parkeerterreinen zijn ook met PARKING_LOT."
+        ],
+        "fr": [
+          "Marquez egalement avec PARKING_LOT les zones ordinaires de retour de voitures qui sont en realite des parkings."
+        ]
+      },
+      "externalProviderIds": "required"
+    },
+    "CONVENIENCE_STORE": {
+      "geometry": {
+        "recommended": "point",
+        "allowed": [
+          "point",
+          "polygon"
+        ]
+      },
+      "externalProviderIds": "required"
+    },
+    "CURRENCY_EXCHANGE": {
+      "geometry": {
+        "recommended": "point",
+        "allowed": [
+          "point",
+          "polygon"
+        ]
+      },
+      "externalProviderIds": "required"
+    },
+    "DEPARTMENT_STORE": {
+      "geometry": {
+        "recommended": "point",
+        "allowed": [
+          "point",
+          "polygon"
+        ]
+      },
+      "externalProviderIds": "required"
+    },
+    "ELECTRONICS": {
+      "geometry": {
+        "recommended": "point",
+        "allowed": [
+          "point",
+          "polygon"
+        ]
+      },
+      "externalProviderIds": "required"
+    },
+    "FASHION_AND_CLOTHING": {
+      "geometry": {
+        "recommended": "point",
+        "allowed": [
+          "point",
+          "polygon"
+        ]
+      },
+      "externalProviderIds": "required"
+    },
+    "FLOWERS": {
+      "geometry": {
+        "recommended": "point",
+        "allowed": [
+          "point",
+          "polygon"
+        ]
+      },
+      "externalProviderIds": "required"
+    },
+    "FURNITURE_HOME_STORE": {
+      "geometry": {
+        "recommended": "point",
+        "allowed": [
+          "point",
+          "polygon"
+        ]
+      },
+      "externalProviderIds": "required"
+    },
+    "GIFTS": {
+      "geometry": {
+        "recommended": "point",
+        "allowed": [
+          "point",
+          "polygon"
+        ]
+      },
+      "externalProviderIds": "required"
+    },
+    "GYM_FITNESS": {
+      "geometry": {
+        "recommended": "point",
+        "allowed": [
+          "point",
+          "polygon"
+        ]
+      },
+      "externalProviderIds": "required"
+    },
+    "HARDWARE_STORE": {
+      "geometry": {
+        "recommended": "point",
+        "allowed": [
+          "point",
+          "polygon"
+        ]
+      },
+      "externalProviderIds": "required"
+    },
+    "JEWELRY": {
+      "geometry": {
+        "recommended": "point",
+        "allowed": [
+          "point",
+          "polygon"
+        ]
+      },
+      "externalProviderIds": "required"
+    },
+    "LAUNDRY_DRY_CLEAN": {
+      "geometry": {
+        "recommended": "point",
+        "allowed": [
+          "point",
+          "polygon"
+        ]
+      },
+      "externalProviderIds": "required"
+    },
+    "MARKET": {
+      "geometry": {
+        "recommended": "polygon",
+        "allowed": [
+          "point",
+          "polygon"
+        ]
+      },
+      "externalProviderIds": "required"
+    },
+    "MUSIC_STORE": {
+      "geometry": {
+        "recommended": "point",
+        "allowed": [
+          "point",
+          "polygon"
+        ]
+      },
+      "externalProviderIds": "required"
+    },
+    "PERSONAL_CARE": {
+      "geometry": {
+        "recommended": "point",
+        "allowed": [
+          "point",
+          "polygon"
+        ]
+      },
+      "externalProviderIds": "required"
+    },
+    "PET_STORE_VETERINARIAN_SERVICES": {
+      "geometry": {
+        "recommended": "point",
+        "allowed": [
+          "point",
+          "polygon"
+        ]
+      },
+      "externalProviderIds": "required"
+    },
+    "PHARMACY": {
+      "geometry": {
+        "recommended": "point",
+        "allowed": [
+          "point",
+          "polygon"
+        ]
+      },
+      "lockLevel": 3,
+      "phone": "required",
+      "openingHours": "required",
+      "externalProviderIds": "required"
+    },
+    "PHOTOGRAPHY": {
+      "geometry": {
+        "recommended": "point",
+        "allowed": [
+          "point",
+          "polygon"
+        ]
+      },
+      "externalProviderIds": "required"
+    },
+    "SHOPPING_CENTER": {
+      "geometry": {
+        "recommended": "polygon",
+        "allowed": [
+          "point",
+          "polygon"
+        ]
+      },
+      "lockLevel": 3,
+      "phone": "required",
+      "url": "required",
+      "openingHours": "required",
+      "externalProviderIds": "required"
+    },
+    "SPORTING_GOODS": {
+      "geometry": {
+        "recommended": "point",
+        "allowed": [
+          "point",
+          "polygon"
+        ]
+      },
+      "externalProviderIds": "required"
     },
     "SUPERMARKET_GROCERY": {
       "geometry": {
@@ -319,33 +1356,7 @@
       "openingHours": "required",
       "externalProviderIds": "required"
     },
-    "SHOPPING_CENTER": {
-      "geometry": {
-        "recommended": "polygon",
-        "allowed": [
-          "point",
-          "polygon"
-        ]
-      },
-      "lockLevel": 3,
-      "phone": "required",
-      "url": "required",
-      "openingHours": "required"
-    },
-    "MUSEUM": {
-      "geometry": {
-        "recommended": "polygon",
-        "allowed": [
-          "point",
-          "polygon"
-        ]
-      },
-      "lockLevel": 3,
-      "phone": "required",
-      "url": "required",
-      "openingHours": "required"
-    },
-    "MOVIE_THEATER": {
+    "SWIMMING_POOL": {
       "geometry": {
         "recommended": "point",
         "allowed": [
@@ -353,11 +1364,49 @@
           "polygon"
         ]
       },
-      "lockLevel": 3,
-      "phone": "required",
-      "url": "required"
+      "externalProviderIds": "required"
     },
-    "STADIUM_ARENA": {
+    "TELECOM": {
+      "geometry": {
+        "recommended": "point",
+        "allowed": [
+          "point",
+          "polygon"
+        ]
+      },
+      "externalProviderIds": "required"
+    },
+    "TOY_STORE": {
+      "geometry": {
+        "recommended": "point",
+        "allowed": [
+          "point",
+          "polygon"
+        ]
+      },
+      "externalProviderIds": "required"
+    },
+    "TRAVEL_AGENCY": {
+      "geometry": {
+        "recommended": "point",
+        "allowed": [
+          "point",
+          "polygon"
+        ]
+      },
+      "externalProviderIds": "required"
+    },
+    "TRANSPORTATION": {
+      "geometry": {
+        "recommended": "point",
+        "allowed": [
+          "point",
+          "polygon"
+        ]
+      },
+      "externalProviderIds": "required"
+    },
+    "AIRPORT": {
       "geometry": {
         "recommended": "polygon",
         "allowed": [
@@ -367,9 +1416,56 @@
       },
       "lockLevel": 3,
       "phone": "required",
-      "url": "required"
+      "url": "required",
+      "address": {
+        "city": "required",
+        "street": "recommended",
+        "houseNumber": "recommended"
+      },
+      "openingHours": "required",
+      "externalProviderIds": "required"
     },
-    "PARK": {
+    "BRIDGE": {
+      "geometry": {
+        "recommended": "polygon",
+        "allowed": [
+          "point",
+          "polygon"
+        ]
+      }
+    },
+    "BUS_STATION": {
+      "geometry": {
+        "recommended": "point",
+        "allowed": [
+          "point",
+          "polygon"
+        ]
+      },
+      "lockLevel": 2,
+      "editorNotes": {
+        "en": [
+          "Bus stops are not considered bus stations in the Netherlands."
+        ],
+        "nl": [
+          "Bushaltes worden in Nederland niet beschouwd als busstations."
+        ],
+        "fr": [
+          "Aux Pays-Bas, les arrets de bus ne sont pas consideres comme des gares routieres."
+        ]
+      },
+      "externalProviderIds": "required"
+    },
+    "CARPOOL_SPOT": {
+      "geometry": {
+        "recommended": "polygon",
+        "allowed": [
+          "point",
+          "polygon"
+        ]
+      }
+    },
+    "FERRY_PIER": {
       "geometry": {
         "recommended": "polygon",
         "allowed": [
@@ -377,9 +1473,9 @@
           "polygon"
         ]
       },
-      "lockLevel": 2
+      "externalProviderIds": "required"
     },
-    "BEACH": {
+    "JUNCTION_INTERCHANGE": {
       "geometry": {
         "recommended": "polygon",
         "allowed": [
@@ -387,9 +1483,9 @@
           "polygon"
         ]
       },
-      "lockLevel": 2
+      "externalProviderIds": "forbidden"
     },
-    "FOREST": {
+    "REST_AREAS": {
       "geometry": {
         "recommended": "polygon",
         "allowed": [
@@ -397,7 +1493,77 @@
           "polygon"
         ]
       },
-      "lockLevel": 2
+      "externalProviderIds": "required"
+    },
+    "SEAPORT_MARINA_HARBOR": {
+      "geometry": {
+        "recommended": "polygon",
+        "allowed": [
+          "point",
+          "polygon"
+        ]
+      },
+      "editorNotes": {
+        "en": [
+          "Use SEA_LAKE_POOL as the first category so the area remains blue on the map."
+        ],
+        "nl": [
+          "Gebruik SEA_LAKE_POOL als eerste categorie zodat het gebied blauw blijft op de kaart."
+        ],
+        "fr": [
+          "Utilisez SEA_LAKE_POOL comme premiere categorie afin que la zone reste bleue sur la carte."
+        ]
+      },
+      "externalProviderIds": "required"
+    },
+    "SUBWAY_STATION": {
+      "geometry": {
+        "recommended": "point",
+        "allowed": [
+          "point",
+          "polygon"
+        ]
+      },
+      "externalProviderIds": "required"
+    },
+    "TAXI_STATION": {
+      "geometry": {
+        "recommended": "point",
+        "allowed": [
+          "point",
+          "polygon"
+        ]
+      }
+    },
+    "TRAIN_STATION": {
+      "geometry": {
+        "recommended": "polygon",
+        "allowed": [
+          "point",
+          "polygon"
+        ]
+      },
+      "lockLevel": 3,
+      "cityInVenueName": false,
+      "url": "required",
+      "externalProviderIds": "required"
+    },
+    "TUNNEL": {
+      "geometry": {
+        "recommended": "polygon",
+        "allowed": [
+          "point",
+          "polygon"
+        ]
+      }
+    },
+    "RESIDENTIAL": {
+      "geometry": {
+        "required": "point",
+        "allowed": [
+          "point"
+        ]
+      }
     }
   }
 }

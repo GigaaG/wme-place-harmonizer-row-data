@@ -66,6 +66,20 @@ function validateServices(services, allowedServices, context) {
   }
 }
 
+function validateCategories(categories, allowedCategories, context) {
+  if (!categories) {
+    return;
+  }
+
+  for (const category of categories) {
+    if (!allowedCategories.includes(category)) {
+      error(
+        `Invalid category "${category}" in ${context}. Allowed values: ${allowedCategories.join(", ")}`
+      );
+    }
+  }
+}
+
 function validateLockLevel(lockLevel, allowedLockLevels, context) {
   if (lockLevel === undefined) {
     return;
@@ -161,6 +175,7 @@ function validateUrlFormatting(urlFormatting, context) {
 }
 
 function validateChainDataset(chains, context, sdkValues) {
+  const allowedCategories = sdkValues.categoryIds;
   const allowedServices = sdkValues.services;
   const allowedLockLevels = sdkValues.lockLevels;
 
@@ -169,6 +184,18 @@ function validateChainDataset(chains, context, sdkValues) {
   }
 
   for (const chain of chains.items) {
+    validateCategories(
+      chain.match?.categoryAnyOf,
+      allowedCategories,
+      `${context} chain ${chain.id} match.categoryAnyOf`
+    );
+
+    validateCategories(
+      chain.standard?.categories,
+      allowedCategories,
+      `${context} chain ${chain.id} standard.categories`
+    );
+
     validateServices(
       chain.standard?.services,
       allowedServices,
@@ -226,6 +253,10 @@ function validateChainDataset(chains, context, sdkValues) {
       `${context} chain ${chain.id} policy.openingHours`
     );
     validatePresenceRequirement(
+      chain.policy?.navigationPoints,
+      `${context} chain ${chain.id} policy.navigationPoints`
+    );
+    validatePresenceRequirement(
       chain.policy?.externalProviderIds,
       `${context} chain ${chain.id} policy.externalProviderIds`
     );
@@ -233,31 +264,34 @@ function validateChainDataset(chains, context, sdkValues) {
 }
 
 function validateManifest() {
-  const manifest = loadJSON("manifest/stable.json");
+  for (const manifestPath of listJsonFiles("manifest")) {
+    const manifest = loadJSON(manifestPath);
 
-  if (!manifest.files || typeof manifest.files !== "object") {
-    error("manifest/stable.json missing 'files' object");
-  }
-
-  for (const [fileKey, fileInfo] of Object.entries(manifest.files)) {
-    const filePath =
-      typeof fileInfo?.path === "string" ? fileInfo.path : fileKey;
-
-    if (typeof fileInfo !== "object" || fileInfo === null) {
-      error(`Manifest entry for ${fileKey} must be an object`);
+    if (!manifest.files || typeof manifest.files !== "object") {
+      error(`${manifestPath} missing 'files' object`);
     }
 
-    if ("required" in fileInfo && typeof fileInfo.required !== "boolean") {
-      error(`Manifest entry for ${fileKey} has non-boolean 'required' value`);
-    }
+    for (const [fileKey, fileInfo] of Object.entries(manifest.files)) {
+      const filePath =
+        typeof fileInfo?.path === "string" ? fileInfo.path : fileKey;
 
-    if (!fs.existsSync(filePath)) {
-      error(`Manifest references missing file: ${filePath}`);
+      if (typeof fileInfo !== "object" || fileInfo === null) {
+        error(`Manifest entry for ${fileKey} in ${manifestPath} must be an object`);
+      }
+
+      if ("required" in fileInfo && typeof fileInfo.required !== "boolean") {
+        error(`Manifest entry for ${fileKey} in ${manifestPath} has non-boolean 'required' value`);
+      }
+
+      if (!fs.existsSync(filePath)) {
+        error(`${manifestPath} references missing file: ${filePath}`);
+      }
     }
   }
 }
 
 function validateConfigObject(config, context, sdkValues) {
+  const allowedCategories = sdkValues.categoryIds;
   const allowedGeometry = sdkValues.geometry;
   const allowedServices = sdkValues.services;
   const allowedLockLevels = sdkValues.lockLevels;
@@ -278,6 +312,12 @@ function validateConfigObject(config, context, sdkValues) {
 
   if (config.categoryStandards) {
     for (const [categoryId, standard] of Object.entries(config.categoryStandards)) {
+      validateCategories(
+        [categoryId],
+        allowedCategories,
+        `${context}.categoryStandards`
+      );
+
       validateLockLevel(
         standard.lockLevel,
         allowedLockLevels,
@@ -357,6 +397,10 @@ function validateConfigObject(config, context, sdkValues) {
         `${context}.categoryStandards.${categoryId}.openingHours`
       );
       validatePresenceRequirement(
+        standard.navigationPoints,
+        `${context}.categoryStandards.${categoryId}.navigationPoints`
+      );
+      validatePresenceRequirement(
         standard.externalProviderIds,
         `${context}.categoryStandards.${categoryId}.externalProviderIds`
       );
@@ -431,6 +475,10 @@ function runValidation() {
     validateSchema(filePath, "schemas/chain-dataset.schema.json");
     validateChainDataset(dataset, filePath, sdkValues);
     validateChainDuplicates(dataset, filePath);
+  }
+
+  for (const filePath of listJsonFiles("locales")) {
+    validateSchema(filePath, "schemas/locale.schema.json");
   }
 
   console.log("OK Data validation passed");
