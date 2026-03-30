@@ -4,6 +4,23 @@ This repository is the data-side source of truth for WME Place Harmonizer ROW Ed
 
 Changes here can affect the userscript runtime, validation, and the code repository that consumes this data. Treat contract changes carefully.
 
+## Branch workflow
+
+This repository uses:
+
+- `dev` for active data integration
+- `beta` for beta-candidate runtime data
+- `main` for stable runtime data
+
+Normal flow:
+
+1. create a feature or maintenance branch from `dev`
+2. merge into `dev`
+3. promote `dev -> beta` when a beta data set is ready
+4. promote `beta -> main` after beta validation
+
+Do not use direct pushes to `main` for routine config, chain, locale, or manifest updates. If an urgent stable hotfix is required, merge the resulting fix back into `beta` and `dev` immediately so branches do not drift.
+
 ## Before you change data
 
 If you change schemas, fixtures, reference data, allowed values, or validation-related structures, check whether the code repository also needs updates in:
@@ -71,6 +88,18 @@ For normal data changes:
 4. update the related documentation when behavior or data contracts changed
 
 If a change affects user-facing text, update the locale files and the locale template together.
+
+## Cross-repo release rule
+
+Some data changes are tightly coupled to the code repository. In particular:
+
+- `schemas/**`
+- `scripts/**`
+- `reference/**`
+- `manifest/**`
+- contract-heavy shared config changes such as `config/global.json`
+
+When a change affects runtime contracts, validation inputs, or generated reference values, check the code repository in the same release cycle. Beta promotion should only happen once both repositories are compatible.
 
 ## Documentation policy
 
