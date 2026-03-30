@@ -20,6 +20,8 @@ manifest/stable.json
 manifest/dev.json
 ```
 
+These manifest files exist within each long-lived repository branch. The repository branch selects the promotion lane (`dev`, `beta`, or `main`), while the manifest file selects the runtime data channel inside that branch.
+
 ## Required top-level fields
 
 Each manifest currently needs:

@@ -24,6 +24,18 @@ This repository is consumed by:
 
 The code repository also imports `reference/sdk-values.json` during local build and test workflows.
 
+## Branch model
+
+This repository should use three long-lived branches:
+
+- `dev` for active integration work
+- `beta` for frozen beta-candidate data
+- `main` for stable runtime data
+
+Feature and maintenance branches should merge into `dev` first. Promoted data moves from `dev` to `beta` for tester validation, then from `beta` to `main` for stable runtime use.
+
+This matters because the userscript runtime loads repository data directly from GitHub. Stable users should only consume `main`, while beta users should consume a frozen beta branch instead of the moving `dev` branch.
+
 ## Layout
 
 ```text
@@ -43,6 +55,7 @@ scripts/               Validation and Excel tooling
 - [docs/config-model.md](docs/config-model.md)
 - [docs/chains-model.md](docs/chains-model.md)
 - [docs/manifest-model.md](docs/manifest-model.md)
+- [docs/release-workflow.md](docs/release-workflow.md)
 - [CONTRIBUTING.md](CONTRIBUTING.md)
 
 ## For contributors
