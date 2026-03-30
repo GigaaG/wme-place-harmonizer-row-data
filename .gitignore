@@ -140,3 +140,6 @@ vite.config.ts.timestamp-*
 
 # Agent
 AGENTS.md
+
+# Pycache
+__pycache__/
