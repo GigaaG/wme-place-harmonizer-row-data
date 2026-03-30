@@ -23,6 +23,8 @@
     "featureEditor.manualActionRequired": "Manual action required",
     "featureEditor.suggestionNotApplicableYet": "This suggestion is not applicable yet",
     "featureEditor.ignoreForThisVenue": "Ignore for this venue",
+    "featureEditor.ignorePending": "This finding will be ignored in {seconds}s unless you undo it",
+    "featureEditor.undoIgnore": "Undo ignore",
     "featureEditor.applySelectedFixes": "Apply selected fixes",
     "sidebar.channel": "Channel",
     "sidebar.manifest": "Manifest",

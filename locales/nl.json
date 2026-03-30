@@ -23,6 +23,8 @@
     "featureEditor.manualActionRequired": "Handmatige actie vereist",
     "featureEditor.suggestionNotApplicableYet": "Deze suggestie kan nog niet automatisch worden toegepast",
     "featureEditor.ignoreForThisVenue": "Negeren voor deze plaats",
+    "featureEditor.ignorePending": "Deze bevinding wordt over {seconds}s genegeerd tenzij je dit ongedaan maakt",
+    "featureEditor.undoIgnore": "Negeren ongedaan maken",
     "featureEditor.applySelectedFixes": "Geselecteerde fixes toepassen",
     "sidebar.channel": "Kanaal",
     "sidebar.manifest": "Manifest",
