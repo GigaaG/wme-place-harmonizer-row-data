@@ -56,6 +56,9 @@ The current code-side manifest validator requires these entries to exist and be 
 - `config/global.json`
 - `chains/global.json`
 
+In current runtime behavior, `locales/en.json` is the effective fallback locale and should stay published.
+Additional locale files such as `locales/nl.json` and `locales/fr.json` may be published as optional entries because the runtime can fall back to English.
+
 ## Required versus published entries
 
 The manifest may list more files than the runtime actively consumes. For example, current manifests still publish:
@@ -64,6 +67,13 @@ The manifest may list more files than the runtime actively consumes. For example
 - exception dataset files
 
 Locale entries are used by the runtime. Exception entries are currently informative only because the userscript does not consume exception datasets yet.
+
+That means current manifests should generally follow this pattern:
+
+- mark `config/global.json` and `chains/global.json` as required
+- mark `locales/en.json` as required
+- mark additional locale files as optional unless the runtime truly depends on them
+- mark exception datasets as optional until the runtime actively consumes them
 
 ## Runtime behavior
 
@@ -83,4 +93,5 @@ When editing manifests:
 - keep `channel`, `version`, `generatedAt`, and `dataRevision` accurate
 - update `dataRevision` when the published dataset changes in a meaningful way
 - keep `config/global.json` and `chains/global.json` listed as required
+- only mark files as required when the current runtime actually depends on them for startup or fallback guarantees
 - do not imply that a published entry is necessarily an active runtime dependency

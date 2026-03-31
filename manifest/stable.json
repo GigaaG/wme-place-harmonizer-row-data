@@ -1,8 +1,8 @@
 {
   "channel": "stable",
   "version": "0.1.0",
-  "generatedAt": "2026-03-27T00:00:00Z",
-  "dataRevision": "2026-03-27-google-validation-severity",
+  "generatedAt": "2026-03-30T20:18:01Z",
+  "dataRevision": "2026-03-30-manifest-required-flags",
   "files": {
     "config/global.json": {
       "required": true
@@ -17,16 +17,16 @@
       "required": true
     },
     "exceptions/global.json": {
-      "required": true
+      "required": false
     },
     "locales/en.json": {
       "required": true
     },
     "locales/nl.json": {
-      "required": true
+      "required": false
     },
     "locales/fr.json": {
-      "required": true
+      "required": false
     }
   }
 }
