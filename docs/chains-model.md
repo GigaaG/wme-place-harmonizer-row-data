@@ -66,6 +66,16 @@ The current runtime and proposal generation pipeline actively use:
   - `address`
 - `editorNotes`
 
+Presence-policy fields inside `policy` accept:
+
+- `required`
+- `recommended`
+- `optional`
+- `discouraged`
+- `forbidden`
+
+This applies to `phone`, `url`, `openingHours`, `navigationPoints`, `externalProviderIds`, and `address.*`. `optional` means the field is explicitly allowed either way and can be used to override an inherited base policy.
+
 ## Fields that are present but not strong runtime contracts
 
 Some fields appear in schemas, examples, or existing data but are not currently strong runtime dependencies. In particular:

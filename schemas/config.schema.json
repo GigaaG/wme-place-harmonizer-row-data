@@ -204,23 +204,23 @@
           },
           "phone": {
             "type": "string",
-            "enum": ["required", "recommended", "discouraged", "forbidden"]
+            "enum": ["required", "recommended", "optional", "discouraged", "forbidden"]
           },
           "url": {
             "type": "string",
-            "enum": ["required", "recommended", "discouraged", "forbidden"]
+            "enum": ["required", "recommended", "optional", "discouraged", "forbidden"]
           },
           "openingHours": {
             "type": "string",
-            "enum": ["required", "recommended", "discouraged", "forbidden"]
+            "enum": ["required", "recommended", "optional", "discouraged", "forbidden"]
           },
           "navigationPoints": {
             "type": "string",
-            "enum": ["required", "recommended", "discouraged", "forbidden"]
+            "enum": ["required", "recommended", "optional", "discouraged", "forbidden"]
           },
           "externalProviderIds": {
             "type": "string",
-            "enum": ["required", "recommended", "discouraged", "forbidden"]
+            "enum": ["required", "recommended", "optional", "discouraged", "forbidden"]
           },
           "services": {
             "type": "object",
@@ -248,15 +248,15 @@
             "properties": {
               "city": {
                 "type": "string",
-                "enum": ["required", "recommended", "discouraged", "forbidden"]
+                "enum": ["required", "recommended", "optional", "discouraged", "forbidden"]
               },
               "street": {
                 "type": "string",
-                "enum": ["required", "recommended", "discouraged", "forbidden"]
+                "enum": ["required", "recommended", "optional", "discouraged", "forbidden"]
               },
               "houseNumber": {
                 "type": "string",
-                "enum": ["required", "recommended", "discouraged", "forbidden"]
+                "enum": ["required", "recommended", "optional", "discouraged", "forbidden"]
               }
             }
           },

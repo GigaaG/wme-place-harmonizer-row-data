@@ -6,6 +6,7 @@ const ajv = new Ajv({ allErrors: true });
 const allowedRequirements = [
   "required",
   "recommended",
+  "optional",
   "discouraged",
   "forbidden"
 ];
