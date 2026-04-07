@@ -83,70 +83,55 @@
           "polygon"
         ]
       },
-      "lockLevel": 1,
+      "address": {
+        "city": "required",
+        "street": "required",
+        "houseNumber": "required"
+      },
+      "url": "required",
+      "phone": "required",
       "openingHours": "required",
       "externalProviderIds": "required"
     },
     "CAR_WASH": {
       "geometry": {
-        "recommended": "point",
-        "allowed": [
-          "point",
-          "polygon"
-        ]
-      },
-      "lockLevel": 1,
-      "address": {
-        "city": "required",
-        "street": "required",
-        "houseNumber": "required"
-      },
-      "openingHours": "required",
-      "externalProviderIds": "required"
+        "recommended": "point"
+      }
     },
     "CHARGING_STATION": {
-      "geometry": {
-        "recommended": "point",
-        "allowed": [
-          "point",
-          "polygon"
-        ]
-      },
       "lockLevel": 3,
-      "externalProviderIds": "recommended"
+      "externalProviderIds": "recommended",
+      "googleMapsValidation": {
+        "enabled": true,
+        "checks": {
+          "nameMismatch": false
+        }
+      }
     },
     "GARAGE_AUTOMOTIVE_SHOP": {
       "geometry": {
-        "recommended": "point",
-        "allowed": [
-          "point",
-          "polygon"
-        ]
-      },
-      "externalProviderIds": "required"
+        "recommended": "point"
+      }
     },
     "GAS_STATION": {
       "geometry": {
-        "required": "polygon",
-        "allowed": [
-          "polygon"
-        ]
+        "required": "polygon"
       },
       "lockLevel": 3,
-      "address": {
-        "city": "required",
-        "street": "required",
-        "houseNumber": "required"
-      },
-      "phone": "recommended",
       "services": {
         "recommended": [
           "RESTROOMS",
           "CREDIT_CARDS"
         ]
       },
-      "openingHours": "required",
-      "externalProviderIds": "required"
+      "editorNotes": {
+        "en": [
+          "When a gas station has a shop or carwash with different opening hours, map the shop or carwash as a separate place."
+        ],
+        "nl": [
+          "Indien er een winkeltje of wasstraat aanwezig is met andere openingstijden, maak daarvoor een aparte place aan."
+        ]
+      }
     },
     "CRISIS_LOCATIONS": {
       "geometry": {
@@ -157,24 +142,8 @@
         ]
       }
     },
-    "DONATION_CENTERS": {
-      "geometry": {
-        "recommended": "point",
-        "allowed": [
-          "point",
-          "polygon"
-        ]
-      }
-    },
-    "SHELTER_LOCATIONS": {
-      "geometry": {
-        "recommended": "point",
-        "allowed": [
-          "point",
-          "polygon"
-        ]
-      }
-    },
+    "DONATION_CENTERS": {},
+    "SHELTER_LOCATIONS": {},
     "CULTURE_AND_ENTERTAINEMENT": {
       "geometry": {
         "recommended": "point",
@@ -183,157 +152,78 @@
           "polygon"
         ]
       },
-      "externalProviderIds": "required"
-    },
-    "ART_GALLERY": {
-      "geometry": {
-        "recommended": "point",
-        "allowed": [
-          "point",
-          "polygon"
-        ]
+      "address": {
+        "city": "required",
+        "street": "required",
+        "houseNumber": "required"
       },
-      "externalProviderIds": "required"
-    },
-    "CASINO": {
-      "geometry": {
-        "recommended": "point",
-        "allowed": [
-          "point",
-          "polygon"
-        ]
-      },
-      "externalProviderIds": "required"
-    },
-    "CLUB": {
-      "geometry": {
-        "recommended": "point",
-        "allowed": [
-          "point",
-          "polygon"
-        ]
-      },
-      "externalProviderIds": "required"
-    },
-    "GAME_CLUB": {
-      "geometry": {
-        "recommended": "point",
-        "allowed": [
-          "point",
-          "polygon"
-        ]
-      },
-      "externalProviderIds": "required"
-    },
-    "MOVIE_THEATER": {
-      "geometry": {
-        "recommended": "point",
-        "allowed": [
-          "point",
-          "polygon"
-        ]
-      },
-      "lockLevel": 3,
-      "phone": "required",
-      "url": "required",
-      "externalProviderIds": "required"
-    },
-    "MUSEUM": {
-      "geometry": {
-        "recommended": "point",
-        "allowed": [
-          "point",
-          "polygon"
-        ]
-      },
-      "lockLevel": 3,
       "phone": "required",
       "url": "required",
       "openingHours": "required",
       "externalProviderIds": "required"
     },
-    "MUSIC_VENUE": {
+    "ART_GALLERY": {
       "geometry": {
-        "recommended": "point",
-        "allowed": [
-          "point",
-          "polygon"
-        ]
+        "recommended": "point"
       },
-      "phone": "required",
-      "url": "required",
-      "externalProviderIds": "required"
+      "openingHours": "recommended"
+    },
+    "CASINO": {},
+    "CLUB": {
+      "editorNotes": {
+        "en": [
+          "Use CLUB for nightclubs. Use SPORTS_COURT for sports clubs."
+        ],
+        "nl": [
+          "Gebruik CLUB voor nachtclubs en SPORT_PARK voor sportclubs."
+        ]
+      }
+    },
+    "GAME_CLUB": {},
+    "MOVIE_THEATER": {},
+    "MUSEUM": {
+      "openingHours": "recommended"
+    },
+    "MUSIC_VENUE": {
+      "openingHours": "recommended"
     },
     "PERFORMING_ARTS_VENUE": {
-      "geometry": {
-        "recommended": "point",
-        "allowed": [
-          "point",
-          "polygon"
-        ]
-      },
-      "externalProviderIds": "required"
+      "openingHours": "recommended"
     },
     "RACING_TRACK": {
       "geometry": {
-        "recommended": "polygon",
-        "allowed": [
-          "point",
-          "polygon"
-        ]
-      },
-      "externalProviderIds": "required"
+        "recommended": "polygon"
+      }
     },
     "STADIUM_ARENA": {
       "geometry": {
-        "recommended": "polygon",
-        "allowed": [
-          "point",
-          "polygon"
-        ]
+        "recommended": "polygon"
       },
-      "lockLevel": 3,
-      "phone": "required",
-      "url": "required",
-      "externalProviderIds": "required"
-    },
-    "THEATER": {
-      "geometry": {
-        "recommended": "point",
-        "allowed": [
-          "point",
-          "polygon"
+      "openingHours": "recommended",
+      "editorNotes": {
+        "en": [
+          "If there is a fanshop inside the stadium, add a seperate place for the fanshop with SPORTING_GOODS as category."
+        ],
+        "nl": [
+          "Indien er een fanshop aanwezig is in het stadion, voeg een aparte place toe voor de fanshop met SPORTING_GOODS als categorie."
         ]
-      },
-      "externalProviderIds": "required"
+      }
     },
+    "THEATER": {},
     "THEME_PARK": {
       "geometry": {
-        "recommended": "polygon",
-        "allowed": [
-          "point",
-          "polygon"
-        ]
-      },
-      "externalProviderIds": "required"
+        "recommended": "polygon"
+      }
     },
     "TOURIST_ATTRACTION_HISTORIC_SITE": {
-      "geometry": {
-        "recommended": "point",
-        "allowed": [
-          "point",
-          "polygon"
-        ]
-      },
       "editorNotes": {
         "en": [
           "Use a polygon when the attraction itself functions as a landmark."
         ],
         "nl": [
-          "Gebruik een polygoon wanneer de attractie zelf als landmark fungeert."
+          "Gebruik een polygoon wanneer de attractie zelf als oriëntatiepunt fungeert."
         ]
-      },
-      "externalProviderIds": "required"
+      }
     },
     "ZOO_AQUARIUM": {
       "geometry": {
@@ -345,16 +235,7 @@
       },
       "externalProviderIds": "required"
     },
-    "FOOD_AND_DRINK": {
-      "geometry": {
-        "recommended": "point",
-        "allowed": [
-          "point",
-          "polygon"
-        ]
-      },
-      "externalProviderIds": "required"
-    },
+    "FOOD_AND_DRINK": {},
     "BAKERY": {
       "geometry": {
         "recommended": "point",
@@ -452,16 +333,7 @@
       "openingHours": "required",
       "externalProviderIds": "required"
     },
-    "LODGING": {
-      "geometry": {
-        "recommended": "point",
-        "allowed": [
-          "point",
-          "polygon"
-        ]
-      },
-      "externalProviderIds": "required"
-    },
+    "LODGING": {},
     "BED_AND_BREAKFAST": {
       "geometry": {
         "recommended": "point",
@@ -518,15 +390,7 @@
       "url": "required",
       "externalProviderIds": "required"
     },
-    "NATURAL_FEATURES": {
-      "geometry": {
-        "recommended": "polygon",
-        "allowed": [
-          "point",
-          "polygon"
-        ]
-      }
-    },
+    "NATURAL_FEATURES": {},
     "CANAL": {
       "geometry": {
         "recommended": "polygon",
@@ -611,15 +475,7 @@
         ]
       }
     },
-    "OTHER": {
-      "geometry": {
-        "recommended": "point",
-        "allowed": [
-          "point",
-          "polygon"
-        ]
-      }
-    },
+    "OTHER": {},
     "CONSTRUCTION_SITE": {
       "geometry": {
         "recommended": "polygon",
@@ -640,15 +496,7 @@
         ]
       }
     },
-    "OUTDOORS": {
-      "geometry": {
-        "recommended": "polygon",
-        "allowed": [
-          "point",
-          "polygon"
-        ]
-      }
-    },
+    "OUTDOORS": {},
     "BEACH": {
       "geometry": {
         "recommended": "polygon",
@@ -763,15 +611,7 @@
       "lockLevel": 2,
       "cityInVenueName": false
     },
-    "PROFESSIONAL_AND_PUBLIC": {
-      "geometry": {
-        "recommended": "point",
-        "allowed": [
-          "point",
-          "polygon"
-        ]
-      }
-    },
+    "PROFESSIONAL_AND_PUBLIC": {},
     "CEMETERY": {
       "geometry": {
         "recommended": "polygon",
@@ -799,9 +639,14 @@
           "polygon"
         ]
       },
-      "lockLevel": 4,
+      "lockLevel": 3,
       "phone": "required",
       "url": "required",
+      "address": {
+        "city": "required",
+        "street": "required",
+        "houseNumber": "required"
+      },
       "externalProviderIds": "required"
     },
     "CONVENTIONS_EVENT_CENTER": {
@@ -949,7 +794,11 @@
           "polygon"
         ]
       },
-      "lockLevel": 2
+      "address": {
+        "city": "required",
+        "street": "required",
+        "houseNumber": "required"
+      }
     },
     "ORGANIZATION_OR_ASSOCIATION": {
       "geometry": {
@@ -1022,14 +871,19 @@
           "polygon"
         ]
       },
-      "lockLevel": 3,
+      "lockLevel": 2,
       "phone": "required",
       "url": "required",
+      "address": {
+        "city": "required",
+        "street": "required",
+        "houseNumber": "required"
+      },
       "externalProviderIds": "required"
     },
     "TRASH_AND_RECYCLING_FACILITIES": {
       "geometry": {
-        "recommended": "point",
+        "recommended": "polygon",
         "allowed": [
           "point",
           "polygon"
@@ -1043,6 +897,11 @@
           "point",
           "polygon"
         ]
+      },      
+      "address": {
+        "city": "required",
+        "street": "required",
+        "houseNumber": "required"
       },
       "openingHours": "recommended",
       "phone": "recommended",
@@ -1107,9 +966,6 @@
         ],
         "nl": [
           "Als de locatie ook een tankstation heeft, gebruik dan GAS_STATION als hoofdcategorie."
-        ],
-        "fr": [
-          "Si le lieu comprend aussi une station-service, utilisez GAS_STATION comme categorie principale."
         ]
       },
       "externalProviderIds": "required"
@@ -1396,16 +1252,7 @@
       },
       "externalProviderIds": "required"
     },
-    "TRANSPORTATION": {
-      "geometry": {
-        "recommended": "point",
-        "allowed": [
-          "point",
-          "polygon"
-        ]
-      },
-      "externalProviderIds": "required"
-    },
+    "TRANSPORTATION": {},
     "AIRPORT": {
       "geometry": {
         "recommended": "polygon",
@@ -1414,7 +1261,7 @@
           "polygon"
         ]
       },
-      "lockLevel": 3,
+      "lockLevel": 4,
       "phone": "required",
       "url": "required",
       "address": {
@@ -1449,9 +1296,6 @@
         ],
         "nl": [
           "Bushaltes worden in Nederland niet beschouwd als busstations."
-        ],
-        "fr": [
-          "Aux Pays-Bas, les arrets de bus ne sont pas consideres comme des gares routieres."
         ]
       },
       "externalProviderIds": "required"
