@@ -783,6 +783,12 @@
       "geometry": {
         "required": "polygon"
       }
-    }
+    },
+    "RESIDENTIAL": {
+      "address": {
+        "city": "required",
+        "street": "required",
+        "houseNumber": "required"
+      }
   }
 }
