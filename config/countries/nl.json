@@ -790,5 +790,6 @@
         "street": "required",
         "houseNumber": "required"
       }
+    }
   }
 }
