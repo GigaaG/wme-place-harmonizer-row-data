@@ -1,8 +1,8 @@
 {
   "channel": "dev",
-  "version": "0.1.1-dev",
-  "generatedAt": "2026-03-30T20:18:01Z",
-  "dataRevision": "2026-03-30-manifest-required-flags",
+  "version": "0.1.2-dev",
+  "generatedAt": "2026-04-07T22:52:00Z",
+  "dataRevision": "2026-04-07-config-update-nl",
   "files": {
     "config/global.json": {
       "required": true
