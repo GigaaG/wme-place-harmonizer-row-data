@@ -350,7 +350,6 @@
     "SWAMP_MARSH": {},
     "OTHER": {
       "geometry": {
-        "recommended": "point",
         "allowed": [
           "point",
           "polygon"
