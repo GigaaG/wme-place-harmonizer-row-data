@@ -106,6 +106,11 @@
         "checks": {
           "nameMismatch": false
         }
+      },
+      "address": {
+        "city": "required",
+        "street": "required",
+        "houseNumber": "optional"
       }
     },
     "GARAGE_AUTOMOTIVE_SHOP": {
@@ -496,7 +501,15 @@
     "FACTORY_INDUSTRIAL": {
       "geometry": {
         "recommended": "polygon"
-      }
+      },
+      "address": {
+        "city": "required",
+        "street": "optional",
+        "houseNumber": "optional"
+      },
+      "url": "optional",
+      "phone": "optional",
+      "openingHours": "optional"
     },
     "FIRE_DEPARTMENT": {
       "geometry": {
