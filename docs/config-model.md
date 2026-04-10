@@ -137,6 +137,16 @@ Category keys must use the canonical SDK category id format, for example:
 - `PARKING_LOT`
 - `RESIDENTIAL`
 
+Presence-policy fields in category standards accept:
+
+- `required`
+- `recommended`
+- `optional`
+- `discouraged`
+- `forbidden`
+
+This applies to `phone`, `url`, `openingHours`, `navigationPoints`, `externalProviderIds`, and `address.*`. `optional` means the field is explicitly allowed either way and can be used to override an inherited parent rule.
+
 The data validator checks category ids against `reference/sdk-values.json`. `editorNotes` stay inside config data as locale-keyed text lists because they are data-bound guidance, not shared UI locale catalog entries.
 
 ## Excel import and export
