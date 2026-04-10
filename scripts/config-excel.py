@@ -32,7 +32,7 @@ EXTRA_JSON_SHEET = "Extra JSON"
 REFERENCE_SHEET = "Reference"
 INSTRUCTIONS_SHEET = "Instructions"
 
-PRESENCE_VALUES = ["required", "recommended", "discouraged", "forbidden"]
+PRESENCE_VALUES = ["required", "recommended", "optional", "discouraged", "forbidden"]
 GEOMETRY_VALUES = ["point", "polygon"]
 BOOLEAN_VALUES = ["true", "false"]
 SEVERITY_VALUES = ["info", "warning", "error"]
@@ -310,14 +310,14 @@ def apply_reference_validations(workbook: Workbook, worksheet, row_limit: int) -
         "E": f"{reference_sheet_name}!$B$2:$B$3",
         "F": f"{reference_sheet_name}!$B$2:$B$3",
         "I": f"{reference_sheet_name}!$C$2:$C$3",
-        "J": f"{reference_sheet_name}!$A$2:$A$5",
-        "K": f"{reference_sheet_name}!$A$2:$A$5",
-        "L": f"{reference_sheet_name}!$A$2:$A$5",
-        "M": f"{reference_sheet_name}!$A$2:$A$5",
-        "N": f"{reference_sheet_name}!$A$2:$A$5",
-        "O": f"{reference_sheet_name}!$A$2:$A$5",
-        "P": f"{reference_sheet_name}!$A$2:$A$5",
-        "Q": f"{reference_sheet_name}!$A$2:$A$5",
+        "J": f"{reference_sheet_name}!$A$2:$A$6",
+        "K": f"{reference_sheet_name}!$A$2:$A$6",
+        "L": f"{reference_sheet_name}!$A$2:$A$6",
+        "M": f"{reference_sheet_name}!$A$2:$A$6",
+        "N": f"{reference_sheet_name}!$A$2:$A$6",
+        "O": f"{reference_sheet_name}!$A$2:$A$6",
+        "P": f"{reference_sheet_name}!$A$2:$A$6",
+        "Q": f"{reference_sheet_name}!$A$2:$A$6",
     }
     for column_letter, formula in validations.items():
         validation = DataValidation(type="list", formula1=formula, allow_blank=True)
