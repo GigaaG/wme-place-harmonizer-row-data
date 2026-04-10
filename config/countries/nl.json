@@ -803,5 +803,6 @@
         "street": "required",
         "houseNumber": "required"
       }
+    }
   }
 }
