@@ -136,6 +136,7 @@
     "proposal.lockLevel.cappedRaise": "{issueMessage}. Toepassen verhoogt de venue naar {lockLevel}, begrensd door jouw editor-lockniveau {editorLockLevel}.",
     "proposal.lockLevel.cappedCannotRaise": "{issueMessage}. Jouw editor-lockniveau {editorLockLevel} kan deze venue niet verder verhogen.",
     "proposal.externalProvider.reason.distanceAway": "{distanceMeters} m verderop",
+    "proposal.externalProvider.reason.likelyMoved": "Sterke naam-match op {distanceMeters} m afstand; venue is mogelijk verhuisd",
     "proposal.externalProvider.reason.nearbyName": "Match in de buurt op basis van de venuenaam",
     "proposal.externalProvider.displayWithDistance": "{name} ({distanceMeters} m)",
     "proposal.externalProvider.validation.notFound": "Google Place niet gevonden",

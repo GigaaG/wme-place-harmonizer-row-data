@@ -136,6 +136,7 @@
     "proposal.lockLevel.cappedRaise": "{issueMessage}. Apply will raise the venue to {lockLevel}, capped by your editor lock level {editorLockLevel}.",
     "proposal.lockLevel.cappedCannotRaise": "{issueMessage}. Your editor lock level {editorLockLevel} cannot raise this venue further.",
     "proposal.externalProvider.reason.distanceAway": "{distanceMeters} m away",
+    "proposal.externalProvider.reason.likelyMoved": "Strong name match {distanceMeters} m away; the venue may have moved",
     "proposal.externalProvider.reason.nearbyName": "Nearby match based on venue name",
     "proposal.externalProvider.displayWithDistance": "{name} ({distanceMeters} m)",
     "proposal.externalProvider.validation.notFound": "Google Place not found",
