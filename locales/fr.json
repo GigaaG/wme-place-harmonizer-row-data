@@ -136,6 +136,7 @@
     "proposal.lockLevel.cappedRaise": "{issueMessage}. L'application augmentera le lieu au niveau {lockLevel}, limite par votre niveau de verrouillage editeur {editorLockLevel}.",
     "proposal.lockLevel.cappedCannotRaise": "{issueMessage}. Votre niveau de verrouillage editeur {editorLockLevel} ne permet pas d'augmenter davantage ce lieu.",
     "proposal.externalProvider.reason.distanceAway": "a {distanceMeters} m",
+    "proposal.externalProvider.reason.likelyMoved": "Correspondance de nom forte a {distanceMeters} m ; le lieu a peut-etre demenage",
     "proposal.externalProvider.reason.nearbyName": "Correspondance proche d'apres le nom du lieu",
     "proposal.externalProvider.displayWithDistance": "{name} ({distanceMeters} m)",
     "proposal.externalProvider.validation.notFound": "Google Place introuvable",
